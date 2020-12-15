@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "repository": "git@github.com:yeohsoonkeat/Slekret-Development.git",
+  "author": "Yeoh Soon Keat <yeohsoonkeat18@kit.edu.kh>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && yarn run migrate",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "pretest": "cross-env NODE_ENV=test yarn run migrate:reset",
+    "lint": "eslint src/**",
+    "format": "eslint src/** --fix",
+    "commit": "git cz",
+    "validate": "npm-run-all lint"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "npm-run-all": "^4.1.5",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/core": "^11.0.0",
+    "commitizen": "^4.2.2",
+    "commitlint-config-gitmoji": "^1.0.1",
+    "cross-env": "^7.0.3",
+    "cz-emoji": "^1.3.1",
+    "eslint": "^7.15.0",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "sequelize-cli": "^6.2.0",
+    "supertest": "^6.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-emoji"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run validate",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
