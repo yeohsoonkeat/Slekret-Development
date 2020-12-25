@@ -1,0 +1,3 @@
+- [x] auth login/register ui (spagetti)
+- [x] admin side bar
+- [ ] back-end routing
