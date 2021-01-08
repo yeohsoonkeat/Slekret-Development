@@ -1,8 +1,8 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Layout from './components/Layout'
-import Login from './screens/Login'
-import Register from './screens/Register'
+import Login from './views/Login'
+import Register from './views/Register'
 
 export default function Auth() {
 	return (
