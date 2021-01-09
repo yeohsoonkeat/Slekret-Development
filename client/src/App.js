@@ -45,7 +45,6 @@
 // 		</BrowserRouter>
 // 	)
 // }
-
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Admin from './pages/admin'
 import Auth from './pages/auth'
