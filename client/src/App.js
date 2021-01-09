@@ -49,5 +49,23 @@ export default function App() {
 }
 
 const Home = () => {
-	return <h1>Home Page</h1>
+	const userLogout = async () => {
+		await axios.post(
+			'http://localhost:8000/auth/logout',
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Credentials': true,
+				},
+			}
+		)
+	}
+	return (
+		<div>
+			<h1 onClick={userLogout}>Logout</h1>
+		</div>
+	)
 }

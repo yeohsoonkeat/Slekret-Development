@@ -67,9 +67,13 @@ authRouter.post('/login', async (req, res) => {
 			auth: false,
 		})
 	}
+})
 
-	// console.log(data)
-	// bcrypt.compare(password)
+authRouter.post('/logout', (req, res) => {
+	req.session.destroy()
+	res.json({
+		auth: false,
+	})
 })
 
 module.exports = authRouter
