@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import DropDown from '../dropDown';
-import AnalyticCardStat from './analyticCardStat';
-import AnaylticChartLine from './analyticChartLine';
+import React, { useState } from 'react'
+import DropDown from '../dropDown'
+import AnalyticCardStat from './analyticCardStat'
+import AnaylticChartLine from './analyticChartLine'
 
 export default function AnalyticBoard() {
-	const [days, setDays] = useState(7);
+	const [days, setDays] = useState(7)
 	const data = {
 		userData: randomArray(days),
 		threadData: randomArray(days),
 		postData: randomArray(days),
 		attachmentData: randomArray(days),
-	};
+	}
 	return (
 		<div className="p-2 md:m-10 relative flex flex-col min-w-0 break-words w-12/12 mb-6 shadow-lg rounded bg-gray-800">
 			<div className="flex flex-wrap items-center">
@@ -47,15 +47,15 @@ export default function AnalyticBoard() {
 			</div>
 			<AnaylticChartLine days={days} data={data} />
 		</div>
-	);
+	)
 }
 
 // will for demo
 
 const randomArray = (days) => {
-	let arr = [];
+	let arr = []
 	for (let i = 0; i < days; i++) {
-		arr.push(Math.floor(Math.random() * 50) + 1);
+		arr.push(Math.floor(Math.random() * 50) + 1)
 	}
-	return arr;
-};
+	return arr
+}

@@ -1,7 +1,37 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import content from '../static'
+import axios from 'axios'
+
+const schema = yup.object().shape({
+	email: yup.string().email().required(),
+	password: yup.string().required().min(2),
+})
 
 export default function Login() {
+	const history = useHistory()
+	const [message, setMessage] = useState('')
+	const { register, errors, handleSubmit } = useForm({
+		resolver: yupResolver(schema),
+	})
+	const onSubmit = async (data) => {
+		const res = await axios.post('http://localhost:8000/auth/login', data, {
+			withCredentials: true,
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Credentials': true,
+			},
+		})
+		if (!res.data.auth) {
+			setMessage(res.data.message)
+		} else {
+			history.push('/admin')
+		}
+	}
 	return (
 		<>
 			<div className="container mx-auto px-4 h-full">
@@ -23,15 +53,6 @@ export default function Login() {
 										/>
 										Github
 									</button>
-									{/* mr */}
-									<button className="btn-login-socail mr-1" type="button">
-										<img
-											alt="..."
-											className="w-5 mr-1"
-											src={process.env.PUBLIC_URL + '/assets/google.svg'}
-										/>
-										Google
-									</button>
 								</div>
 								<hr className="mt-6 border-b-1 border-gray-400" />
 							</div>
@@ -39,56 +60,40 @@ export default function Login() {
 								<div className="text-gray-500 text-center mb-3 font-bold">
 									<small>Or sign in with credentials</small>
 								</div>
-								<form>
-									<div className="relative w-full mb-3">
-										<label
-											className="block uppercase text-gray-700 text-xs font-bold mb-2"
-											htmlFor="grid-password"
-										>
-											Email
-										</label>
-										<input
-											type="email"
-											className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-											placeholder="Email"
-										/>
-									</div>
-
-									<div className="relative w-full mb-3">
-										<label
-											className="block uppercase text-gray-700 text-xs font-bold mb-2"
-											htmlFor="grid-password"
-										>
-											Password
-										</label>
-										<input
-											type="password"
-											className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-											placeholder="Password"
-										/>
-									</div>
-									<div>
-										<label className="inline-flex items-center cursor-pointer">
-											<input
-												id="customCheckLogin"
-												type="checkbox"
-												className="form-checkbox text-gray-800 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-											/>
-											<span className="ml-2 text-sm font-semibold text-gray-700">
-												Remember me
-											</span>
-										</label>
-									</div>
+								<form onSubmit={handleSubmit(onSubmit)}>
+									{content.loginForm.map((input, index) => {
+										return (
+											<div className="relative w-full mb-3" key={index}>
+												<label
+													className="block uppercase text-gray-700 text-xs font-bold mb-2"
+													htmlFor="grid-password"
+												>
+													{input.name}
+												</label>
+												<input
+													ref={register}
+													name={input.name}
+													type={input.type}
+													className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+													placeholder={input.placeholder}
+													autoComplete="true"
+												/>
+												<p className="text-red-700">
+													{errors[input.name]?.message}
+												</p>
+											</div>
+										)
+									})}
 
 									<div className="text-center mt-6">
-										<button
+										<input
 											className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-											type="button"
-										>
-											Sign In
-										</button>
+											type="submit"
+											value="Login"
+										/>
 									</div>
 								</form>
+								<p className="text-red-700 text-center">{message}</p>
 							</div>
 						</div>
 						<div className="flex flex-wrap mt-6 relative text-xl">

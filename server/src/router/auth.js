@@ -1,18 +1,18 @@
 require('dotenv').config()
+const bcrypt = require('bcrypt')
 const express = require('express')
-const { v4: uuidv4 } = require('uuid')
-const hash_password = require('../utils/hash_password')
-const getUserByEmail = require('../hasura_handler/get_user_by_email')
-const getUserByUsername = require('../hasura_handler/get_user_by_username')
 const sendEmail = require('../utils/setEmailVerify')
+const isUserEmailExist = require('../utils/isUserEmailExist')
 const generateVerifyLink = require('../utils/generateVerifyLink')
+const isUserUsernameExist = require('../utils/isUserUsernameExist')
 const { verifyToken, generateRefreshToken } = require('../utils/jwt')
-const addUser = require('../hasura_handler/add_user')
+const addUserToDb = require('../utils/addUserToDb')
+const getUserByEmail = require('../db/getUserByEmail')
+
 const authRouter = express.Router()
 
 authRouter.post('/register', async (req, res) => {
 	const { username, email } = req.body
-
 	if (!(await isUserEmailExist(email))) {
 		if (!(await isUserUsernameExist(username))) {
 			const link = generateVerifyLink(req.body)
@@ -42,41 +42,34 @@ authRouter.get('/verify', async (req, res) => {
 	}
 })
 
-const addUserToDb = async (req, res, user) => {
-	const userId = uuidv4()
-	const { email, password, fullname, username } = user
-	const hashpassword = await hash_password(password)
-	const { errors } = await addUser({
-		id: userId,
-		email,
-		password: hashpassword,
-		fullname,
-		username,
-	})
-
+authRouter.post('/login', async (req, res) => {
+	const { email, password } = req.body
+	const { data, errors } = await getUserByEmail({ email })
 	if (errors) {
 		res.status(400).json(errors[0])
 	}
-	const refreshToken = generateRefreshToken(userId)
-	req.session.refreshToken = refreshToken
-	res.redirect(process.env.CLIENT_URL + '/auth/verify')
-}
 
-const isUserEmailExist = async (email) => {
-	const { data } = await getUserByEmail({ email })
-	if (data.slekret_users.length === 0) {
-		return false
-	} else {
-		return true
-	}
-}
+	if (data.slekret_users.length !== 0) {
+		const hashPassword = data.slekret_users[0].password
+		const userid = data.slekret_users[0].id
 
-const isUserUsernameExist = async (username) => {
-	const { data } = await getUserByUsername({ username })
-	if (data.slekret_users.length === 0) {
-		return false
+		const isPasswordCorrect = await bcrypt.compare(password, hashPassword)
+		if (isPasswordCorrect) {
+			const refreshToken = generateRefreshToken(userid)
+			req.session.refreshToken = refreshToken
+			res.json({
+				auth: true,
+			})
+		}
 	} else {
-		return true
+		res.json({
+			message: 'Unable to Login',
+			auth: false,
+		})
 	}
-}
+
+	// console.log(data)
+	// bcrypt.compare(password)
+})
+
 module.exports = authRouter

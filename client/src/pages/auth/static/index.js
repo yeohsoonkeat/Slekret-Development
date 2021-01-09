@@ -21,6 +21,18 @@ const content = {
 			placeholder: 'full name',
 		},
 	],
+	loginForm: [
+		{
+			type: 'email',
+			name: 'email',
+			placeholder: 'example@gmail.com',
+		},
+		{
+			type: 'password',
+			name: 'password',
+			placeholder: 'password',
+		},
+	],
 }
 
 export default content
