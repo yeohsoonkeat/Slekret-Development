@@ -1,30 +1,26 @@
-# version: '3.4'
-
-# services:
-#   client:
-#     image: client
-#     build:
-#       context: client
-#       dockerfile: ./Dockerfile
-#     env_file: .env
-#     ports:
-#       - 3000:3000
-#     volumes:
-#       - ./client:/usr/src/app/
-
-#   server:
-#     image: server
-#     build:
-#       context: server
-#       dockerfile: ./Dockerfile
-#     env_file: .env
-#     ports:
-#       - 8000:8000
-#     volumes:
-#       - ./server:/usr/src/app
-
 version: '3.6'
 services:
+  client:
+    image: client
+    build:
+      context: client
+      dockerfile: ./Dockerfile
+    env_file: .env
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/usr/src/app/
+  server:
+    image: server
+    build:
+      context: server
+      dockerfile: ./Dockerfile
+    env_file: .env
+    ports:
+      - 8000:8000
+    volumes:
+      - ./server:/usr/src/app
+
   postgres:
     image: postgres:12
     restart: always
