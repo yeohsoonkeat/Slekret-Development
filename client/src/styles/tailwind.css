@@ -1,8 +1,5 @@
 @tailwind base;
 
 @tailwind components;
-.btn-login-socail {
-  @apply bg-white text-gray-800  px-4 py-2 rounded outline-none focus:outline-none mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150;
-}
 
 @tailwind utilities;
