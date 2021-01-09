@@ -37,7 +37,6 @@ app.use('/auth', authRouter)
 app.get('/token', isUserAuthenticated, (req, res) => {
 	const refreshToken = req.session.refreshToken
 	const userId = verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET)
-	console.log(userId, '=====')
 	if (!userId) {
 		res.json({ auth: false })
 	}

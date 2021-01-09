@@ -10,7 +10,7 @@ query MyQuery($username: String) {
 
 // execute the parent operation in Hasura
 const getUserByUsername = async (variables) => {
-	const fetchResponse = await fetch('http://localhost:8080/v1/graphql', {
+	const fetchResponse = await fetch(process.env.HASURA_URL, {
 		method: 'POST',
 		body: JSON.stringify({
 			query: HASURA_OPERATION,

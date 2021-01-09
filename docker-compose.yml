@@ -10,6 +10,8 @@ services:
       - 3000:3000
     volumes:
       - ./client:/usr/src/app/
+    networks:
+      - app-networks
   server:
     image: server
     build:
@@ -20,7 +22,8 @@ services:
       - 8000:8000
     volumes:
       - ./server:/usr/src/app
-
+    networks:
+      - app-networks
   postgres:
     image: postgres:12
     restart: always
@@ -28,6 +31,8 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
+    networks:
+      - app-networks
   graphql-engine:
     image: hasura/graphql-engine:v1.3.3
     ports:
@@ -35,6 +40,7 @@ services:
     depends_on:
       - 'postgres'
     restart: always
+    env_file: .env
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
       ## enable the console served by server
@@ -42,12 +48,15 @@ services:
       ## enable debugging mode. It is recommended to disable this in production
       HASURA_GRAPHQL_DEV_MODE: 'true'
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
-      HASURA_GRAPHQL_JWT_SECRET: '{
-        "type": "HS256",
-        "key":"5e030a725c413c1329973a5de0e71323f09cef9511966fa91267b7332d4ea6e5dbe0d441bc0ec3c519229e1fe28cb1fd4e966ce2e10e4ea348f1c8cb4b4844131ad0b287d42a53f498be6c07d71ea71e7c33505268598bd515f9917757b5dcd8117f35b0d3facf0fc4e5bf0bcaf73b7201f2865153f4be644b635f069d0eb261"
-        }'
+      HASURA_GRAPHQL_ADMIN_SECRET: '${HASURA_GRAPHQL_ADMIN_SECRET}'
+      HASURA_GRAPHQL_JWT_SECRET: '${HASURA_GRAPHQL_JWT_SECRET}'
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+    networks:
+      - app-networks
 volumes:
   db_data:
+
+networks:
+  app-networks:
+    driver: bridge
