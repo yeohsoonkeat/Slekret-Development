@@ -23,16 +23,18 @@ export default function Register() {
 		resolver: yupResolver(schema),
 	})
 	const onSubmit = async (data) => {
-		const res = await axios.post('http://localhost:8000/auth/register', data, {
-			withCredentials: true,
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Credentials': true,
-			},
-		})
-		if (res.data.verify) {
-			history.push('/auth/verify')
+		const res = await axios
+			.post('http://localhost:8000/auth/register', data, {
+				withCredentials: true,
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Credentials': true,
+				},
+			})
+			.catch((er) => console.log(er))
+		if (res.data?.verify) {
+			history.push({ pathname: '/auth/verify', state: { data } })
 		}
 		if (res.data.message) {
 			setMessage(res.data.message)
