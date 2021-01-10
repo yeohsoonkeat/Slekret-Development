@@ -6,6 +6,8 @@ import Auth from './pages/auth'
 import ProtectedRoute from './routes/ProtectedRoutes'
 import PublicRoutes from './routes/PublicRoutes'
 import Profile from './pages/profile'
+import Home from './pages/home'
+import Forum from './pages/forum'
 import useAuthProvider from './hook/useAuthProvider'
 
 export default function App() {
@@ -36,39 +38,12 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<ProtectedRoute auth={auth} path="/" exact component={Home} />
+				<Route auth={auth} path="/" exact component={Home} />
 				<ProtectedRoute auth={auth} path="/admin" component={Admin} />
 				<PublicRoutes auth={auth} component={Auth} path="/auth" />
 				<Route path="/user/" component={Profile} />
+				<Route path="/forum/" component={Forum}/>
 			</Switch>
 		</BrowserRouter>
-	)
-}
-
-const Home = () => {
-	const authDispatch = useAuthProvider()[1]
-	const userLogout = async () => {
-		authDispatch({
-			type: 'UPDATE_AUTH',
-			payload: { auth: false },
-		})
-		window.localStorage.setItem('auth', 'false')
-		await axios.post(
-			'http://localhost:8000/auth/logout',
-			{},
-			{
-				withCredentials: true,
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Credentials': true,
-				},
-			}
-		)
-	}
-	return (
-		<div>
-			<h1 onClick={userLogout}>Logout</h1>
-		</div>
 	)
 }
