@@ -1,5 +1,6 @@
 require('dotenv').config()
 const nodemailer = require('nodemailer')
+const generateVerifyLink = require('./generateVerifyLink')
 
 const transporter = nodemailer.createTransport({
 	host: 'smtp.gmail.com',
@@ -22,13 +23,13 @@ const mailOptions = (email, link) => {
 	}
 }
 
-const sendEmail = (email, link) => {
-	transporter.sendMail(mailOptions(email, link), function(error, info) {
+const sendEmail = (reqBody) => {
+	const link = generateVerifyLink(reqBody)
+	const { email } = reqBody
+
+	transporter.sendMail(mailOptions(email, link), function(error) {
 		if (error) {
-			return false
-		} else {
-			console.log(info)
-			return true
+			throw new Error('BROKEN') // Express will catch this on its own.
 		}
 	})
 }

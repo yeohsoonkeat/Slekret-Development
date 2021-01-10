@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid')
 const createUser = require('../../db/createUser')
 const getUserByEmail = require('../../db/getUserByEmail')
-const generateVerifyLink = require('../../utils/generateVerifyLink')
 const hashPassword = require('../../utils/hashPassword')
 const isUserEmailExist = require('../../utils/isUserEmailExist')
 const isUserUsernameExist = require('../../utils/isUserUsernameExist')
@@ -14,27 +13,58 @@ module.exports = {
 	// POST register user
 	registerUser: async (req, res) => {
 		const { username, email } = req.body
+
+		if (req.session.verifyCount) {
+			req.session.verifyCount = parseInt(req.session.verifyCount) + 1
+		} else {
+			req.session.verifyCount = 1
+		}
+
+		// thrird attemp
+		if (parseInt(req.session.verifyCount) > 2) {
+			req.session.destroy()
+			return res.json({
+				verify: false,
+			})
+		}
+		// second attempt
+		if (parseInt(req.session.verifyCount) === 2) {
+			try {
+				await sendEmail(req.body, res)
+				return res.json({
+					message: 'Email have been to your inbox',
+				})
+			} catch (er) {
+				return res.json({
+					message: 'can not send Email',
+				})
+			}
+		}
+		// first attempt
 		if (!(await isUserEmailExist(email))) {
 			if (!(await isUserUsernameExist(username))) {
-				const link = generateVerifyLink(req.body)
-				if (await sendEmail(email, link)) {
+				try {
+					await sendEmail(req.body, res)
 					res.json({
 						verify: true,
 					})
+				} catch (er) {
+					res.json({
+						message: 'can not send Email',
+					})
 				}
 			} else {
-				res.json({
+				return res.json({
 					message: 'Username is already exist',
 				})
 			}
 		} else {
-			res.json({
+			return res.json({
 				message: 'Email is already exist',
 			})
 		}
 	},
 	//GET verify user
-
 	verifyUser: async (req, res) => {
 		const token = req.query.token
 		const user = jwtUtils.verifyToken(token, process.env.TOKEN_LINK_VERIFY)

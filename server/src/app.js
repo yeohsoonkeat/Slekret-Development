@@ -22,7 +22,6 @@ app.use(
 		},
 	})
 )
-
 app.use(
 	cors({
 		origin: process.env.CLIENT_URL,
@@ -48,6 +47,10 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 		token,
 		auth: true,
 	})
+})
+
+app.get('/', (req, res) => {
+	res.redirect(process.env.CLIENT_URL)
 })
 
 module.exports = app
