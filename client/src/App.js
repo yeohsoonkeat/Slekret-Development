@@ -1,16 +1,16 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Admin from './pages/admin'
 import Auth from './pages/auth'
 import ProtectedRoute from './routes/ProtectedRoutes'
 import PublicRoutes from './routes/PublicRoutes'
 import Profile from './pages/profile'
+import useAuthProvider from './hook/useAuthProvider'
 
 export default function App() {
-	const [auth, setAuth] = useState(
-		window.localStorage.getItem('auth') === 'true'
-	)
+	const [authState, authDispatch] = useAuthProvider()
+	const { auth } = authState
 	useEffect(() => {
 		axios
 			.get('http://localhost:8000/token', {
@@ -22,19 +22,16 @@ export default function App() {
 				},
 			})
 			.then((res) => {
-				console.log(res)
-				if (res.data.auth) {
-					setAuth(true)
-					window.localStorage.setItem('auth', 'true')
-				} else {
-					setAuth(false)
-					window.localStorage.setItem('auth', 'false')
-				}
+				window.localStorage.setItem('auth', res.data?.auth)
+				authDispatch({
+					type: 'UPDATE_AUTH',
+					payload: { auth: res.data?.auth, token: res.data?.token },
+				})
 			})
 			.catch((er) => {
-				console.log(er)
+				window.localStorage.setItem('auth', 'false')
 			})
-	}, [])
+	}, [authDispatch])
 
 	return (
 		<BrowserRouter>
@@ -49,7 +46,13 @@ export default function App() {
 }
 
 const Home = () => {
+	const authDispatch = useAuthProvider()[1]
 	const userLogout = async () => {
+		authDispatch({
+			type: 'UPDATE_AUTH',
+			payload: { auth: false },
+		})
+		window.localStorage.setItem('auth', 'false')
 		await axios.post(
 			'http://localhost:8000/auth/logout',
 			{},

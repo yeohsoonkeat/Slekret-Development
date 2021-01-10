@@ -1,12 +1,12 @@
-import React from 'react';
-import Brand from './Brand';
-import Divider from './Divider';
-import Menu from './Menu';
-import ToggleMenuIcon from './ToggleMenuButton';
-import Wrapper from './Wrapper';
+import React from 'react'
+import Brand from './Brand'
+import Divider from './Divider'
+import Menu from './Menu'
+import ToggleMenuIcon from './ToggleMenuButton'
+import Wrapper from './Wrapper'
 
 export default function SideBar() {
-	const title = 'Slekret dashboard';
+	const title = 'Slekret dashboard'
 	const items = [
 		{
 			route: '/admin/dashboard',
@@ -18,8 +18,8 @@ export default function SideBar() {
 			title: 'setting',
 			awesomeIcon: 'fas fa-tools',
 		},
-	];
-	const [collapseShow, setCollapseShow] = React.useState('hidden');
+	]
+	const [collapseShow, setCollapseShow] = React.useState('hidden')
 
 	return (
 		<Wrapper>
@@ -35,5 +35,5 @@ export default function SideBar() {
 				<Menu title="Admin Panel" items={items} />
 			</div>
 		</Wrapper>
-	);
+	)
 }

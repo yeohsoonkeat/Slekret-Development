@@ -1,6 +1,6 @@
 const initialState = {
 	auth: false,
-	user: {},
+	token: '',
 }
 
 const reducer = (state, { type, payload }) => {
@@ -9,7 +9,7 @@ const reducer = (state, { type, payload }) => {
 			return {
 				...state,
 				auth: payload.auth,
-				user: payload.user,
+				token: payload.token,
 			}
 		case 'USER_LOGOUT':
 			return {

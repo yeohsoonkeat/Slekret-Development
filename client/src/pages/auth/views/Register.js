@@ -84,7 +84,7 @@ export default function Register() {
 										<input
 											className="w-full bg-black focus:outline-none text-white rounded p-2 cursor-pointer"
 											type="submit"
-											value="Next"
+											value="Register"
 										/>
 										<p className=" mt-2 text-red-400">{message}</p>
 									</div>

@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import content from '../static'
 import axios from 'axios'
+import useAuthProvider from '../../../hook/useAuthProvider'
 
 const schema = yup.object().shape({
 	email: yup.string().email().required(),
@@ -12,7 +13,7 @@ const schema = yup.object().shape({
 })
 
 export default function Login() {
-	const history = useHistory()
+	const authDispatch = useAuthProvider()[1]
 	const [message, setMessage] = useState('')
 	const { register, errors, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
@@ -29,7 +30,11 @@ export default function Login() {
 		if (!res.data.auth) {
 			setMessage(res.data.message)
 		} else {
-			history.push('/admin')
+			authDispatch({
+				type: 'UPDATE_AUTH',
+				payload: { auth: res.data?.auth },
+			})
+			window.localStorage.setItem('auth', res.data?.auth)
 		}
 	}
 	return (

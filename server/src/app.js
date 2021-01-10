@@ -2,13 +2,11 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-const app = express()
-
 const sessions = require('express-session')
-
-const authRouter = require('./router/auth')
-const { verifyToken, hasuraJwtToken } = require('./utils/jwt')
+const authRoutes = require('./routes/authenticationRoutes/AuthRoutes')
+const jwtUtils = require('./utils/jwt')
 const isUserAuthenticated = require('./middleware/isUserAuthenticated')
+const app = express()
 
 app.use(express.json())
 
@@ -34,15 +32,18 @@ app.use(
 )
 
 // router
-app.use('/auth', authRouter)
+app.use('/auth', authRoutes)
 
 app.get('/token', isUserAuthenticated, (req, res) => {
 	const refreshToken = req.session.refreshToken
-	const userId = verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET)
+	const userId = jwtUtils.verifyToken(
+		refreshToken,
+		process.env.JWT_REFRESH_SECRET
+	)
 	if (!userId) {
 		res.json({ auth: false })
 	}
-	const token = hasuraJwtToken(userId)
+	const token = jwtUtils.hasuraJwtToken(userId)
 	res.json({
 		token,
 		auth: true,

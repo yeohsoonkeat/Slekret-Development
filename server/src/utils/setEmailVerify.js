@@ -25,9 +25,10 @@ const mailOptions = (email, link) => {
 const sendEmail = (email, link) => {
 	transporter.sendMail(mailOptions(email, link), function(error, info) {
 		if (error) {
-			console.log(error)
+			return false
 		} else {
-			console.log('Email sent: ' + info.response)
+			console.log(info)
+			return true
 		}
 	})
 }
