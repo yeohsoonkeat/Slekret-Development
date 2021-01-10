@@ -33,6 +33,18 @@ const content = {
 			placeholder: 'password',
 		},
 	],
+	usernameForm: [
+		{
+			type: 'text',
+			name: 'username',
+			placeholder: 'username',
+		},
+		{
+			type: 'text',
+			name: 'fullname',
+			placeholder: 'full name',
+		},
+	],
 }
 
 export default content

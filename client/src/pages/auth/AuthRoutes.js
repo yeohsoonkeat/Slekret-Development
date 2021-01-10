@@ -5,7 +5,7 @@ import Expired from './views/Expired'
 import Login from './views/Login'
 import Register from './views/Register'
 import Verify from './views/Verify'
-
+import FormSignUpUsernameAndFullName from './views/FormSignUpUsernameAndFullName'
 export default function Auth() {
 	return (
 		<Layout>
@@ -14,6 +14,11 @@ export default function Auth() {
 				<Route path="/auth/register" exact component={Register} />
 				<Route path="/auth/verify" exact component={Verify} />
 				<Route path="/auth/expired" exact component={Expired} />
+				<Route
+					exact
+					path="/auth/usernameandfullname"
+					component={FormSignUpUsernameAndFullName}
+				/>
 
 				<Redirect from="/auth*" to="/auth/login" />
 			</Switch>

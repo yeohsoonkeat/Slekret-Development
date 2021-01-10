@@ -1,48 +1,41 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-export default function FormSignUpUsernameAndFullName({
-	setGoNext,
-	emailAndPassword,
-}) {
+import { Link, useHistory } from 'react-router-dom'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import content from '../static'
+
+const schema = yup.object().shape({
+	username: yup.string().required().trim(),
+	fullname: yup.string().required().trim(),
+})
+
+export default function FormSignUpUsernameAndFullName() {
 	const [message, setMessage] = useState('')
-	const formStatic = [
-		{
-			type: 'text',
-			name: 'username',
-			placeholder: 'username',
-		},
-		{
-			type: 'text',
-			name: 'fullname',
-			placeholder: 'full name',
-		},
-	]
-	const { register, handleSubmit, errors } = useForm()
+	const history = useHistory()
+	const { register, handleSubmit, errors } = useForm({
+		resolver: yupResolver(schema),
+	})
 
 	const onSubmit = async (data) => {
-		// check with backend submit
-		const res = await axios.post(
-			'http://localhost:8000/auth/registeSumbit',
-			{ ...data, ...emailAndPassword },
-			{
-				withCredentials: true,
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Credentials': true,
-				},
-			}
-		)
-		if (!res.data.auth) {
-			setMessage(res.data.message)
-		} else {
-			// go to the next page
-			setMessage('')
+		console.log(data)
+		const res = await axios.post('http://localhost:8000/auth/username', data, {
+			withCredentials: true,
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Credentials': true,
+			},
+		})
+		setMessage(res.data?.message)
+		if (res.data?.fail) {
+			history.push('/auth/register')
 		}
-
-		// go the home page
+		if (res.data?.auth) {
+			window.open('/', '_self')
+		}
 	}
 	return (
 		<div className="container mx-auto px-4 h-full">
@@ -53,7 +46,7 @@ export default function FormSignUpUsernameAndFullName({
 							<div className="text-gray-500 text-center mb-3 font-bold">
 								<p className="text-red-500 mt-2">{message}</p>
 								<form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-									{formStatic.map((input, index) => {
+									{content.usernameForm.map((input, index) => {
 										return (
 											<div className="relative w-full mb-3" key={index}>
 												<label
@@ -68,7 +61,11 @@ export default function FormSignUpUsernameAndFullName({
 													type={input.type}
 													className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
 													placeholder={input.placeholder}
+													autoComplete="true"
 												/>
+												<p className=" text-red-500">
+													{errors[input.name]?.message}
+												</p>
 											</div>
 										)
 									})}
@@ -78,12 +75,9 @@ export default function FormSignUpUsernameAndFullName({
 											type="submit"
 											value="submit"
 										/>
-										<p
-											className="mt-2 underline"
-											onClick={() => setGoNext(false)}
-										>
+										<Link to="/auth/register" className="mt-2 underline">
 											back
-										</p>
+										</Link>
 									</div>
 								</form>
 							</div>

@@ -24,10 +24,11 @@ export default function App() {
 				},
 			})
 			.then((res) => {
-				window.localStorage.setItem('auth', res.data?.auth)
+				const { auth, token, user } = res?.data
+				window.localStorage.setItem('auth', auth)
 				authDispatch({
 					type: 'UPDATE_AUTH',
-					payload: { auth: res.data?.auth, token: res.data?.token },
+					payload: { auth, token, user },
 				})
 			})
 			.catch((er) => {
@@ -38,11 +39,11 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route auth={auth} path="/" exact component={Home} />
+				<Route path="/" exact component={Home} />
 				<ProtectedRoute auth={auth} path="/admin" component={Admin} />
 				<PublicRoutes auth={auth} component={Auth} path="/auth" />
 				<Route path="/user/" component={Profile} />
-				<Route path="/forum/" component={Forum}/>
+				<Route path="/forum/" component={Forum} />
 			</Switch>
 		</BrowserRouter>
 	)

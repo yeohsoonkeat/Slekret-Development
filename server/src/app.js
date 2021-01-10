@@ -6,7 +6,11 @@ const sessions = require('express-session')
 const authRoutes = require('./routes/authenticationRoutes/AuthRoutes')
 const jwtUtils = require('./utils/jwt')
 const isUserAuthenticated = require('./middleware/isUserAuthenticated')
+const passport = require('passport')
 const app = express()
+
+// passport config
+require('./config/passport.config')
 
 app.use(express.json())
 
@@ -22,6 +26,11 @@ app.use(
 		},
 	})
 )
+
+// middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(
 	cors({
 		origin: process.env.CLIENT_URL,
@@ -39,18 +48,20 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 		refreshToken,
 		process.env.JWT_REFRESH_SECRET
 	)
+
 	if (!userId) {
 		res.json({ auth: false })
 	}
+
 	const token = jwtUtils.hasuraJwtToken(userId)
-	res.json({
+
+	const user = req.session.user
+
+	return res.json({
 		token,
 		auth: true,
+		user,
 	})
-})
-
-app.get('/', (req, res) => {
-	res.redirect(process.env.CLIENT_URL)
 })
 
 module.exports = app

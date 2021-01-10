@@ -40,7 +40,9 @@ export default function Register() {
 			setMessage(res.data.message)
 		}
 	}
-
+	const githubAuth = () => {
+		window.open('http://localhost:8000/auth/github', '_self')
+	}
 	return (
 		<div className="container mx-auto px-4 h-full">
 			<div className="flex content-center items-center justify-center h-full">
@@ -52,7 +54,7 @@ export default function Register() {
 									Sign Up with
 								</h6>
 							</div>
-							<SocailAuth />
+							<SocailAuth githubAuth={githubAuth} />
 							<hr className="mt-6 border-b-1 border-gray-400" />
 						</div>
 						<div className="flex-auto px-4 lg:px-10 py-10 pt-0">
