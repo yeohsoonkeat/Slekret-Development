@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
+import config from '../../../config'
 
 const Verify = () => {
 	const location = useLocation()
@@ -12,7 +13,7 @@ const Verify = () => {
 	const resentVerifyEmail = async () => {
 		setIsResent(true)
 		await axios
-			.post('http://localhost:8000/auth/register', location.state?.data, {
+			.post(config.backendUrl + '/auth/register', location.state?.data, {
 				withCredentials: true,
 				headers: {
 					Accept: 'application/json',

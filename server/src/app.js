@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authenticationRoutes/AuthRoutes')
 const jwtUtils = require('./utils/jwt')
 const isUserAuthenticated = require('./middleware/isUserAuthenticated')
 const passport = require('passport')
+const appConfig = require('./config/app.config')
 const app = express()
 
 // passport config
@@ -33,7 +34,7 @@ app.use(passport.session())
 
 app.use(
 	cors({
-		origin: process.env.CLIENT_URL,
+		origin: appConfig.clientURl,
 		methods: 'GET,POST,PUT,DELETE,HEAD,PATCH',
 		credentials: true,
 	})

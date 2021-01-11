@@ -1,6 +1,7 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid')
+const appConfig = require('../../config/app.config')
 const jwtUtils = require('../../utils/jwt')
 const createUser = require('../../db/createUser')
 const sendEmail = require('../../utils/setEmailVerify')
@@ -80,7 +81,7 @@ module.exports = {
 				userId = data.slekret_users[0].id
 				setSessionForEmailRegister(userId, req)
 
-				res.redirect(process.env.CLIENT_URL)
+				res.redirect(appConfig.clientURl)
 			}
 			const hashpassword = await hashPassword(password)
 			const { errors } = await createUser({
@@ -94,11 +95,11 @@ module.exports = {
 				res.status(400).json(errors[0])
 			}
 			setSessionForEmailRegister(userId, req)
-			res.redirect(process.env.CLIENT_URL + '/auth/verify')
+			res.redirect(appConfig.clientURl + '/auth/verify')
 		} else {
 			req.session.destroy()
 			req.logout()
-			res.redirect(process.env.CLIENT_URL + '/auth/expired')
+			res.redirect(appConfig.clientURl + '/auth/expired')
 		}
 	},
 	//POST user login
@@ -151,10 +152,10 @@ module.exports = {
 		if (!userIsNull) {
 			const userId = data.slekret_users[0].id
 			setUserSocialSession(userId, profileImg, req)
-			return res.redirect(process.env.CLIENT_URL)
+			return res.redirect(appConfig.clientURl)
 		}
 
-		res.redirect(process.env.CLIENT_URL + '/auth/usernameandfullname')
+		res.redirect(appConfig.clientURl + '/auth/usernameandfullname')
 	},
 
 	// ------------ //
