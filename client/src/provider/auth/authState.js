@@ -1,8 +1,7 @@
 const initialState = {
 	auth: false,
-	token: '',
 	user: {},
-}
+};
 
 const reducer = (state, { type, payload }) => {
 	switch (type) {
@@ -10,16 +9,14 @@ const reducer = (state, { type, payload }) => {
 			return {
 				...state,
 				auth: payload.auth,
-				token: payload.token,
 				user: payload.user,
-			}
+			};
 		case 'USER_LOGOUT':
-			console.log('running')
 			return {
 				initialState,
-			}
+			};
 		default:
-			return state
+			return state;
 	}
-}
-export { initialState, reducer }
+};
+export { initialState, reducer };

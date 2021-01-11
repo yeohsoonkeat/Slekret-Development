@@ -50,10 +50,6 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 		process.env.JWT_REFRESH_SECRET
 	);
 
-	if (!userId) {
-		res.json({ auth: false });
-	}
-
 	const token = jwtUtils.hasuraJwtToken(userId);
 
 	const user = req.session.user;

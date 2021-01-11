@@ -19,7 +19,7 @@ const verifyToken = (token, secret) => {
 const hasuraJwtToken = (id) => {
 	const payload = {
 		'https://hasura.io/jwt/claims': {
-			'x-hasura-allowed-roles': ['editor', 'user', 'moderator'],
+			'x-hasura-allowed-roles': ['editor', 'user', 'moderator', 'guest'],
 			'x-hasura-default-role': 'user',
 			'x-hasura-user-id': id,
 		},
@@ -38,4 +38,23 @@ const generateRefreshToken = (userId) => {
 	return refreshToken;
 };
 
-module.exports = { hasuraJwtToken, verifyToken, generateRefreshToken };
+const generateGuestToken = () => {
+	const payload = {
+		'https://hasura.io/jwt/claims': {
+			'x-hasura-allowed-roles': ['editor', 'user', 'moderator', 'guest'],
+			'x-hasura-default-role': 'guest',
+		},
+	};
+	const token = jwt.sign(payload, process.env.JWT_SECRET, {
+		algorithm: 'HS256',
+		expiresIn: '12h',
+	});
+	return token;
+};
+
+module.exports = {
+	hasuraJwtToken,
+	verifyToken,
+	generateRefreshToken,
+	generateGuestToken,
+};
