@@ -9,8 +9,13 @@ import content from '../static'
 import { useHistory } from 'react-router-dom'
 
 const schema = yup.object().shape({
-	username: yup.string().required().trim(),
-	fullname: yup.string().required().trim(),
+	username: yup
+		.string()
+		.required()
+		.trim()
+		.max(25)
+		.matches(/^\w+$/g, 'Allow only characters and numbers'),
+	fullname: yup.string().required().trim().max(25),
 	email: yup.string().email().required(),
 	password: yup.string().required().min(2),
 })
@@ -33,6 +38,7 @@ export default function Register() {
 				},
 			})
 			.catch((er) => console.log(er))
+		console.log(res)
 		if (res.data?.verify) {
 			history.push({ pathname: '/auth/verify', state: { data } })
 		}

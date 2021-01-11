@@ -14,6 +14,7 @@ const reducer = (state, { type, payload }) => {
 				user: payload.user,
 			}
 		case 'USER_LOGOUT':
+			console.log('running')
 			return {
 				initialState,
 			}

@@ -8,8 +8,12 @@ import * as yup from 'yup'
 import content from '../static'
 
 const schema = yup.object().shape({
-	username: yup.string().required().trim(),
-	fullname: yup.string().required().trim(),
+	username: yup
+		.string()
+		.required()
+		.max(25)
+		.matches(/^\w+$/g, 'Allow only characters and numbers'),
+	fullname: yup.string().required().trim().max(25),
 })
 
 export default function FormSignUpUsernameAndFullName() {
@@ -20,7 +24,9 @@ export default function FormSignUpUsernameAndFullName() {
 	})
 
 	const onSubmit = async (data) => {
-		console.log(data)
+		if (data.username.includes(' ')) {
+			return setMessage('Username is not allow to have space')
+		}
 		const res = await axios.post('http://localhost:8000/auth/username', data, {
 			withCredentials: true,
 			headers: {

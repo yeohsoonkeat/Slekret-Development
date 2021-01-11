@@ -1,14 +1,15 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid')
+const jwtUtils = require('../../utils/jwt')
 const createUser = require('../../db/createUser')
-const getUserByEmail = require('../../db/getUserByEmail')
+const sendEmail = require('../../utils/setEmailVerify')
 const hashPassword = require('../../utils/hashPassword')
+const getUserByEmail = require('../../db/getUserByEmail')
 const isUserEmailExist = require('../../utils/isUserEmailExist')
 const isUserUsernameExist = require('../../utils/isUserUsernameExist')
-const jwtUtils = require('../../utils/jwt')
-const sendEmail = require('../../utils/setEmailVerify')
 const setUserSocialSession = require('../../utils/setSessionForSocialUser')
+const setSessionForEmailRegister = require('../../utils/setSessionForEmailRegister')
 
 module.exports = {
 	// POST register user
@@ -71,10 +72,17 @@ module.exports = {
 		const user = jwtUtils.verifyToken(token, process.env.TOKEN_LINK_VERIFY)
 
 		if (user) {
-			const userId = uuidv4()
+			let userId = uuidv4()
 			const { email, password, fullname, username } = user
-			const hashpassword = await hashPassword(password)
+			const { data } = await getUserByEmail({ email })
+			const userExist = data.slekret_users.length !== 0
+			if (userExist) {
+				userId = data.slekret_users[0].id
+				setSessionForEmailRegister(userId, req)
 
+				res.redirect(process.env.CLIENT_URL)
+			}
+			const hashpassword = await hashPassword(password)
 			const { errors } = await createUser({
 				id: userId,
 				email,
@@ -85,13 +93,11 @@ module.exports = {
 			if (errors) {
 				res.status(400).json(errors[0])
 			}
-
-			const refreshToken = jwtUtils.generateRefreshToken(userId)
-
-			req.session.refreshToken = refreshToken
-			req.session.user = { id: userId }
+			setSessionForEmailRegister(userId, req)
 			res.redirect(process.env.CLIENT_URL + '/auth/verify')
 		} else {
+			req.session.destroy()
+			req.logout()
 			res.redirect(process.env.CLIENT_URL + '/auth/expired')
 		}
 	},
@@ -129,6 +135,7 @@ module.exports = {
 	//POST user logout
 
 	userLogout: async (req, res) => {
+		req.logout()
 		req.session.destroy()
 		res.json({
 			auth: false,
@@ -141,7 +148,6 @@ module.exports = {
 		const { email, profileImg } = req.user
 		const { data } = await getUserByEmail({ email })
 		const userIsNull = data.slekret_users.length === 0
-
 		if (!userIsNull) {
 			const userId = data.slekret_users[0].id
 			setUserSocialSession(userId, profileImg, req)
@@ -155,16 +161,15 @@ module.exports = {
 
 	usernameCreation: async (req, res) => {
 		const socialUserSession = req.user
-
 		if (!socialUserSession) {
 			return res.json({
-				message: 'Sorry you do not have email.',
+				message: 'Invalid Request.',
 				fail: true,
 			})
 		}
 		const { email, profileImg } = socialUserSession
+		console.log(email, profileImg)
 		const { data } = await getUserByEmail({ email })
-
 		const userIsNull = data.slekret_users.length === 0
 
 		if (userIsNull) {
@@ -178,13 +183,17 @@ module.exports = {
 
 			const userId = uuidv4()
 
-			const { data } = await createUser({
+			const { data, errors } = await createUser({
 				email,
 				username,
 				fullname,
 				id: userId,
 				password: null,
 			})
+			if (errors) {
+				return res.json({ message: 'Internal Sever Error' })
+			}
+
 			const userIsCreated = data.insert_slekret_users.affected_rows === 1
 
 			if (userIsCreated) {
