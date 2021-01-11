@@ -1,11 +1,11 @@
 const isUserAuthenticated = (req, res, next) => {
 	if (req.session.refreshToken) {
-		next()
+		next();
 	} else {
 		res.json({
 			auth: false,
-		})
+		});
 	}
-}
+};
 
-module.exports = isUserAuthenticated
+module.exports = isUserAuthenticated;

@@ -1,12 +1,12 @@
-const getUserByUsername = require('../db/getUserByUsername')
+const getUserByUsername = require('../db/getUserByUsername');
 
 const isUserUsernameExist = async (username) => {
-	const { data } = await getUserByUsername({ username })
+	const { data } = await getUserByUsername({ username });
 	if (data.slekret_users.length === 0) {
-		return false
+		return false;
 	} else {
-		return true
+		return true;
 	}
-}
+};
 
-module.exports = isUserUsernameExist
+module.exports = isUserUsernameExist;

@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 const HASURA_OPERATION = `
 query MyQuery($email: String) {
@@ -8,7 +8,7 @@ query MyQuery($email: String) {
 	password
   }
 }
-`
+`;
 
 // execute the parent operation in Hasura
 const getUserByEmail = async (variables) => {
@@ -21,9 +21,9 @@ const getUserByEmail = async (variables) => {
 		headers: {
 			'x-hasura-admin-secret': process.env.AMDIN_SECRET,
 		},
-	})
-	const data = await fetchResponse.json()
-	return data
-}
+	});
+	const data = await fetchResponse.json();
+	return data;
+};
 
-module.exports = getUserByEmail
+module.exports = getUserByEmail;

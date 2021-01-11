@@ -17,8 +17,8 @@ const content = {
 		},
 		{
 			type: 'text',
-			name: 'fullname',
-			placeholder: 'full name',
+			name: 'displayname',
+			placeholder: 'Display Name',
 		},
 	],
 	loginForm: [
@@ -41,10 +41,10 @@ const content = {
 		},
 		{
 			type: 'text',
-			name: 'fullname',
-			placeholder: 'full name',
+			name: 'displayname',
+			placeholder: 'Display Name',
 		},
 	],
-}
+};
 
-export default content
+export default content;
