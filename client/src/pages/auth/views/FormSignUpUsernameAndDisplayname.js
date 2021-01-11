@@ -1,11 +1,11 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { Link, useHistory } from 'react-router-dom'
-
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import content from '../static'
+import axios from 'axios';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useHistory } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import content from '../static';
+import config from '../../../config';
 
 const schema = yup.object().shape({
 	username: yup
@@ -13,36 +13,36 @@ const schema = yup.object().shape({
 		.required()
 		.max(25)
 		.matches(/^\w+$/g, 'Allow only characters and numbers'),
-	fullname: yup.string().required().trim().max(25),
-})
+	displayname: yup.string().required().trim().max(25),
+});
 
-export default function FormSignUpUsernameAndFullName() {
-	const [message, setMessage] = useState('')
-	const history = useHistory()
+export default function FormSignUpUsernameAndDisplayname() {
+	const [message, setMessage] = useState('');
+	const history = useHistory();
 	const { register, handleSubmit, errors } = useForm({
 		resolver: yupResolver(schema),
-	})
+	});
 
 	const onSubmit = async (data) => {
 		if (data.username.includes(' ')) {
-			return setMessage('Username is not allow to have space')
+			return setMessage('Username is not allow to have space');
 		}
-		const res = await axios.post('http://localhost:8000/auth/username', data, {
+		const res = await axios.post(config.backendUrl + '/auth/username', data, {
 			withCredentials: true,
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Credentials': true,
 			},
-		})
-		setMessage(res.data?.message)
+		});
+		setMessage(res.data?.message);
 		if (res.data?.fail) {
-			history.push('/auth/register')
+			history.push('/auth/register');
 		}
 		if (res.data?.auth) {
-			window.open('/', '_self')
+			window.open('/', '_self');
 		}
-	}
+	};
 	return (
 		<div className="container mx-auto px-4 h-full">
 			<div className="flex content-center items-center justify-center h-full">
@@ -73,7 +73,7 @@ export default function FormSignUpUsernameAndFullName() {
 													{errors[input.name]?.message}
 												</p>
 											</div>
-										)
+										);
 									})}
 									<div className="text-center mt-6">
 										<input
@@ -99,5 +99,5 @@ export default function FormSignUpUsernameAndFullName() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

@@ -1,12 +1,13 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import AlreadyHaveAccount from '../components/AlreadyHaveAccount'
-import SocailAuth from '../components/SocailAuth'
-import content from '../static'
-import { useHistory } from 'react-router-dom'
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import AlreadyHaveAccount from '../components/AlreadyHaveAccount';
+import SocailAuth from '../components/SocailAuth';
+import content from '../static';
+import { useHistory } from 'react-router-dom';
+import config from '../../../config';
 
 const schema = yup.object().shape({
 	username: yup
@@ -15,21 +16,21 @@ const schema = yup.object().shape({
 		.trim()
 		.max(25)
 		.matches(/^\w+$/g, 'Allow only characters and numbers'),
-	fullname: yup.string().required().trim().max(25),
+	displayname: yup.string().required().trim().max(25),
 	email: yup.string().email().required(),
 	password: yup.string().required().min(2),
-})
+});
 
 export default function Register() {
-	const [message, setMessage] = useState('')
-	const history = useHistory()
+	const [message, setMessage] = useState('');
+	const history = useHistory();
 
 	const { register, errors, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
-	})
+	});
 	const onSubmit = async (data) => {
 		const res = await axios
-			.post('http://localhost:8000/auth/register', data, {
+			.post(config.backendUrl + '/auth/register', data, {
 				withCredentials: true,
 				headers: {
 					Accept: 'application/json',
@@ -37,18 +38,18 @@ export default function Register() {
 					'Access-Control-Allow-Credentials': true,
 				},
 			})
-			.catch((er) => console.log(er))
-		console.log(res)
+			.catch((er) => console.log(er));
+		console.log(res);
 		if (res.data?.verify) {
-			history.push({ pathname: '/auth/verify', state: { data } })
+			history.push({ pathname: '/auth/verify', state: { data } });
 		}
 		if (res.data.message) {
-			setMessage(res.data.message)
+			setMessage(res.data.message);
 		}
-	}
+	};
 	const githubAuth = () => {
-		window.open('http://localhost:8000/auth/github', '_self')
-	}
+		window.open(config.backendUrl + '/auth/github', '_self');
+	};
 	return (
 		<div className="container mx-auto px-4 h-full">
 			<div className="flex content-center items-center justify-center h-full">
@@ -88,7 +89,7 @@ export default function Register() {
 													{errors[input.name]?.message}
 												</p>
 											</div>
-										)
+										);
 									})}
 									<div className="text-center mt-6">
 										<input
@@ -106,5 +107,5 @@ export default function Register() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

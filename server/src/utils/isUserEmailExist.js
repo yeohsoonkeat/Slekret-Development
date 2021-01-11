@@ -1,12 +1,12 @@
-const getUserByEmail = require('../db/getUserByEmail')
+const getUserByEmail = require('../db/getUserByEmail');
 
 const isUserEmailExist = async (email) => {
-	const { data } = await getUserByEmail({ email })
+	const { data } = await getUserByEmail({ email });
 	if (data.slekret_users.length === 0) {
-		return false
+		return false;
 	} else {
-		return true
+		return true;
 	}
-}
+};
 
-module.exports = isUserEmailExist
+module.exports = isUserEmailExist;

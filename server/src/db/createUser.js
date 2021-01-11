@@ -1,8 +1,8 @@
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 const HASURA_OPERATION = `
-mutation MyMutation($id: uuid, $password: String, $email: String, $username: String, $fullname: String) {
-	insert_slekret_users(objects: {id: $id, password: $password, email: $email, username: $username, fullname: $fullname}, on_conflict: {constraint: slekret_users_pkey, update_columns: []}) {
+mutation MyMutation($id: uuid, $password: String, $email: String, $username: String, $displayname: String) {
+	insert_slekret_users(objects: {id: $id, password: $password, email: $email, username: $username, displayname: $displayname}, on_conflict: {constraint: slekret_users_pkey, update_columns: []}) {
 	  affected_rows
 	  returning {
 		id
@@ -11,7 +11,7 @@ mutation MyMutation($id: uuid, $password: String, $email: String, $username: Str
   }
   
   
-`
+`;
 
 // execute the parent operation in Hasura
 const createUser = async (variables) => {
@@ -24,9 +24,9 @@ const createUser = async (variables) => {
 		headers: {
 			'x-hasura-admin-secret': process.env.AMDIN_SECRET,
 		},
-	})
-	const data = await fetchResponse.json()
-	return data
-}
+	});
+	const data = await fetchResponse.json();
+	return data;
+};
 
-module.exports = createUser
+module.exports = createUser;

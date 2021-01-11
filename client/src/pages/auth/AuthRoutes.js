@@ -1,11 +1,11 @@
-import React from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
-import Layout from './Layout'
-import Expired from './views/Expired'
-import Login from './views/Login'
-import Register from './views/Register'
-import Verify from './views/Verify'
-import FormSignUpUsernameAndFullName from './views/FormSignUpUsernameAndFullName'
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Layout from './Layout';
+import Expired from './views/Expired';
+import FormSignUpUsernameAndDisplayname from './views/FormSignUpUsernameAndDisplayname';
+import Login from './views/Login';
+import Register from './views/Register';
+import Verify from './views/Verify';
 export default function Auth() {
 	return (
 		<Layout>
@@ -16,12 +16,12 @@ export default function Auth() {
 				<Route path="/auth/expired" exact component={Expired} />
 				<Route
 					exact
-					path="/auth/usernameandfullname"
-					component={FormSignUpUsernameAndFullName}
+					path="/auth/usernameanddisplayname"
+					component={FormSignUpUsernameAndDisplayname}
 				/>
 
 				<Redirect from="/auth*" to="/auth/login" />
 			</Switch>
 		</Layout>
-	)
+	);
 }
