@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import routes from '../constant/routes';
+
+const navbar_categories = [
+  { text: 'Home', path: routes.home },
+  { text: 'Forum', path: routes.forum },
+  { text: 'Blog', path: routes.blog },
+];
 
 const NavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +24,7 @@ const NavigationBar = () => {
             >
               <span className="sr-only">Open main menu</span>
               <svg
-                className={`${isOpen ? "hidden" : "block"} h-6 w-6`}
+                className={`${isOpen ? 'hidden' : 'block'} h-6 w-6`}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -32,7 +39,7 @@ const NavigationBar = () => {
                 />
               </svg>
               <svg
-                className={`${isOpen ? "block" : "hidden"} h-6 w-6`}
+                className={`${isOpen ? 'block' : 'hidden'} h-6 w-6`}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -63,24 +70,15 @@ const NavigationBar = () => {
             </div>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
-                <Link
-                  to="/"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/forum"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Forum
-                </Link>
-                <Link
-                  to="/blog"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Blogs
-                </Link>
+                {navbar_categories.map((category, index) => (
+                  <Link
+                    key={index}
+                    to={category.path}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    {category.text}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
@@ -122,7 +120,7 @@ const NavigationBar = () => {
               </div>
               <div
                 className={`${
-                  profilePanel ? "block" : "hidden"
+                  profilePanel ? 'block' : 'hidden'
                 } z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu`}
                 aria-orientation="vertical"
                 aria-labelledby="user-menu"
@@ -154,27 +152,18 @@ const NavigationBar = () => {
         </div>
       </div>
 
-      {/* Navbar Categories */}
-      <div className={`${isOpen ? "block" : "hidden"} sm:hidden`}>
+      {/* Mobile Navbar Categories */}
+      <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link
-            to="#"
-            className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Home
-          </Link>
-          <Link
-            to="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Forum
-          </Link>
-          <Link
-            to="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Blogs
-          </Link>
+          {navbar_categories.map((category, index) => (
+            <Link
+              key={index}
+              to={category.path}
+              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            >
+              {category.text}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>
