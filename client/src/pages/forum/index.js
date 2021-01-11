@@ -1,10 +1,16 @@
+import { Route, Switch } from "react-router-dom";
+import routes from "../../constant/routes";
 import DefaultLayout from "../../layout/default";
-import ForumRoutes from "./routes";
+import ForumHome from "./view/ForumHome";
 
-export default function ForumPage() {
+const Forum = () => {
   return (
     <DefaultLayout>
-      <ForumRoutes />
+      <Switch>
+        <Route path={routes.forum} component={ForumHome} />
+      </Switch>
     </DefaultLayout>
   );
-}
+};
+
+export default Forum;

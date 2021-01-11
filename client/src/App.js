@@ -10,7 +10,6 @@ import Home from "./pages/home";
 import Forum from "./pages/forum";
 import useAuthProvider from "./hook/useAuthProvider";
 import routes from "./constant/routes";
-import Blog from "./pages/blog";
 
 export default function App() {
   const [authState, authDispatch] = useAuthProvider();
@@ -48,7 +47,6 @@ export default function App() {
         <PublicRoutes path={routes.auth} auth={auth} component={Auth} />
         <Route path={routes.profile} component={Profile} />
         <Route path={routes.forum} component={Forum} />
-        <Route path={routes.blog} component={Blog} />
       </Switch>
     </BrowserRouter>
   );
