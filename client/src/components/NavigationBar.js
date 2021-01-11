@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +7,7 @@ const NavigationBar = () => {
 
   return (
     <nav className="bg-gray-800 w-full">
-      <div className="px-2 mx-auto sm:px-6 ">
+      <div className="px-2 mx-auto sm:px-6 max-w-8xl">
         <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
@@ -17,7 +17,7 @@ const NavigationBar = () => {
             >
               <span className="sr-only">Open main menu</span>
               <svg
-                className={`${isOpen ? 'hidden' : 'block'} h-6 w-6`}
+                className={`${isOpen ? "hidden" : "block"} h-6 w-6`}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -32,7 +32,7 @@ const NavigationBar = () => {
                 />
               </svg>
               <svg
-                className={`${isOpen ? 'block' : 'hidden'} h-6 w-6`}
+                className={`${isOpen ? "block" : "hidden"} h-6 w-6`}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -122,7 +122,7 @@ const NavigationBar = () => {
               </div>
               <div
                 className={`${
-                  profilePanel ? 'block' : 'hidden'
+                  profilePanel ? "block" : "hidden"
                 } z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu`}
                 aria-orientation="vertical"
                 aria-labelledby="user-menu"
@@ -155,7 +155,7 @@ const NavigationBar = () => {
       </div>
 
       {/* Navbar Categories */}
-      <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
+      <div className={`${isOpen ? "block" : "hidden"} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           <Link
             to="#"
@@ -182,6 +182,3 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
-
-
-
