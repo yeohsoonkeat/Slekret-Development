@@ -3,18 +3,20 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 
-import Admin from './pages/admin';
-import Auth from './pages/auth';
+import config from './config';
+import routes from './constant/routes';
 import ProtectedRoute from './routes/ProtectedRoutes';
 import PublicRoutes from './routes/PublicRoutes';
+import useAuthProvider from './hook/useAuthProvider';
+import useApolloClientWithToken from './hook/useApolloClientWithToken';
+
+import Admin from './pages/admin';
+import Auth from './pages/auth';
 import Profile from './pages/profile';
 import Home from './pages/home';
 import Forum from './pages/forum';
-import useAuthProvider from './hook/useAuthProvider';
-// import Blog from './pages/blog';
-import routes from './constant/routes';
-import config from './config';
-import useApolloClientWithToken from './hook/ useApolloClientWithToken';
+import Blog from './pages/blog';
+
 export default function App() {
   const [token, setToken] = useState();
   const [authState, authDispatch] = useAuthProvider();
@@ -53,7 +55,7 @@ export default function App() {
           <PublicRoutes path={routes.auth} auth={auth} component={Auth} />
           <Route path={routes.profile} component={Profile} />
           <Route path={routes.forum} component={Forum} />
-          {/* <Route path={routes.blog} component={Blog} /> */}
+          <Route path={routes.blog} component={Blog} />
         </Switch>
       </BrowserRouter>
     </ApolloProvider>
