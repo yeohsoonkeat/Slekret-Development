@@ -38,24 +38,23 @@ export default function App() {
 				window.localStorage.setItem('auth', 'false')
 			})
 	}, [authDispatch])
-
-	return (
-		<BrowserRouter>
-			<Switch>
-				<ProtectedRoute auth={auth} path="/logout" exact component={Logout} />
-				<Route path={routes.home} exact component={Home} />
-				<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
-				<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
-				<Route path={routes.profile} component={Profile} />
-				<Route path={routes.forum} component={Forum} />
-			</Switch>
-		</BrowserRouter>
-	)
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path={routes.home} exact component={Home} />
+        <ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
+        <ProtectedRoute path="/logout" auth={auth} component={Logout} />
+        <PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+        <Route path={routes.profile} component={Profile} />
+        <Route path={routes.forum} component={Forum} />
+        <Route path={routes.blog} component={Blog} />
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 const Logout = () => {
-	const authDispatch = useAuthProvider()[1]
-
+  const authDispatch = useAuthProvider()[1]
 	const logout = () => {
 		authDispatch({
 			type: 'USER_LOGOUT',
@@ -74,10 +73,3 @@ const Logout = () => {
 			}
 		)
 	}
-
-	return (
-		<button className="bg-black text-white" onClick={logout}>
-			Logout
-		</button>
-	)
-}
