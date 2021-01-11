@@ -10,13 +10,14 @@ import Home from './pages/home'
 import Forum from './pages/forum'
 import useAuthProvider from './hook/useAuthProvider'
 import routes from './constant/routes'
-
+import config from './config'
 export default function App() {
 	const [authState, authDispatch] = useAuthProvider()
 	const { auth } = authState
 	useEffect(() => {
+		console.log(config.backendUrl)
 		axios
-			.get('http://localhost:8000/token', {
+			.get(config.backendUrl + '/token', {
 				withCredentials: true,
 				headers: {
 					Accept: 'application/json',
@@ -61,7 +62,7 @@ const Logout = () => {
 		})
 		window.localStorage.setItem('auth', 'false')
 		axios.post(
-			'http://localhost:8000/auth/logout',
+			config + '/auth/logout',
 			{},
 			{
 				withCredentials: true,

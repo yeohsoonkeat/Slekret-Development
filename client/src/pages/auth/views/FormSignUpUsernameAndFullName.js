@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import content from '../static'
+import config from '../../../config'
 
 const schema = yup.object().shape({
 	username: yup
@@ -27,7 +28,7 @@ export default function FormSignUpUsernameAndFullName() {
 		if (data.username.includes(' ')) {
 			return setMessage('Username is not allow to have space')
 		}
-		const res = await axios.post('http://localhost:8000/auth/username', data, {
+		const res = await axios.post(config.backendUrl + '/auth/username', data, {
 			withCredentials: true,
 			headers: {
 				Accept: 'application/json',

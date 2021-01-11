@@ -7,6 +7,7 @@ import AlreadyHaveAccount from '../components/AlreadyHaveAccount'
 import SocailAuth from '../components/SocailAuth'
 import content from '../static'
 import { useHistory } from 'react-router-dom'
+import config from '../../../config'
 
 const schema = yup.object().shape({
 	username: yup
@@ -29,7 +30,7 @@ export default function Register() {
 	})
 	const onSubmit = async (data) => {
 		const res = await axios
-			.post('http://localhost:8000/auth/register', data, {
+			.post(config.backendUrl + '/auth/register', data, {
 				withCredentials: true,
 				headers: {
 					Accept: 'application/json',
@@ -47,7 +48,7 @@ export default function Register() {
 		}
 	}
 	const githubAuth = () => {
-		window.open('http://localhost:8000/auth/github', '_self')
+		window.open(config.backendUrl + '/auth/github', '_self')
 	}
 	return (
 		<div className="container mx-auto px-4 h-full">

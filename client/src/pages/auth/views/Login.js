@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import content from '../static'
 import axios from 'axios'
 import useAuthProvider from '../../../hook/useAuthProvider'
+import config from '../../../config'
 
 const schema = yup.object().shape({
 	email: yup.string().email().required(),
@@ -19,7 +20,7 @@ const Login = () => {
 		resolver: yupResolver(schema),
 	})
 	const onSubmit = async (data) => {
-		const res = await axios.post('http://localhost:8000/auth/login', data, {
+		const res = await axios.post(config.backendUrl + '/auth/login', data, {
 			withCredentials: true,
 			headers: {
 				Accept: 'application/json',
@@ -38,7 +39,7 @@ const Login = () => {
 		}
 	}
 	const githubAuth = () => {
-		window.open('http://localhost:8000/auth/github', '_self')
+		window.open(config.backendUrl + '/auth/github', '_self')
 	}
 
 	return (
