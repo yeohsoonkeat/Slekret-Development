@@ -14,34 +14,9 @@ const updateUserPassword = require('../../db/updateUserPassword');
 
 module.exports = {
 	// POST register user
-	registerUser: async (req, res) => {
+	userRegister: async (req, res) => {
 		const { username, email } = req.body;
 
-		if (!req.session.verifyCount) {
-			req.session.verifyCount = 1;
-		}
-
-		// thrird attemp
-		if (parseInt(req.session.verifyCount) > 2) {
-			req.session.destroy();
-			return res.json({
-				verify: false,
-			});
-		}
-
-		// second attempt
-		if (parseInt(req.session.verifyCount) === 2) {
-			try {
-				await sendEmail(req.body, 'verifyUser');
-				return res.json({
-					message: 'Email have been to your inbox',
-				});
-			} catch (er) {
-				return res.json({
-					message: 'can not send Email',
-				});
-			}
-		}
 		// first attempt
 		if (!(await isUserEmailExist(email))) {
 			if (!(await isUserUsernameExist(username))) {
@@ -50,7 +25,6 @@ module.exports = {
 					res.json({
 						verify: true,
 					});
-					req.session.verifyCount = parseInt(req.session.verifyCount) + 1;
 				} catch (er) {
 					res.json({
 						message: 'can not send Email',
@@ -80,9 +54,9 @@ module.exports = {
 			const userExist = data.slekret_users.length !== 0;
 
 			if (userExist) {
-				let username = data.slekret_users[0].username;
+				let { id, username } = data.slekret_users[0];
 				const profileImg = data.slekret_users[0].avatar_src;
-				setUserSession(username, profileImg, req);
+				setUserSession({ id, username }, profileImg, req);
 				res.redirect(appConfig.clientURl);
 			}
 
@@ -100,7 +74,7 @@ module.exports = {
 				res.status(400).json(errors[0]);
 			}
 
-			setUserSession(username, appConfig.defaultAvatar, req);
+			setUserSession({ id: userId, username }, appConfig.defaultAvatar, req);
 			res.redirect(appConfig.clientURl + '/auth/verify');
 		} else {
 			req.session.destroy();
@@ -153,11 +127,12 @@ module.exports = {
 			const hashPassword = data.slekret_users[0].password;
 			const username = data.slekret_users[0].username;
 			const profileImg = data.slekret_users[0].avatar_src;
+			const id = data.slekret_users[0].id;
 
 			const isPasswordCorrect = await bcrypt.compare(password, hashPassword);
 
 			if (isPasswordCorrect) {
-				setUserSession(username, profileImg, req);
+				setUserSession({ id, username }, profileImg, req);
 				res.json({
 					auth: true,
 				});
@@ -188,8 +163,8 @@ module.exports = {
 		const userIsNull = data.slekret_users.length === 0;
 
 		if (!userIsNull) {
-			const username = data.slekret_users[0].username;
-			setUserSession(username, profileImg, req);
+			const { id, username } = data.slekret_users[0];
+			setUserSession({ id, username }, profileImg, req);
 			return res.redirect(appConfig.clientURl);
 		}
 
@@ -237,14 +212,14 @@ module.exports = {
 			const userIsCreated = data.insert_slekret_users.affected_rows === 1;
 
 			if (userIsCreated) {
-				setUserSession(username, profileImg, req);
+				setUserSession({ id: userId, username }, profileImg, req);
 				return res.json({
 					auth: true,
 				});
 			}
 		} else {
-			const username = data.slekret_users[0].username;
-			setUserSession(username, profileImg, req);
+			const { username, id } = data.slekret_users[0].username;
+			setUserSession({ id, username }, profileImg, req);
 			return res.json({
 				auth: true,
 			});

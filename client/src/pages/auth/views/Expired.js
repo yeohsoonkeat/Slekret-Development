@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export default function Expired() {
 	return (
@@ -18,9 +18,9 @@ export default function Expired() {
 				></path>
 			</svg>
 			<h1 className="text-2xl">Verify token is expired</h1>
-			<Link className="underline mt-5" to="/auth/register">
-				Go back to register
+			<Link className="underline mt-5" to="/auth/">
+				Go back
 			</Link>
 		</div>
-	)
+	);
 }

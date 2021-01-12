@@ -31,8 +31,8 @@ const hasuraJwtToken = (id) => {
 	return token;
 };
 
-const generateRefreshToken = (userId) => {
-	const refreshToken = jwt.sign(userId, process.env.JWT_REFRESH_SECRET, {
+const generateRefreshToken = (payload) => {
+	const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
 		algorithm: 'HS256',
 	});
 	return refreshToken;

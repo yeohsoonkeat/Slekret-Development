@@ -7,10 +7,14 @@ const Verify = () => {
 	const location = useLocation();
 	const history = useHistory();
 	const [isResent, setIsResent] = useState(false);
+
 	if (!location.state) {
 		history.push('/auth/register');
 	}
 	const resentVerifyEmail = async () => {
+		if (window.localStorage.getItem('auth') === 'true') {
+			return history.push('/');
+		}
 		setIsResent(true);
 		await axios
 			.post(config.backendUrl + '/auth/register', location.state?.data, {
