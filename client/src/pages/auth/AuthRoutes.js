@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Layout from './Layout';
 import Expired from './views/Expired';
+import ForgetPassword from './views/ForgetPassword';
 import FormSignUpUsernameAndDisplayname from './views/FormSignUpUsernameAndDisplayname';
 import Login from './views/Login';
 import Register from './views/Register';
@@ -19,6 +20,7 @@ export default function Auth() {
 					path="/auth/usernameanddisplayname"
 					component={FormSignUpUsernameAndDisplayname}
 				/>
+				<Route exact path="/auth/forgetpassword" component={ForgetPassword} />
 
 				<Redirect from="/auth*" to="/auth/login" />
 			</Switch>

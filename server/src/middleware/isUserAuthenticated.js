@@ -1,3 +1,4 @@
+const appConfig = require('../config/app.config');
 const jwtUtils = require('../utils/jwt');
 const isUserAuthenticated = (req, res, next) => {
 	if (req.session.refreshToken) {
@@ -6,6 +7,9 @@ const isUserAuthenticated = (req, res, next) => {
 		res.json({
 			auth: false,
 			token: jwtUtils.generateGuestToken(),
+			user: {
+				profileImg: appConfig.backendUrl + '/static/default_profile.svg',
+			},
 		});
 	}
 };
