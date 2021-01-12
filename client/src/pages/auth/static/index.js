@@ -45,6 +45,23 @@ const content = {
 			placeholder: 'Display Name',
 		},
 	],
+	forgetPasswordForm: [
+		{
+			type: 'email',
+			name: 'email',
+			placeholder: 'Email Address',
+		},
+		{
+			type: 'password',
+			name: 'password',
+			placeholder: 'password',
+		},
+		{
+			type: 'password',
+			name: 'confirmPassword',
+			placeholder: 'Confirm Password',
+		},
+	],
 };
 
 export default content;
