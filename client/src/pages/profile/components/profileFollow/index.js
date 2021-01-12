@@ -12,7 +12,7 @@ export default function ProfileFollow(props) {
         </div>
         <div className="followers">
           <p className="text-lg font-semibold text-blue-300">
-            {props.user.follower}
+            {props.user.followers}
           </p>
           <p className="text-gray-500 text-md">Followers</p>
         </div>

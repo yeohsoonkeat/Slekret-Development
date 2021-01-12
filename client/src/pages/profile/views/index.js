@@ -1,4 +1,3 @@
-import ProfilePage from './profile'
-import ProfileSettingPage from './profileSetting'
+import ProfilePage from './Profile';
 
-export {ProfilePage, ProfileSettingPage}
+export { ProfilePage };
