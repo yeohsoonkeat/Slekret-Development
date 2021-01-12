@@ -886,7 +886,7 @@ CREATE TABLE public.slekret_users (
     last_login date,
     username character varying NOT NULL,
     email character varying NOT NULL,
-    avatar_src character varying,
+    avatar_src character varying DEFAULT 'http://localhost:8000/static/default_profile.svg'::character varying,
     created_at timestamp with time zone,
     following integer DEFAULT 0 NOT NULL,
     followers integer DEFAULT 0 NOT NULL,
@@ -1024,8 +1024,9 @@ COPY hdb_catalog.hdb_function (function_schema, function_name, configuration, is
 --
 
 COPY hdb_catalog.hdb_permission (table_schema, table_name, role_name, perm_type, perm_def, comment, is_system_defined) FROM stdin;
-public	slekret_users	user	update	{"set": {}, "check": {"id": {"_eq": "X-Hasura-User-Id"}}, "filter": {"id": {"_eq": "X-Hasura-User-Id"}}, "columns": ["displayname", "password", "username"]}	\N	f
 public	slekret_users	guest	select	{"filter": {}, "columns": ["avatar_src", "description", "displayname", "followers", "following", "username"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_users	user	update	{"set": {}, "check": {"id": {"_eq": "X-Hasura-User-Id"}}, "filter": {"id": {"_eq": "X-Hasura-User-Id"}}, "columns": ["description", "displayname", "password", "username"]}	\N	f
+public	slekret_users	user	select	{"filter": {"id": {"_eq": "X-Hasura-User-Id"}}, "columns": ["avatar_src", "description", "displayname", "followers", "following", "username"], "computed_fields": [], "allow_aggregations": false}	\N	f
 \.
 
 
@@ -1097,7 +1098,7 @@ COPY hdb_catalog.hdb_scheduled_events (id, webhook_conf, scheduled_time, retry_c
 --
 
 COPY hdb_catalog.hdb_schema_update_event (instance_id, occurred_at, invalidations) FROM stdin;
-2b86e5ed-5e83-46b5-8b86-0592174b06db	2021-01-11 08:56:30.17489+00	{"metadata":false,"remote_schemas":[]}
+8014a682-982c-4a15-940c-292e248fc175	2021-01-12 02:58:33.740732+00	{"metadata":false,"remote_schemas":[]}
 \.
 
 
@@ -1147,7 +1148,7 @@ public	slekret_users	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 --
 
 COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, console_state) FROM stdin;
-87449576-32f0-4570-83b1-8f3137ecabb5	40	2021-01-10 03:41:43.248826+00	{}	{"console_notifications": {"admin": {"date": "2021-01-11T08:55:14.060Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
+87449576-32f0-4570-83b1-8f3137ecabb5	40	2021-01-10 03:41:43.248826+00	{}	{"console_notifications": {"admin": {"date": "2021-01-12T02:46:42.113Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
 \.
 
 
@@ -1164,10 +1165,7 @@ COPY hdb_catalog.remote_schemas (id, name, definition, comment) FROM stdin;
 --
 
 COPY public.slekret_users (password, last_login, username, email, avatar_src, created_at, following, followers, last_posted_on, is_hiding_present, is_superuser, id, displayname, description) FROM stdin;
-$2b$10$2Gwjgg8RU7sXqJ8sgwKUKuKNhm6cWSm4FmTf64ZpWFIhNptAUqiF6	\N	121	widiy52793@sofiarae.com	\N	\N	0	0	\N	f	f	7624016e-8975-491e-ac79-99db4a6811f0	1212	\N
-$2b$10$QK.pmN7dddTRygM/Rjyio.p7x9JlkRXPra5wpcU/3vKLIv80FbwKe	\N	12	pobab14501@izzum.com	\N	\N	0	0	\N	f	f	44358c1d-16ff-4e64-9026-719f87bc7623	12	\N
-\N	\N	sokheng	chensokheng6@gmail.com	\N	\N	0	0	\N	f	f	8ffeccb4-bcc3-4098-94a9-7aec72acee65	chen sokheng	\N
-\N	\N	yeohsoonkeat	yeohsoonkeat18@kit.edu.kh	\N	\N	0	0	\N	f	f	f4d6e2ee-91d9-48ee-8119-437130b8005d	Yeoh Soon Keat	\N
+$2b$10$zRfXPqoiITUYxN.6SnCOtu8hLyl.q4yLhPFHmsxP05rabwoTuIRdO	\N	testing	sibago1621@izzum.com	http://localhost:8000/static/default_profile.svg	\N	0	0	\N	f	f	0933cf03-26ca-4c60-92a8-e07eeaa5f97f	sokheng uchiha	\N
 \.
 
 

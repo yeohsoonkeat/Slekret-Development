@@ -1,5 +1,6 @@
 //app.js
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const sessions = require('express-session');
@@ -39,6 +40,9 @@ app.use(
 		credentials: true,
 	})
 );
+
+// public folder
+app.use('/static', express.static(path.join(__dirname, 'assets')));
 
 // router
 app.use('/auth', authRoutes);
