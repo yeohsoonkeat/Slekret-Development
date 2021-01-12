@@ -24,9 +24,6 @@ export default function FormSignUpUsernameAndDisplayname() {
 	});
 
 	const onSubmit = async (data) => {
-		if (data.username.includes(' ')) {
-			return setMessage('Username is not allow to have space');
-		}
 		const res = await axios.post(config.backendUrl + '/auth/username', data, {
 			withCredentials: true,
 			headers: {

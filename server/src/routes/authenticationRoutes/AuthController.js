@@ -78,9 +78,9 @@ module.exports = {
 			const userExist = data.slekret_users.length !== 0;
 
 			if (userExist) {
-				userId = data.slekret_users[0].id;
+				let username = data.slekret_users[0].username;
 				const profileImg = data.slekret_users[0].avatar_src;
-				setUserSession(userId, profileImg, req);
+				setUserSession(username, profileImg, req);
 				res.redirect(appConfig.clientURl);
 			}
 
@@ -98,7 +98,7 @@ module.exports = {
 				res.status(400).json(errors[0]);
 			}
 
-			setUserSession(userId, appConfig.defaultAvatar, req);
+			setUserSession(username, appConfig.defaultAvatar, req);
 			res.redirect(appConfig.clientURl + '/auth/verify');
 		} else {
 			req.session.destroy();
@@ -118,13 +118,13 @@ module.exports = {
 
 		if (data.slekret_users.length !== 0) {
 			const hashPassword = data.slekret_users[0].password;
-			const userId = data.slekret_users[0].id;
+			const username = data.slekret_users[0].username;
 			const profileImg = data.slekret_users[0].avatar_src;
 
 			const isPasswordCorrect = await bcrypt.compare(password, hashPassword);
 
 			if (isPasswordCorrect) {
-				setUserSession(userId, profileImg, req);
+				setUserSession(username, profileImg, req);
 				res.json({
 					auth: true,
 				});
@@ -155,8 +155,8 @@ module.exports = {
 		const userIsNull = data.slekret_users.length === 0;
 
 		if (!userIsNull) {
-			const userId = data.slekret_users[0].id;
-			setUserSession(userId, profileImg, req);
+			const username = data.slekret_users[0].username;
+			setUserSession(username, profileImg, req);
 			return res.redirect(appConfig.clientURl);
 		}
 
@@ -204,14 +204,14 @@ module.exports = {
 			const userIsCreated = data.insert_slekret_users.affected_rows === 1;
 
 			if (userIsCreated) {
-				setUserSession(userId, profileImg, req);
+				setUserSession(username, profileImg, req);
 				return res.json({
 					auth: true,
 				});
 			}
 		} else {
-			const userId = data.slekret_users[0].id;
-			setUserSession(userId, profileImg, req);
+			const username = data.slekret_users[0].username;
+			setUserSession(username, profileImg, req);
 			return res.json({
 				auth: true,
 			});
