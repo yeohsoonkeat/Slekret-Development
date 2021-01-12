@@ -1,17 +1,17 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import config from '../../../config'
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import config from '../../../config';
 
 const Verify = () => {
-	const location = useLocation()
-	const history = useHistory()
-	const [isResent, setIsResent] = useState(false)
+	const location = useLocation();
+	const history = useHistory();
+	const [isResent, setIsResent] = useState(false);
 	if (!location.state) {
-		history.push('/auth/register')
+		history.push('/auth/register');
 	}
 	const resentVerifyEmail = async () => {
-		setIsResent(true)
+		setIsResent(true);
 		await axios
 			.post(config.backendUrl + '/auth/register', location.state?.data, {
 				withCredentials: true,
@@ -21,8 +21,8 @@ const Verify = () => {
 					'Access-Control-Allow-Credentials': true,
 				},
 			})
-			.catch((err) => console.log(err))
-	}
+			.catch((err) => console.log());
+	};
 	return (
 		<div className="text-white w-full text-center md:text-left bg-gray-900 p-5 md:w-4/12 font-inter">
 			<h1 className="font-bold text-4xl lg:text-5xl">
@@ -43,7 +43,7 @@ const Verify = () => {
 				</button>
 			)}
 		</div>
-	)
-}
+	);
+};
 
-export default Verify
+export default Verify;

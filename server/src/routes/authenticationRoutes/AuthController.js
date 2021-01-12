@@ -114,13 +114,12 @@ module.exports = {
 
 		if (data.slekret_users.length !== 0) {
 			const hashPassword = data.slekret_users[0].password;
-			const userid = data.slekret_users[0].id;
+			const userId = data.slekret_users[0].id;
 
 			const isPasswordCorrect = await bcrypt.compare(password, hashPassword);
-			if (isPasswordCorrect) {
-				const refreshToken = jwtUtils.generateRefreshToken(userid);
-				req.session.refreshToken = refreshToken;
 
+			if (isPasswordCorrect) {
+				setSessionForEmailRegister(userId, req);
 				res.json({
 					auth: true,
 				});
@@ -162,6 +161,7 @@ module.exports = {
 
 	usernameCreation: async (req, res) => {
 		const socialUserSession = req.user;
+
 		if (!socialUserSession) {
 			return res.json({
 				message: 'Invalid Request.',
@@ -169,7 +169,6 @@ module.exports = {
 			});
 		}
 		const { email, profileImg } = socialUserSession;
-		console.log(email, profileImg);
 		const { data } = await getUserByEmail({ email });
 		const userIsNull = data.slekret_users.length === 0;
 
