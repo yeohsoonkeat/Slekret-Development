@@ -1,8 +1,9 @@
 const jwtUtils = require('./jwt');
-const setUserSession = (username, profileImg, req) => {
-	const refreshToken = jwtUtils.generateRefreshToken(username);
+const setUserSession = (user, profileImg, req) => {
+	console.log(user);
+	const refreshToken = jwtUtils.generateRefreshToken(user.id);
 	req.session.refreshToken = refreshToken;
-	req.session.user = { username, profileImg };
+	req.session.user = { ...user, profileImg };
 };
 
 module.exports = setUserSession;
