@@ -66,7 +66,9 @@ module.exports = {
 			});
 		}
 	},
-	userForgetPassword: async (req, res) => {},
+	userForgetPassword: async (req, res) => {
+		return res.json({});
+	},
 
 	//GET verify user
 	verifyUser: async (req, res) => {
