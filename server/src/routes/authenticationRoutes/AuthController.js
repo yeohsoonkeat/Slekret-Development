@@ -66,6 +66,10 @@ module.exports = {
 			});
 		}
 	},
+	userForgetPassword: async (req, res) => {
+		return res.json({});
+	},
+
 	//GET verify user
 	verifyUser: async (req, res) => {
 		const token = req.query.token;

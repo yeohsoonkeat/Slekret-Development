@@ -13,6 +13,8 @@ authRouter.route('/login').post(AuthController.userLogin);
 
 authRouter.route('/logout').post(AuthController.userLogout);
 
+authRouter.route('/forgetPassword').post(AuthController.userForgetPassword);
+
 //socail register
 authRouter.route('/github').get(passport.authenticate('github'));
 
