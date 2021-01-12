@@ -3,9 +3,9 @@ const fetch = require('node-fetch');
 const HASURA_OPERATION = `
 query MyQuery($email: String) {
   slekret_users(where: {email: {_eq: $email}}) {
-	id
 	email
 	password
+	username
   }
 }
 `;
