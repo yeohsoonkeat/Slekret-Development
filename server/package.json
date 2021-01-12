@@ -9,8 +9,8 @@
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && yarn run migrate",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "pretest": "cross-env NODE_ENV=test yarn run migrate:reset",
-    "lint": "eslint src/**",
-    "format": "eslint src/** --fix",
+    "lint": "eslint src/** --no-error-on-unmatched-pattern",
+    "format": "eslint src/** --fix --no-error-on-unmatched-pattern",
     "commit": "git cz",
     "validate": "npm-run-all lint"
   },

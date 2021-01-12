@@ -9,8 +9,7 @@ const hashPassword = require('../../utils/hashPassword');
 const getUserByEmail = require('../../db/getUserByEmail');
 const isUserEmailExist = require('../../utils/isUserEmailExist');
 const isUserUsernameExist = require('../../utils/isUserUsernameExist');
-const setUserSocialSession = require('../../utils/setSessionForSocialUser');
-const setSessionForEmailRegister = require('../../utils/setSessionForEmailRegister');
+const setUserSession = require('../../utils/setUserSession');
 
 module.exports = {
 	// POST register user
@@ -77,12 +76,14 @@ module.exports = {
 			const { email, password, displayname, username } = user;
 			const { data } = await getUserByEmail({ email });
 			const userExist = data.slekret_users.length !== 0;
+
 			if (userExist) {
 				userId = data.slekret_users[0].id;
-				setSessionForEmailRegister(userId, req);
-
+				const profileImg = data.slekret_users[0].avatar_src;
+				setUserSession(userId, profileImg, req);
 				res.redirect(appConfig.clientURl);
 			}
+
 			const hashpassword = await hashPassword(password);
 			const { errors } = await createUser({
 				id: userId,
@@ -90,11 +91,14 @@ module.exports = {
 				password: hashpassword,
 				displayname,
 				username,
+				avatar_src: appConfig.defaultAvatar,
 			});
+
 			if (errors) {
 				res.status(400).json(errors[0]);
 			}
-			setSessionForEmailRegister(userId, req);
+
+			setUserSession(userId, appConfig.defaultAvatar, req);
 			res.redirect(appConfig.clientURl + '/auth/verify');
 		} else {
 			req.session.destroy();
@@ -115,11 +119,12 @@ module.exports = {
 		if (data.slekret_users.length !== 0) {
 			const hashPassword = data.slekret_users[0].password;
 			const userId = data.slekret_users[0].id;
+			const profileImg = data.slekret_users[0].avatar_src;
 
 			const isPasswordCorrect = await bcrypt.compare(password, hashPassword);
 
 			if (isPasswordCorrect) {
-				setSessionForEmailRegister(userId, req);
+				setUserSession(userId, profileImg, req);
 				res.json({
 					auth: true,
 				});
@@ -148,9 +153,10 @@ module.exports = {
 		const { email, profileImg } = req.user;
 		const { data } = await getUserByEmail({ email });
 		const userIsNull = data.slekret_users.length === 0;
+
 		if (!userIsNull) {
 			const userId = data.slekret_users[0].id;
-			setUserSocialSession(userId, profileImg, req);
+			setUserSession(userId, profileImg, req);
 			return res.redirect(appConfig.clientURl);
 		}
 
@@ -189,6 +195,7 @@ module.exports = {
 				displayname,
 				id: userId,
 				password: null,
+				avatar_src: profileImg,
 			});
 			if (errors) {
 				return res.json({ message: 'Internal Sever Error' });
@@ -197,14 +204,14 @@ module.exports = {
 			const userIsCreated = data.insert_slekret_users.affected_rows === 1;
 
 			if (userIsCreated) {
-				setUserSocialSession(userId, profileImg, req);
+				setUserSession(userId, profileImg, req);
 				return res.json({
 					auth: true,
 				});
 			}
 		} else {
 			const userId = data.slekret_users[0].id;
-			setUserSocialSession(userId, profileImg, req);
+			setUserSession(userId, profileImg, req);
 			return res.json({
 				auth: true,
 			});

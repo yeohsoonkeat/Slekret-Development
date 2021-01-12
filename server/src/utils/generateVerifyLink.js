@@ -6,7 +6,7 @@ const generateVerifyLink = (user) => {
 		algorithm: 'HS256',
 		expiresIn: '2m',
 	});
-	const link = appConfig.ServerUrl + `/auth/verify?token=${token}`;
+	const link = appConfig.backendUrl + `/auth/verify?token=${token}`;
 	return link;
 };
 

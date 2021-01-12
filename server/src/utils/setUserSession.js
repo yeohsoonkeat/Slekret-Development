@@ -1,9 +1,8 @@
 const jwtUtils = require('./jwt');
-
-const setSessionForEmailRegister = (userId, req) => {
+const setUserSession = (userId, profileImg, req) => {
 	const refreshToken = jwtUtils.generateRefreshToken(userId);
 	req.session.refreshToken = refreshToken;
-	req.session.user = { id: userId };
+	req.session.user = { userId, profileImg };
 };
 
-module.exports = setSessionForEmailRegister;
+module.exports = setUserSession;
