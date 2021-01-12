@@ -112,11 +112,7 @@ const Login = () => {
 						</div>
 						<div className="flex flex-wrap mt-6 relative text-xl">
 							<div className="w-1/2">
-								<Link
-									to="/auth/forgetpassword"
-									onClick={(e) => e.preventDefault()}
-									className="text-gray-300"
-								>
+								<Link to="/auth/forgetpassword" className="text-gray-300">
 									<small>Forgot password?</small>
 								</Link>
 							</div>
