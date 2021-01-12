@@ -11,7 +11,7 @@ export default function HomePage() {
 	if (error) {
 		return <h1>erorr</h1>;
 	}
-	console.log(data);
+	console.log(data, 'testing');
 
 	return (
 		<div>

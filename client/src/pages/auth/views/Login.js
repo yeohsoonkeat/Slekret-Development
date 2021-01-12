@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import content from '../static'
-import axios from 'axios'
-import useAuthProvider from '../../../hook/useAuthProvider'
-import config from '../../../config'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import content from '../static';
+import axios from 'axios';
+import useAuthProvider from '../../../hook/useAuthProvider';
+import config from '../../../config';
 
 const schema = yup.object().shape({
 	email: yup.string().email().required(),
 	password: yup.string().required().min(2),
-})
+});
 
 const Login = () => {
-	const authDispatch = useAuthProvider()[1]
-	const [message, setMessage] = useState('')
+	const authDispatch = useAuthProvider()[1];
+	const [message, setMessage] = useState('');
 	const { register, errors, handleSubmit } = useForm({
 		resolver: yupResolver(schema),
-	})
+	});
 	const onSubmit = async (data) => {
 		const res = await axios.post(config.backendUrl + '/auth/login', data, {
 			withCredentials: true,
@@ -27,20 +27,20 @@ const Login = () => {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Credentials': true,
 			},
-		})
+		});
 		if (!res.data.auth) {
-			setMessage(res.data.message)
+			setMessage(res.data.message);
 		} else {
 			authDispatch({
 				type: 'UPDATE_AUTH',
 				payload: { auth: res.data?.auth },
-			})
-			window.localStorage.setItem('auth', res.data?.auth)
+			});
+			window.localStorage.setItem('auth', res.data?.auth);
 		}
-	}
+	};
 	const githubAuth = () => {
-		window.open(config.backendUrl + '/auth/github', '_self')
-	}
+		window.open(config.backendUrl + '/auth/github', '_self');
+	};
 
 	return (
 		<>
@@ -96,12 +96,12 @@ const Login = () => {
 													{errors[input.name]?.message}
 												</p>
 											</div>
-										)
+										);
 									})}
 
 									<div className="text-center mt-6">
 										<input
-											className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+											className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 cursor-pointer"
 											type="submit"
 											value="Login"
 										/>
@@ -130,7 +130,7 @@ const Login = () => {
 				</div>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default Login
+export default Login;

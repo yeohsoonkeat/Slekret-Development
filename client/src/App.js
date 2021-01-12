@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-
 import Admin from './pages/admin';
 import Auth from './pages/auth';
 import ProtectedRoute from './routes/ProtectedRoutes';
@@ -15,6 +14,7 @@ import Blog from './pages/blog';
 import routes from './constant/routes';
 import config from './config';
 import useApolloClientWithToken from './hook/ useApolloClientWithToken';
+
 export default function App() {
 	const [token, setToken] = useState();
 	const [authState, authDispatch] = useAuthProvider();
@@ -40,7 +40,6 @@ export default function App() {
 				});
 			})
 			.catch((err) => {
-				console.log(err);
 				window.localStorage.setItem('auth', 'false');
 			});
 	}, [authDispatch]);

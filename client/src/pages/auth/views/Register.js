@@ -38,7 +38,7 @@ export default function Register() {
 					'Access-Control-Allow-Credentials': true,
 				},
 			})
-			.catch((er) => console.log(er));
+			.catch((er) => console.log());
 		console.log(res);
 		if (res.data?.verify) {
 			history.push({ pathname: '/auth/verify', state: { data } });
