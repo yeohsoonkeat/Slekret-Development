@@ -23,13 +23,13 @@ const mailOptions = (email, link) => {
 	};
 };
 
-const sendEmail = (reqBody) => {
-	const link = generateVerifyLink(reqBody);
+const sendEmail = (reqBody, path) => {
+	const link = generateVerifyLink(reqBody, path);
 	const { email } = reqBody;
 
 	transporter.sendMail(mailOptions(email, link), function(error) {
 		if (error) {
-			throw new Error('BROKEN'); // Express will catch this on its own.
+			throw new Error('BROKEN');
 		}
 	});
 };

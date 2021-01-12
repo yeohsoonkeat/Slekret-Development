@@ -7,13 +7,15 @@ const authRouter = express.Router();
 
 authRouter.route('/register').post(AuthController.registerUser);
 
-authRouter.route('/verify').get(AuthController.verifyUser);
+authRouter.route('/verifyUser').get(AuthController.verifyUser);
 
 authRouter.route('/login').post(AuthController.userLogin);
 
 authRouter.route('/logout').post(AuthController.userLogout);
 
 authRouter.route('/forgetPassword').post(AuthController.userForgetPassword);
+
+authRouter.route('/verifyPassword').get(AuthController.verifyPassword);
 
 //socail register
 authRouter.route('/github').get(passport.authenticate('github'));

@@ -4,12 +4,13 @@ const { v4: uuidv4 } = require('uuid');
 const appConfig = require('../../config/app.config');
 const jwtUtils = require('../../utils/jwt');
 const createUser = require('../../db/createUser');
-const sendEmail = require('../../utils/setEmailVerify');
+const sendEmail = require('../../utils/sendEmailVerify');
 const hashPassword = require('../../utils/hashPassword');
 const getUserByEmail = require('../../db/getUserByEmail');
 const isUserEmailExist = require('../../utils/isUserEmailExist');
 const isUserUsernameExist = require('../../utils/isUserUsernameExist');
 const setUserSession = require('../../utils/setUserSession');
+const updateUserPassword = require('../../db/updateUserPassword');
 
 module.exports = {
 	// POST register user
@@ -27,10 +28,11 @@ module.exports = {
 				verify: false,
 			});
 		}
+
 		// second attempt
 		if (parseInt(req.session.verifyCount) === 2) {
 			try {
-				await sendEmail(req.body);
+				await sendEmail(req.body, 'verifyUser');
 				return res.json({
 					message: 'Email have been to your inbox',
 				});
@@ -44,8 +46,7 @@ module.exports = {
 		if (!(await isUserEmailExist(email))) {
 			if (!(await isUserUsernameExist(username))) {
 				try {
-					await sendEmail(req.body);
-
+					await sendEmail(req.body, 'verifyUser');
 					res.json({
 						verify: true,
 					});
@@ -65,9 +66,6 @@ module.exports = {
 				message: 'Email is already exist',
 			});
 		}
-	},
-	userForgetPassword: async (req, res) => {
-		return res.json({});
 	},
 
 	//GET verify user
@@ -110,6 +108,37 @@ module.exports = {
 			res.redirect(appConfig.clientURl + '/auth/expired');
 		}
 	},
+	userForgetPassword: async (req, res) => {
+		const { email } = req.body;
+
+		if (!(await isUserEmailExist(email))) {
+			return res.json({
+				message: 'Sorry your email is not exist',
+				isSentEmail: false,
+			});
+		}
+
+		await sendEmail(req.body, 'verifyPassword');
+		return res.json({ isSentEmail: true });
+	},
+
+	verifyPassword: async (req, res) => {
+		const token = req.query.token;
+		const user = jwtUtils.verifyToken(token, process.env.TOKEN_LINK_VERIFY);
+
+		if (!user) {
+			return res.redirect(appConfig.clientURl + '/auth/expired');
+		}
+		const { email, password } = user;
+		const newPassword = await hashPassword(password);
+
+		const { data } = await updateUserPassword({ email, newPassword });
+
+		if (data.update_slekret_users.affected_rows) {
+			return res.redirect(appConfig.clientURl + '/auth/login');
+		}
+	},
+
 	//POST user login
 
 	userLogin: async (req, res) => {
