@@ -15,8 +15,8 @@ const Forum = (props) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="flex-1 px-6 flex my-8">
-      <ul className="w-48 divide-y hidden lg:block">
+    <div className="flex-1 flex my-8 px-2 sm:px-6">
+      <ul className="w-48 divide-y hidden lg:block mr-8">
         {[
           { title: 'Home', icon: IconHome },
           { title: 'Explore Topics', icon: IconGlobe },

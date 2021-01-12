@@ -38,7 +38,7 @@ const Questions = (props) => {
   const current_url = match.url;
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 max-w-full">
       <div className="flex justify-end mb-4">
         <button className="px-4 py-2 bg-blue-600 text-sm text-white rounded-md flex items-center">
           <IconPlus className="w-5 h-5" />

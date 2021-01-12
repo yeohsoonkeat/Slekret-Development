@@ -32,7 +32,7 @@ const QuestionCard = (props) => {
   const tagRandomIndexes = random_numbers(tags.length);
 
   return (
-    <div className="ml-4 bg-white shadow-sm flex rounded-lg">
+    <div className="bg-white shadow-sm flex rounded-lg">
       {/* Votes */}
       <div className="flex flex-col items-center p-6">
         <div
