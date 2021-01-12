@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import IconComment from '../../../icons/ic_comment';
 import IconThumbDown from '../../../icons/ic_thumb_down';
 import IconThumbUp from '../../../icons/ic_thumb_up';
@@ -8,16 +9,19 @@ const actionLiked = 'liked';
 const actionDisliked = 'disliked';
 const colors = ['pink', 'blue', 'green', 'yellow', 'indigo'];
 
-const ItemCard = ({ item }) => {
+const QuestionCard = (props) => {
+  const { item, current_url } = props;
+
   const {
+    id,
     previousAction,
     votes,
     title,
     tags,
     description,
     avatar,
+    display_name,
     username,
-    profile_url,
     posted_date,
     comments,
   } = item;
@@ -70,7 +74,14 @@ const ItemCard = ({ item }) => {
 
       <div className="ml-2 mr-12">
         <div className="flex-1 border-b mt-6">
-          <p className="text-xl font-medium">{title}</p>
+          <Link
+            to={`${current_url}/${id}/${title
+              .toLowerCase()
+              .split(' ')
+              .join('-')}`}
+          >
+            <p className="text-xl font-medium">{title}</p>
+          </Link>
           <div className="flex mt-1">
             {tags.map((tag, index) => {
               const randomColor =
@@ -103,28 +114,25 @@ const ItemCard = ({ item }) => {
         </div>
 
         <div className="mt-2 mb-4 flex items-center justify-between">
-          <div className="flex items-center">
+          <Link to={`@${username}`} className="flex items-center">
             <div
               className="w-10 h-10 rounded-full bg-blue-500 bg-cover"
-              style={{
-                backgroundImage: `url(${avatar})`,
-              }}
+              style={{ backgroundImage: `url(${avatar})` }}
             />
-            <p className="text-gray-500 ml-3 text-sm font-medium select-none">
-              <span>Posted by </span>
-              <a href={profile_url} className="text-blue-800">
-                {username}
-              </a>
-              <span className="mx-3">&middot;</span>
-              <span className="text-xs">{posted_date}</span>
-            </p>
-          </div>
+            <div className="text-gray-500 ml-3 text-sm font-medium select-none">
+              <span className="hidden md:inline-block mr-1">Posted by</span>
+              <span className="text-blue-800">{display_name}</span>
+              <span className="mx-3 hidden md:inline-block">&middot;</span>
+              <span className="text-xs block md:inline-block">
+                {posted_date}
+              </span>
+            </div>
+          </Link>
 
-          <div>
-            <IconComment className="w-6 h-6 text-gray-500 inline" />
-            <span className="ml-1 text-gray-500 hover:text-gray-800 text-sm font-medium select-none">
-              {comments} comments
-            </span>
+          <div className="text-gray-500 hover:text-gray-800 hover:cursor-pointer text-sm font-medium select-none flex items-center">
+            <IconComment className="w-6 h-6" />
+            <span className="mx-1">{comments}</span>
+            <span className="hidden md:inline-block">comments</span>
           </div>
         </div>
       </div>
@@ -132,4 +140,4 @@ const ItemCard = ({ item }) => {
   );
 };
 
-export default ItemCard;
+export default QuestionCard;
