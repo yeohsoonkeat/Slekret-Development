@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import IconComment from '../../../icons/ic_comment';
 import IconThumbDown from '../../../icons/ic_thumb_down';
 import IconThumbUp from '../../../icons/ic_thumb_up';
+import random_numbers from '../utils/random_numbers';
 
 const actionLiked = 'liked';
 const actionDisliked = 'disliked';
-const colors = ['pink', 'blue', 'indigo', 'green', 'yellow'];
+const colors = ['pink', 'blue', 'green', 'yellow', 'indigo'];
 
 const ItemCard = ({ item }) => {
   const {
@@ -23,6 +24,8 @@ const ItemCard = ({ item }) => {
 
   const [currentVotes, setCurrentVotes] = useState(votes || 0);
   const [action, setAction] = useState(previousAction);
+
+  const tagRandomIndexes = random_numbers(tags.length);
 
   return (
     <div className="ml-4 bg-white shadow-sm flex rounded-lg">
@@ -54,7 +57,7 @@ const ItemCard = ({ item }) => {
           onClick={() => {
             if (action !== actionDisliked) {
               setAction(actionDisliked);
-              setCurrentVotes(currentVotes > 0 ? currentVotes - 1 : 0);
+              setCurrentVotes(currentVotes - 1);
             }
           }}
         >
@@ -71,7 +74,7 @@ const ItemCard = ({ item }) => {
           <div className="flex mt-1">
             {tags.map((tag, index) => {
               const randomColor =
-                colors[Math.floor(Math.random() * colors.length)];
+                colors[tagRandomIndexes[index] % colors.length];
 
               return (
                 <span

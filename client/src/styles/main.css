@@ -10777,6 +10777,34 @@ video {
   cursor: not-allowed;
 }
 
+.hover\:cursor-auto:hover{
+  cursor: auto;
+}
+
+.hover\:cursor-default:hover{
+  cursor: default;
+}
+
+.hover\:cursor-pointer:hover{
+  cursor: pointer;
+}
+
+.hover\:cursor-wait:hover{
+  cursor: wait;
+}
+
+.hover\:cursor-text:hover{
+  cursor: text;
+}
+
+.hover\:cursor-move:hover{
+  cursor: move;
+}
+
+.hover\:cursor-not-allowed:hover{
+  cursor: not-allowed;
+}
+
 .block{
   display: block;
 }
@@ -11242,6 +11270,42 @@ video {
 }
 
 .font-black{
+  font-weight: 900;
+}
+
+.hover\:font-thin:hover{
+  font-weight: 100;
+}
+
+.hover\:font-extralight:hover{
+  font-weight: 200;
+}
+
+.hover\:font-light:hover{
+  font-weight: 300;
+}
+
+.hover\:font-normal:hover{
+  font-weight: 400;
+}
+
+.hover\:font-medium:hover{
+  font-weight: 500;
+}
+
+.hover\:font-semibold:hover{
+  font-weight: 600;
+}
+
+.hover\:font-bold:hover{
+  font-weight: 700;
+}
+
+.hover\:font-extrabold:hover{
+  font-weight: 800;
+}
+
+.hover\:font-black:hover{
   font-weight: 900;
 }
 
@@ -24779,6 +24843,30 @@ video {
 }
 
 .tracking-widest{
+  letter-spacing: 0.1em;
+}
+
+.hover\:tracking-tighter:hover{
+  letter-spacing: -0.05em;
+}
+
+.hover\:tracking-tight:hover{
+  letter-spacing: -0.025em;
+}
+
+.hover\:tracking-normal:hover{
+  letter-spacing: 0em;
+}
+
+.hover\:tracking-wide:hover{
+  letter-spacing: 0.025em;
+}
+
+.hover\:tracking-wider:hover{
+  letter-spacing: 0.05em;
+}
+
+.hover\:tracking-widest:hover{
   letter-spacing: 0.1em;
 }
 
@@ -39374,6 +39462,34 @@ video {
     cursor: not-allowed;
   }
 
+  .sm\:hover\:cursor-auto:hover{
+    cursor: auto;
+  }
+
+  .sm\:hover\:cursor-default:hover{
+    cursor: default;
+  }
+
+  .sm\:hover\:cursor-pointer:hover{
+    cursor: pointer;
+  }
+
+  .sm\:hover\:cursor-wait:hover{
+    cursor: wait;
+  }
+
+  .sm\:hover\:cursor-text:hover{
+    cursor: text;
+  }
+
+  .sm\:hover\:cursor-move:hover{
+    cursor: move;
+  }
+
+  .sm\:hover\:cursor-not-allowed:hover{
+    cursor: not-allowed;
+  }
+
   .sm\:block{
     display: block;
   }
@@ -39839,6 +39955,42 @@ video {
   }
 
   .sm\:font-black{
+    font-weight: 900;
+  }
+
+  .sm\:hover\:font-thin:hover{
+    font-weight: 100;
+  }
+
+  .sm\:hover\:font-extralight:hover{
+    font-weight: 200;
+  }
+
+  .sm\:hover\:font-light:hover{
+    font-weight: 300;
+  }
+
+  .sm\:hover\:font-normal:hover{
+    font-weight: 400;
+  }
+
+  .sm\:hover\:font-medium:hover{
+    font-weight: 500;
+  }
+
+  .sm\:hover\:font-semibold:hover{
+    font-weight: 600;
+  }
+
+  .sm\:hover\:font-bold:hover{
+    font-weight: 700;
+  }
+
+  .sm\:hover\:font-extrabold:hover{
+    font-weight: 800;
+  }
+
+  .sm\:hover\:font-black:hover{
     font-weight: 900;
   }
 
@@ -53363,6 +53515,30 @@ video {
   }
 
   .sm\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .sm\:hover\:tracking-tighter:hover{
+    letter-spacing: -0.05em;
+  }
+
+  .sm\:hover\:tracking-tight:hover{
+    letter-spacing: -0.025em;
+  }
+
+  .sm\:hover\:tracking-normal:hover{
+    letter-spacing: 0em;
+  }
+
+  .sm\:hover\:tracking-wide:hover{
+    letter-spacing: 0.025em;
+  }
+
+  .sm\:hover\:tracking-wider:hover{
+    letter-spacing: 0.05em;
+  }
+
+  .sm\:hover\:tracking-widest:hover{
     letter-spacing: 0.1em;
   }
 
@@ -67928,6 +68104,34 @@ video {
     cursor: not-allowed;
   }
 
+  .md\:hover\:cursor-auto:hover{
+    cursor: auto;
+  }
+
+  .md\:hover\:cursor-default:hover{
+    cursor: default;
+  }
+
+  .md\:hover\:cursor-pointer:hover{
+    cursor: pointer;
+  }
+
+  .md\:hover\:cursor-wait:hover{
+    cursor: wait;
+  }
+
+  .md\:hover\:cursor-text:hover{
+    cursor: text;
+  }
+
+  .md\:hover\:cursor-move:hover{
+    cursor: move;
+  }
+
+  .md\:hover\:cursor-not-allowed:hover{
+    cursor: not-allowed;
+  }
+
   .md\:block{
     display: block;
   }
@@ -68393,6 +68597,42 @@ video {
   }
 
   .md\:font-black{
+    font-weight: 900;
+  }
+
+  .md\:hover\:font-thin:hover{
+    font-weight: 100;
+  }
+
+  .md\:hover\:font-extralight:hover{
+    font-weight: 200;
+  }
+
+  .md\:hover\:font-light:hover{
+    font-weight: 300;
+  }
+
+  .md\:hover\:font-normal:hover{
+    font-weight: 400;
+  }
+
+  .md\:hover\:font-medium:hover{
+    font-weight: 500;
+  }
+
+  .md\:hover\:font-semibold:hover{
+    font-weight: 600;
+  }
+
+  .md\:hover\:font-bold:hover{
+    font-weight: 700;
+  }
+
+  .md\:hover\:font-extrabold:hover{
+    font-weight: 800;
+  }
+
+  .md\:hover\:font-black:hover{
     font-weight: 900;
   }
 
@@ -81917,6 +82157,30 @@ video {
   }
 
   .md\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .md\:hover\:tracking-tighter:hover{
+    letter-spacing: -0.05em;
+  }
+
+  .md\:hover\:tracking-tight:hover{
+    letter-spacing: -0.025em;
+  }
+
+  .md\:hover\:tracking-normal:hover{
+    letter-spacing: 0em;
+  }
+
+  .md\:hover\:tracking-wide:hover{
+    letter-spacing: 0.025em;
+  }
+
+  .md\:hover\:tracking-wider:hover{
+    letter-spacing: 0.05em;
+  }
+
+  .md\:hover\:tracking-widest:hover{
     letter-spacing: 0.1em;
   }
 
@@ -96482,6 +96746,34 @@ video {
     cursor: not-allowed;
   }
 
+  .lg\:hover\:cursor-auto:hover{
+    cursor: auto;
+  }
+
+  .lg\:hover\:cursor-default:hover{
+    cursor: default;
+  }
+
+  .lg\:hover\:cursor-pointer:hover{
+    cursor: pointer;
+  }
+
+  .lg\:hover\:cursor-wait:hover{
+    cursor: wait;
+  }
+
+  .lg\:hover\:cursor-text:hover{
+    cursor: text;
+  }
+
+  .lg\:hover\:cursor-move:hover{
+    cursor: move;
+  }
+
+  .lg\:hover\:cursor-not-allowed:hover{
+    cursor: not-allowed;
+  }
+
   .lg\:block{
     display: block;
   }
@@ -96947,6 +97239,42 @@ video {
   }
 
   .lg\:font-black{
+    font-weight: 900;
+  }
+
+  .lg\:hover\:font-thin:hover{
+    font-weight: 100;
+  }
+
+  .lg\:hover\:font-extralight:hover{
+    font-weight: 200;
+  }
+
+  .lg\:hover\:font-light:hover{
+    font-weight: 300;
+  }
+
+  .lg\:hover\:font-normal:hover{
+    font-weight: 400;
+  }
+
+  .lg\:hover\:font-medium:hover{
+    font-weight: 500;
+  }
+
+  .lg\:hover\:font-semibold:hover{
+    font-weight: 600;
+  }
+
+  .lg\:hover\:font-bold:hover{
+    font-weight: 700;
+  }
+
+  .lg\:hover\:font-extrabold:hover{
+    font-weight: 800;
+  }
+
+  .lg\:hover\:font-black:hover{
     font-weight: 900;
   }
 
@@ -110471,6 +110799,30 @@ video {
   }
 
   .lg\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .lg\:hover\:tracking-tighter:hover{
+    letter-spacing: -0.05em;
+  }
+
+  .lg\:hover\:tracking-tight:hover{
+    letter-spacing: -0.025em;
+  }
+
+  .lg\:hover\:tracking-normal:hover{
+    letter-spacing: 0em;
+  }
+
+  .lg\:hover\:tracking-wide:hover{
+    letter-spacing: 0.025em;
+  }
+
+  .lg\:hover\:tracking-wider:hover{
+    letter-spacing: 0.05em;
+  }
+
+  .lg\:hover\:tracking-widest:hover{
     letter-spacing: 0.1em;
   }
 
@@ -125036,6 +125388,34 @@ video {
     cursor: not-allowed;
   }
 
+  .xl\:hover\:cursor-auto:hover{
+    cursor: auto;
+  }
+
+  .xl\:hover\:cursor-default:hover{
+    cursor: default;
+  }
+
+  .xl\:hover\:cursor-pointer:hover{
+    cursor: pointer;
+  }
+
+  .xl\:hover\:cursor-wait:hover{
+    cursor: wait;
+  }
+
+  .xl\:hover\:cursor-text:hover{
+    cursor: text;
+  }
+
+  .xl\:hover\:cursor-move:hover{
+    cursor: move;
+  }
+
+  .xl\:hover\:cursor-not-allowed:hover{
+    cursor: not-allowed;
+  }
+
   .xl\:block{
     display: block;
   }
@@ -125501,6 +125881,42 @@ video {
   }
 
   .xl\:font-black{
+    font-weight: 900;
+  }
+
+  .xl\:hover\:font-thin:hover{
+    font-weight: 100;
+  }
+
+  .xl\:hover\:font-extralight:hover{
+    font-weight: 200;
+  }
+
+  .xl\:hover\:font-light:hover{
+    font-weight: 300;
+  }
+
+  .xl\:hover\:font-normal:hover{
+    font-weight: 400;
+  }
+
+  .xl\:hover\:font-medium:hover{
+    font-weight: 500;
+  }
+
+  .xl\:hover\:font-semibold:hover{
+    font-weight: 600;
+  }
+
+  .xl\:hover\:font-bold:hover{
+    font-weight: 700;
+  }
+
+  .xl\:hover\:font-extrabold:hover{
+    font-weight: 800;
+  }
+
+  .xl\:hover\:font-black:hover{
     font-weight: 900;
   }
 
@@ -139025,6 +139441,30 @@ video {
   }
 
   .xl\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .xl\:hover\:tracking-tighter:hover{
+    letter-spacing: -0.05em;
+  }
+
+  .xl\:hover\:tracking-tight:hover{
+    letter-spacing: -0.025em;
+  }
+
+  .xl\:hover\:tracking-normal:hover{
+    letter-spacing: 0em;
+  }
+
+  .xl\:hover\:tracking-wide:hover{
+    letter-spacing: 0.025em;
+  }
+
+  .xl\:hover\:tracking-wider:hover{
+    letter-spacing: 0.05em;
+  }
+
+  .xl\:hover\:tracking-widest:hover{
     letter-spacing: 0.1em;
   }
 
@@ -153590,6 +154030,34 @@ video {
     cursor: not-allowed;
   }
 
+  .\32xl\:hover\:cursor-auto:hover{
+    cursor: auto;
+  }
+
+  .\32xl\:hover\:cursor-default:hover{
+    cursor: default;
+  }
+
+  .\32xl\:hover\:cursor-pointer:hover{
+    cursor: pointer;
+  }
+
+  .\32xl\:hover\:cursor-wait:hover{
+    cursor: wait;
+  }
+
+  .\32xl\:hover\:cursor-text:hover{
+    cursor: text;
+  }
+
+  .\32xl\:hover\:cursor-move:hover{
+    cursor: move;
+  }
+
+  .\32xl\:hover\:cursor-not-allowed:hover{
+    cursor: not-allowed;
+  }
+
   .\32xl\:block{
     display: block;
   }
@@ -154055,6 +154523,42 @@ video {
   }
 
   .\32xl\:font-black{
+    font-weight: 900;
+  }
+
+  .\32xl\:hover\:font-thin:hover{
+    font-weight: 100;
+  }
+
+  .\32xl\:hover\:font-extralight:hover{
+    font-weight: 200;
+  }
+
+  .\32xl\:hover\:font-light:hover{
+    font-weight: 300;
+  }
+
+  .\32xl\:hover\:font-normal:hover{
+    font-weight: 400;
+  }
+
+  .\32xl\:hover\:font-medium:hover{
+    font-weight: 500;
+  }
+
+  .\32xl\:hover\:font-semibold:hover{
+    font-weight: 600;
+  }
+
+  .\32xl\:hover\:font-bold:hover{
+    font-weight: 700;
+  }
+
+  .\32xl\:hover\:font-extrabold:hover{
+    font-weight: 800;
+  }
+
+  .\32xl\:hover\:font-black:hover{
     font-weight: 900;
   }
 
@@ -167579,6 +168083,30 @@ video {
   }
 
   .\32xl\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .\32xl\:hover\:tracking-tighter:hover{
+    letter-spacing: -0.05em;
+  }
+
+  .\32xl\:hover\:tracking-tight:hover{
+    letter-spacing: -0.025em;
+  }
+
+  .\32xl\:hover\:tracking-normal:hover{
+    letter-spacing: 0em;
+  }
+
+  .\32xl\:hover\:tracking-wide:hover{
+    letter-spacing: 0.025em;
+  }
+
+  .\32xl\:hover\:tracking-wider:hover{
+    letter-spacing: 0.05em;
+  }
+
+  .\32xl\:hover\:tracking-widest:hover{
     letter-spacing: 0.1em;
   }
 

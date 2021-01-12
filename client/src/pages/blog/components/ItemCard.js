@@ -1,6 +1,8 @@
-import IconBookmark from '../../../icons/ic_bookmark';
-import IconShare from '../../../icons/ic_share';
-import IconTag from '../../../icons/ic_tag';
+import { useState } from 'react';
+import IconBook from '../../../icons/ic_book';
+import IconHeart from '../../../icons/ic_heart';
+import PostTags from './PostTags';
+import UserInfo from './UserInfo';
 
 const ItemCard = ({ item }) => {
   const {
@@ -10,25 +12,44 @@ const ItemCard = ({ item }) => {
     description,
     avatar,
     username,
+    display_name,
     published_date,
+    is_liked,
+    likes,
+    read_duration,
   } = item;
+
+  const [isLiked, setIsLiked] = useState(is_liked);
 
   return (
     <div className="w-full">
-      <div className="w-full relative" style={{ paddingTop: '75%' }}>
+      <div className="group w-full relative">
+        <div className="w-full relative" style={{ paddingTop: '75%' }}>
+          <div
+            className="absolute inset-0 bg-red-500 bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${image})` }}
+          />
+        </div>
         <div
-          className="absolute inset-0 bg-red-500"
-          style={{ backgroundImage: `url(${image})` }}
-        />
+          className="group-hover:opacity-100 opacity-0 bg-black bg-opacity-40 absolute top-0 w-full h-full flex justify-center items-center transition-opacity duration-500"
+          // style={{ boxShadow: 'inset 0 0 60px 60px rgba(0,0,0,0.25)' }}
+        >
+          <div className="flex select-none">
+            <div className="mr-6 flex items-center text-white">
+              <div onClick={() => setIsLiked(!isLiked)}>
+                <IconHeart className="w-6 h-6" filled={isLiked} />
+              </div>
+              <p className="font-medium">{likes}</p>
+            </div>
+            <div className="flex items-center text-white">
+              <IconBook className="w-6 h-6" />
+              <p className="font-medium">{read_duration}</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="mt-3 flex items-center text-gray-500">
-        <IconTag className="w-4 h-4" />
-        <span className="text-xs">
-          <span className="font-semibold">TAGS: </span>
-          {tags.join(', ')}
-        </span>
-      </div>
-      <p className="my-2 text-xl text-gray-600 font-semibold leading-5">
+      <PostTags tags={tags} extendedParentClassName="mt-3" />
+      <p className="my-2 text-2xl text-gray-600 font-semibold leading-6">
         {title}
       </p>
       <p
@@ -39,36 +60,12 @@ const ItemCard = ({ item }) => {
           WebkitLineClamp: '5',
           WebkitBoxOrient: 'vertical',
         }}
-        className="text-gray-500 tracking-wide text-sm"
+        className="text-gray-500 tracking-wide"
       >
         {description}
       </p>
 
-      <div className="mt-2 border-t pt-2 flex justify-between items-center">
-        <div className="flex items-center">
-          <div
-            className="mr-2 w-12 h-12 rounded-full bg-cover"
-            style={{ backgroundImage: `url(${avatar})` }}
-          />
-          <div>
-            <p className="text-sm">{username}</p>
-            <p
-              className="uppercase font-bold tracking-widest px-2 py-1 bg-gray-200 text-gray-600"
-              style={{ fontSize: '0.5rem', lineHeight: '0.75rem' }}
-            >
-              {published_date}
-            </p>
-          </div>
-        </div>
-        <div className="flex">
-          <div className="mr-2 p-2 border rounded-full text-gray-600 hover:bg-gray-200">
-            <IconShare className="w-5 h-5" />
-          </div>
-          <div className="p-2 border rounded-full text-gray-600 hover:bg-gray-200">
-            <IconBookmark className="w-5 h-5" />
-          </div>
-        </div>
-      </div>
+      <UserInfo user={{ avatar, display_name, username, published_date }} />
     </div>
   );
 };

@@ -12,7 +12,11 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fontWeight: ['hover'],
+      letterSpacing: ['hover'],
+      cursor: ['hover'],
+    },
   },
   plugins: [],
 };
