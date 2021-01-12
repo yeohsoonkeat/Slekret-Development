@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import content from '../static';
 import config from '../../../config';
-import Alert from '../components/Alert';
 
 const schema = yup.object().shape({
 	email: yup.string().email().required(),
@@ -16,6 +15,8 @@ const schema = yup.object().shape({
 
 export default function FormSignUpUsernameAndDisplayname() {
 	const [message, setMessage] = useState('');
+	const history = useHistory();
+
 	const { register, handleSubmit, errors } = useForm({
 		resolver: yupResolver(schema),
 	});
@@ -24,18 +25,29 @@ export default function FormSignUpUsernameAndDisplayname() {
 		if (data.password !== data.confirmPassword) {
 			setMessage("Password doesn't match");
 		}
-		console.log(data);
+
+		const res = await axios.post(
+			config.backendUrl + '/auth/forgetPassword',
+			data,
+			{
+				withCredentials: true,
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Credentials': true,
+				},
+			}
+		);
+		if (res.data?.isSentEmail) {
+			history.push({ pathname: '/auth/verify', state: { data } });
+		} else {
+			setMessage(res.data?.message);
+		}
+
 		// if (data.username.includes(' ')) {
 		// 	return setMessage('Username is not allow to have space');
 		// }
-		// const res = await axios.post(config.backendUrl + '/auth/username', data, {
-		// 	withCredentials: true,
-		// 	headers: {
-		// 		Accept: 'application/json',
-		// 		'Content-Type': 'application/json',
-		// 		'Access-Control-Allow-Credentials': true,
-		// 	},
-		// });
+
 		// setMessage(res.data?.message);
 		// if (res.data?.fail) {
 		// 	history.push('/auth/register');
