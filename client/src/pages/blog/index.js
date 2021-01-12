@@ -1,10 +1,14 @@
-import React from "react";
-import DefaultLayout from "../../layout/default";
+import { Route, Switch } from 'react-router-dom';
+import routes from '../../constant/routes';
+import DefaultLayout from '../../layout/default';
+import BlogHome from './view/BlogHome';
 
 const Blog = () => {
   return (
     <DefaultLayout>
-      <div className="flex-1 bg-green-500"></div>
+      <Switch>
+        <Route path={routes.blog} component={BlogHome} />
+      </Switch>
     </DefaultLayout>
   );
 };
