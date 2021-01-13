@@ -1,13 +1,13 @@
 require('dotenv').config();
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
-
+const appConfig = require('./app.config');
 passport.use(
 	new GitHubStrategy(
 		{
 			clientID: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
-			callbackURL: 'http://localhost:8000' + '/auth/github/callback',
+			callbackURL: appConfig.backendUrl + '/auth/github/callback',
 			scope: ['user:email'],
 		},
 		function(accessToken, refreshToken, profile, cb) {

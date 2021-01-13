@@ -24,6 +24,7 @@ export default function FormSignUpUsernameAndDisplayname() {
 	const onSubmit = async (data) => {
 		if (data.password !== data.confirmPassword) {
 			setMessage("Password doesn't match");
+			return;
 		}
 
 		const res = await axios.post(
@@ -43,18 +44,6 @@ export default function FormSignUpUsernameAndDisplayname() {
 		} else {
 			setMessage(res.data?.message);
 		}
-
-		// if (data.username.includes(' ')) {
-		// 	return setMessage('Username is not allow to have space');
-		// }
-
-		// setMessage(res.data?.message);
-		// if (res.data?.fail) {
-		// 	history.push('/auth/register');
-		// }
-		// if (res.data?.auth) {
-		// 	window.open('/', '_self');
-		// }
 	};
 	return (
 		<div className="container mx-auto px-4 h-full">

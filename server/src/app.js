@@ -1,14 +1,15 @@
 //app.js
 require('dotenv').config();
 const path = require('path');
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
+const passport = require('passport');
 const sessions = require('express-session');
 const authRoutes = require('./routes/authenticationRoutes/AuthRoutes');
 const jwtUtils = require('./utils/jwt');
 const isUserAuthenticated = require('./middleware/isUserAuthenticated');
-const passport = require('passport');
 const appConfig = require('./config/app.config');
+const api = require('./api');
 const app = express();
 
 // passport config
@@ -46,6 +47,7 @@ app.use('/static', express.static(path.join(__dirname, 'assets')));
 
 // router
 app.use('/auth', authRoutes);
+app.use('/api/v1', api);
 
 app.get('/token', isUserAuthenticated, (req, res) => {
 	const refreshToken = req.session.refreshToken;
