@@ -10,7 +10,10 @@ const ForumLayout = ({ children }) => {
 
   return (
     <div className="w-full max-w-8xl flex-1 px-2 sm:px-6 flex my-8">
-      <ul className="w-48 divide-y hidden lg:block mr-8">
+      <ul
+        className="w-48 divide-y hidden lg:block mr-8"
+        style={{ minWidth: '12rem' }}
+      >
         {[
           { title: 'Home', icon: IconHome },
           { title: 'Explore Topics', icon: IconGlobe },
