@@ -46,7 +46,7 @@ const items = one
 
 const BlogHome = () => {
   return (
-    <div className="flex-1 px-6 flex flex-col py-8">
+    <div className="flex-1 flex flex-col py-8">
       <div className="w-full relative">
         <div className="relative" style={{ paddingTop: '40%' }}>
           <div
