@@ -5,42 +5,48 @@ import IconGlobe from '../../icons/ic_globe';
 import IconHome from '../../icons/ic_home';
 import IconQuestion from '../../icons/ic_question';
 import IconButton from './components/IconButton';
+import NewQuestion from './view/NewQuestion';
 import QuestionDetail from './view/QuestionDetail';
 import Questions from './view/Questions';
 
 const Forum = (props) => {
-  const { match } = props;
-  const current_url = match.url;
+	const { match } = props;
+	const current_url = match.url;
 
-  const [activeIndex, setActiveIndex] = useState(0);
+	const [activeIndex, setActiveIndex] = useState(0);
 
-  return (
-    <div className="flex-1 flex my-8 px-2 sm:px-6">
-      <ul className="w-48 divide-y hidden lg:block mr-8">
-        {[
-          { title: 'Home', icon: IconHome },
-          { title: 'Explore Topics', icon: IconGlobe },
-          { title: 'My Questions', icon: IconQuestion },
-          { title: 'My Answers', icon: IconAnnotation },
-        ].map((category, index) => {
-          return (
-            <IconButton
-              key={index}
-              title={category.title}
-              icon={category.icon}
-              isActive={index === activeIndex}
-              onClick={() => setActiveIndex(index)}
-            />
-          );
-        })}
-      </ul>
+	return (
+		<div className="flex-1 flex my-8 px-2 sm:px-6">
+			<ul className="w-48 divide-y hidden lg:block mr-8">
+				{[
+					{ title: 'Home', icon: IconHome },
+					{ title: 'Explore Topics', icon: IconGlobe },
+					{ title: 'My Questions', icon: IconQuestion },
+					{ title: 'My Answers', icon: IconAnnotation },
+				].map((category, index) => {
+					return (
+						<IconButton
+							key={index}
+							title={category.title}
+							icon={category.icon}
+							isActive={index === activeIndex}
+							onClick={() => setActiveIndex(index)}
+						/>
+					);
+				})}
+			</ul>
 
-      <Switch>
-        <Route exact path={current_url} component={Questions} />
-        <Route path={`${current_url}/:id/:title`} component={QuestionDetail} />
-      </Switch>
-    </div>
-  );
+			<Switch>
+				<Route exact path={current_url} component={Questions} />
+				<Route
+					exact
+					path={`${current_url}/:id/:title`}
+					component={QuestionDetail}
+				/>
+				<Route path={`${current_url}/new-question`} component={NewQuestion} />
+			</Switch>
+		</div>
+	);
 };
 
 export default Forum;
