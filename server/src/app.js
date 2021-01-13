@@ -53,7 +53,6 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 		refreshToken,
 		process.env.JWT_REFRESH_SECRET
 	);
-	console.log(userId);
 
 	const token = jwtUtils.hasuraJwtToken(userId);
 

@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import IconPlus from '../../../icons/ic_plus';
 import QuestionCard from '../components/QuestionCard';
-import { gql, useQuery } from '@apollo/client';
 
 const items = [
   {
@@ -37,22 +37,17 @@ const items = [
 const Questions = (props) => {
   const { match } = props;
   const current_url = match.url;
-  const { loading, error, data } = useQuery(GET_FORUMS_AND_TAGS);
 
-  if (loading) {
-    return <h1>Loading</h1>;
-  }
-  if (error) {
-    return <h1>error</h1>;
-  }
-  console.log(data);
   return (
     <div className="flex-1 max-w-full">
       <div className="flex justify-end mb-4">
-        <button className="px-4 py-2 bg-blue-600 text-sm text-white rounded-md flex items-center">
+        <Link
+          to={`${current_url}/new-question`}
+          className="px-4 py-2 bg-blue-600 text-sm text-white rounded-md flex items-center"
+        >
           <IconPlus className="w-5 h-5" />
           <span className="ml-1 font-medium">Ask Question</span>
-        </button>
+        </Link>
       </div>
       {items.map((item, index) => (
         <div key={index} className={`${index !== 0 && 'mt-8'}`}>
@@ -62,18 +57,5 @@ const Questions = (props) => {
     </div>
   );
 };
-
-const GET_FORUMS_AND_TAGS = gql`
-  query MyQuery {
-    forum_questions {
-      content
-      forum_tags {
-        tag {
-          tag_name
-        }
-      }
-    }
-  }
-`;
 
 export default Questions;

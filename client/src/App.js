@@ -51,9 +51,14 @@ const App = () => {
         <Switch>
           <ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
           <PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+
           <DefaultLayout>
             <Route path={routes.home} exact component={Home} />
-            <Route path={routes.profile} component={Profile} />
+            <ProtectedRoute
+              auth={auth}
+              path={routes.profile}
+              component={Profile}
+            />
             <Route path={routes.forum} component={Forum} />
             <Route path={routes.blog} component={Blog} />
           </DefaultLayout>
