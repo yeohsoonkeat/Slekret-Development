@@ -29171,55 +29171,25 @@ video {
   transition-delay: 1000ms;
 }
 
-@keyframes spin{
-  to{
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes ping{
-  75%, 100%{
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-@keyframes pulse{
-  50%{
-    opacity: .5;
-  }
-}
-
-@keyframes bounce{
-  0%, 100%{
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8,0,1,1);
+@keyframes float{
+  0%{
+    transform: translateY(0px);
+    animation-timing-function: ease-in-out;
   }
 
   50%{
-    transform: none;
-    animation-timing-function: cubic-bezier(0,0,0.2,1);
+    transform: translateY(-20px);
+    animation-timing-function: ease-in-out;
+  }
+
+  100%{
+    transform: translateY(0px);
+    animation-timing-function: ease-in-out;
   }
 }
 
-.animate-none{
-  animation: none;
-}
-
-.animate-spin{
-  animation: spin 1s linear infinite;
-}
-
-.animate-ping{
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.animate-pulse{
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-bounce{
-  animation: bounce 1s infinite;
+.animate-float{
+  animation: float 3s infinite;
 }
 
 @media (min-width: 640px){
@@ -57843,24 +57813,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .sm\:animate-none{
-    animation: none;
-  }
-
-  .sm\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .sm\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .sm\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .sm\:animate-bounce{
-    animation: bounce 1s infinite;
+  .sm\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -86485,24 +86439,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .md\:animate-none{
-    animation: none;
-  }
-
-  .md\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .md\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .md\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .md\:animate-bounce{
-    animation: bounce 1s infinite;
+  .md\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -115127,24 +115065,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .lg\:animate-none{
-    animation: none;
-  }
-
-  .lg\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .lg\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .lg\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .lg\:animate-bounce{
-    animation: bounce 1s infinite;
+  .lg\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -143769,24 +143691,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .xl\:animate-none{
-    animation: none;
-  }
-
-  .xl\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .xl\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .xl\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .xl\:animate-bounce{
-    animation: bounce 1s infinite;
+  .xl\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -172411,23 +172317,7 @@ video {
     transition-delay: 1000ms;
   }
 
-  .\32xl\:animate-none{
-    animation: none;
-  }
-
-  .\32xl\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .\32xl\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .\32xl\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .\32xl\:animate-bounce{
-    animation: bounce 1s infinite;
+  .\32xl\:animate-float{
+    animation: float 3s infinite;
   }
 }
