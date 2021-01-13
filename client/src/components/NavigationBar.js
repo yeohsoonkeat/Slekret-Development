@@ -203,3 +203,83 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
+
+// import { useState } from 'react';
+// import { Link } from 'react-router-dom';
+// import routes from '../constant/routes';
+// import AnimatedIconHamburgerMenu from '../animated_icons/ai_hamburger_menu';
+// import IconUser from '../icons/ic_user';
+
+// const navbar_categories = [
+//   { text: 'Forum', path: routes.forum },
+//   { text: 'Blog', path: routes.blog },
+// ];
+
+// const NavigationBar = () => {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [activeIndex, setActiveIndex] = useState(0);
+
+//   return (
+//     <nav className="bg-gray-800 w-full">
+//       <div className="max-w-8xl mx-auto px-2 sm:px-6">
+//         <div className="h-16 flex items-center justify-between">
+//           {/* Hamburger Menu Icon */}
+//           <div className="block sm:hidden" onClick={() => setIsOpen(!isOpen)}>
+//             <AnimatedIconHamburgerMenu
+//               isOpen={isOpen}
+//               color="bg-gray-400"
+//               hoveredColor="bg-white"
+//             />
+//           </div>
+
+//           <div className="flex items-center">
+//             {/* Logo */}
+//             <Link to={routes.home}>
+//               <img
+//                 className="block lg:hidden h-8 w-auto"
+//                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+//                 alt="Workflow"
+//               />
+//               <img
+//                 className="hidden lg:block h-8 w-auto"
+//                 src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+//                 alt="Workflow"
+//               />
+//             </Link>
+
+//             {/* Categories */}
+//             <div className="hidden sm:flex items-center sm:space-x-1 lg:space-x-4 sm:ml-6 lg:ml-10">
+//               {navbar_categories.map((category, index) => {
+//                 const isActive = index === activeIndex;
+
+//                 return (
+//                   <Link key={index} to={category.path}>
+//                     <div
+//                       className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm tracking-wider ${
+//                         isActive ? 'font-bold' : 'font-medium '
+//                       }`}
+//                       onClick={() => setActiveIndex(index)}
+//                     >
+//                       {category.text}
+//                     </div>
+//                   </Link>
+//                 );
+//               })}
+//             </div>
+//           </div>
+
+//           {/* Account */}
+//           <Link
+//             to={routes.auth}
+//             className="flex items-center text-gray-400 hover:text-white"
+//           >
+//             <IconUser className="w-8 h-8" strokeWidth={1.5} />
+//             <span className="ml-1 font-medium hidden sm:block">Account</span>
+//           </Link>
+//         </div>
+//       </div>
+//     </nav>
+//   );
+// };
+
+// export default NavigationBar;
