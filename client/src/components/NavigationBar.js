@@ -4,6 +4,9 @@ import routes from '../constant/routes';
 import useAuthProvider from '../hook/useAuthProvider';
 import axios from 'axios';
 import config from '../config';
+import AnimatedIconHamburgerMenu from '../animated_icons/ai_hamburger_menu';
+import IconUser from '../icons/ic_user';
+
 const navbar_categories = [
   { text: 'Home', path: routes.home },
   { text: 'Forum', path: routes.forum },
@@ -12,6 +15,7 @@ const navbar_categories = [
 
 const NavigationBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [profilePanel, setProfilePanel] = useState(false);
   const [authState, authDispatch] = useAuthProvider();
 
@@ -38,71 +42,57 @@ const NavigationBar = () => {
         <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
-              className={`inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white`}
+              className={`inline-flexitems-center justify-center p-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white`}
               aria-expanded="false"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className={`${isOpen ? 'hidden' : 'block'} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
+              <AnimatedIconHamburgerMenu
+                isOpen={isOpen}
+                color="bg-gray-400"
+                hoveredColor="bg-white"
+                extendedParentClassName="inline-flex items-center justify-center p-2 hover:bg-gray-700"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
-                className={`${isOpen ? 'block' : 'hidden'} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+                <span className="sr-only">Open main menu</span>
+              </AnimatedIconHamburgerMenu>
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">
-              <img
-                className="block lg:hidden h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                alt="Workflow"
-              />
-              <img
-                className="hidden lg:block h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                alt="Workflow"
-              />
-            </div>
+            <Link to={routes.home}>
+              <div className="ml-14 sm:ml-0 flex-shrink-0 flex items-center">
+                <img
+                  className="block lg:hidden h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                  alt="Workflow"
+                />
+                <img
+                  className="hidden lg:block h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                  alt="Workflow"
+                />
+              </div>
+            </Link>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
-                {navbar_categories.map((category, index) => (
-                  <Link
-                    key={index}
-                    to={category.path}
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    {category.text}
-                  </Link>
-                ))}
+                {navbar_categories.map((category, index) => {
+                  const isActive = index === activeIndex;
+
+                  return (
+                    <Link key={index} to={category.path}>
+                      <button
+                        className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm tracking-wider ${
+                          isActive ? 'bg-gray-900 font-bold' : 'font-medium '
+                        }`}
+                        onClick={() => setActiveIndex(index)}
+                      >
+                        {category.text}
+                      </button>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <div className="flex items-center pr-2 sm:pr-0">
             {authState.auth ? (
               <>
                 <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -172,30 +162,13 @@ const NavigationBar = () => {
                 </div>
               </>
             ) : (
-              <>
-                <Link
-                  to="/auth/"
-                  className="bg-purple-900 hover:bg-purple-400 py-2 px-6 uppercase text-lg font-bold text-white rounded-full hidden md:block"
-                >
-                  Sign In
-                </Link>
-                <Link to="/auth/">
-                  <svg
-                    className="w-10 h-10 text-purple-700 block sm:hidden"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </Link>
-              </>
+              <Link
+                to={routes.auth}
+                className="flex items-center text-gray-400 hover:text-white"
+              >
+                <IconUser className="w-8 h-8" strokeWidth={1.5} />
+                <span className="ml-1 font-medium">Account</span>
+              </Link>
             )}
           </div>
         </div>
@@ -203,16 +176,26 @@ const NavigationBar = () => {
 
       {/* Mobile Navbar Categories */}
       <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          {navbar_categories.map((category, index) => (
-            <Link
-              key={index}
-              to={category.path}
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              {category.text}
-            </Link>
-          ))}
+        <div className="px-2 pb-3 space-y-1">
+          {navbar_categories.map((category, index) => {
+            const isActive = index === activeIndex;
+
+            return (
+              <Link key={index} to={category.path}>
+                <button
+                  className={`w-full text-left text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base ${
+                    isActive ? 'bg-gray-900 font-bold' : 'font-medium'
+                  }`}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    setIsOpen(false);
+                  }}
+                >
+                  {category.text}
+                </button>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </nav>

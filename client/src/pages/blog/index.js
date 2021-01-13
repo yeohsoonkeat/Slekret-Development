@@ -1,15 +1,14 @@
 import { Route, Switch } from 'react-router-dom';
-import routes from '../../constant/routes';
-import DefaultLayout from '../../layout/default';
 import BlogHome from './view/BlogHome';
 
-const Blog = () => {
+const Blog = (props) => {
+  const { match } = props;
+  const current_url = match.url;
+
   return (
-    <DefaultLayout>
-      <Switch>
-        <Route path={routes.blog} component={BlogHome} />
-      </Switch>
-    </DefaultLayout>
+    <Switch>
+      <Route exact path={current_url} component={BlogHome} />
+    </Switch>
   );
 };
 
