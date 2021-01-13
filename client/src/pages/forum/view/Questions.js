@@ -1,5 +1,6 @@
 import IconPlus from '../../../icons/ic_plus';
 import QuestionCard from '../components/QuestionCard';
+import { gql, useQuery } from '@apollo/client';
 
 const items = [
   {
@@ -36,7 +37,15 @@ const items = [
 const Questions = (props) => {
   const { match } = props;
   const current_url = match.url;
+  const { loading, error, data } = useQuery(GET_FORUMS_AND_TAGS);
 
+  if (loading) {
+    return <h1>Loading</h1>;
+  }
+  if (error) {
+    return <h1>error</h1>;
+  }
+  console.log(data);
   return (
     <div className="flex-1 max-w-full">
       <div className="flex justify-end mb-4">
@@ -53,5 +62,18 @@ const Questions = (props) => {
     </div>
   );
 };
+
+const GET_FORUMS_AND_TAGS = gql`
+  query MyQuery {
+    forum_questions {
+      content
+      forum_tags {
+        tag {
+          tag_name
+        }
+      }
+    }
+  }
+`;
 
 export default Questions;
