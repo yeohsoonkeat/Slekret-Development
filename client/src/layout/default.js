@@ -6,8 +6,7 @@ const DefaultLayout = ({ children }) => {
     <div className="bg-gray-100">
       <div className="min-h-screen flex flex-col items-center">
         <NavigationBar />
-
-        <div className="px-2 sm:px-6">{children}</div>
+        {children}
       </div>
       <Footer />
     </div>
