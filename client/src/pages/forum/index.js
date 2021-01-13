@@ -15,7 +15,7 @@ const Forum = (props) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="w-full max-w-8xl flex-1 flex my-8">
+    <div className="w-full max-w-8xl bg-red-300 flex-1 px-2 sm:px-6 flex my-8">
       <ul className="w-48 divide-y hidden lg:block mr-8">
         {[
           { title: 'Home', icon: IconHome },
