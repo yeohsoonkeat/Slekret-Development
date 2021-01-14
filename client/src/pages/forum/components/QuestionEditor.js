@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 export default function QuestionEditor({
 	className,
-	setQuestionTitle,
-	setQuestionDescription,
+	setTitle,
+	setContent,
 	setListofTags,
 	listOfTags,
 }) {
-	const [tag, setTag] = useState();
+	const [tag, setTag] = useState('');
 
 	const handleTag = (e) => {
 		const tag = e.target.value;
@@ -30,7 +30,7 @@ export default function QuestionEditor({
 				<input
 					placeholder="Question title.."
 					className="m-2 p-2 w-11/12 resize-none text-2xl md:text-3xl items-center font-black focus:outline-none"
-					onChange={(e) => setQuestionTitle(e.target.value)}
+					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<div className="m-2 p-2 flex flex-wrap">
 					{listOfTags.map((item, index) => {
@@ -57,7 +57,7 @@ export default function QuestionEditor({
 					placeholder="Question description.."
 					class="flex-1  pt-2 m-2 p-2 w-11/12 resize-none  items-center  focus:outline-none break-all"
 					onChange={(e) => {
-						setQuestionDescription(e.target.value);
+						setContent(e.target.value);
 					}}
 				></textarea>
 			</div>

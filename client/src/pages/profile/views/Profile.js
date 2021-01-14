@@ -4,7 +4,8 @@ import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
 export default function ProfilePage() {
-  const { username } = useParams();
+  let { username } = useParams();
+  username = username.replace(/^@/, '');
   const { loading, error, data } = useQuery(GET_USER_DETAIL, {
     variables: { username },
   });
@@ -13,6 +14,7 @@ export default function ProfilePage() {
     return <h1>Loading</h1>;
   }
   if (error) {
+    console.log(error);
     return <h1>error</h1>;
   }
   const user = data.slekret_users[0];
@@ -29,8 +31,6 @@ const GET_USER_DETAIL = gql`
       avatar_src
       description
       displayname
-      followers
-      following
       username
       last_login
     }
