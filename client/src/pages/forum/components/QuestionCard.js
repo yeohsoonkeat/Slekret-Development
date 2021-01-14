@@ -5,31 +5,31 @@ import IconThumbDown from '../../../icons/ic_thumb_down';
 import IconThumbUp from '../../../icons/ic_thumb_up';
 import random_numbers from '../utils/random_numbers';
 
-const actionLiked = 'liked';
-const actionDisliked = 'disliked';
+const actionLiked = 1;
+const actionDisliked = -1;
 const colors = ['pink', 'blue', 'green', 'yellow', 'indigo'];
 
 const QuestionCard = (props) => {
   const { item, current_url } = props;
-
+  let posted_date = '12hour ago';
   const {
     id,
-    previousAction,
-    votes,
     title,
-    tags,
-    description,
-    avatar,
-    display_name,
-    username,
-    posted_date,
-    comments,
+    content,
+    slekret_user,
+    forum_tags,
+    forum_upvote_downvotes,
+    forum_upvote_downvotes_aggregate,
+    forum_replies_aggregate,
   } = item;
+  const { avatar_src, display_name, username } = slekret_user;
+  const user_isVote = forum_upvote_downvotes.votes;
+  const [currentVotes, setCurrentVotes] = useState(
+    forum_upvote_downvotes_aggregate.aggregate.sum.vote || 0
+  );
+  const [action, setAction] = useState(user_isVote);
 
-  const [currentVotes, setCurrentVotes] = useState(votes || 0);
-  const [action, setAction] = useState(previousAction);
-
-  const tagRandomIndexes = random_numbers(tags.length);
+  const tagRandomIndexes = random_numbers(forum_tags.length);
 
   return (
     <div className="bg-white shadow-sm flex rounded-lg">
@@ -83,10 +83,9 @@ const QuestionCard = (props) => {
             <p className="text-xl font-medium">{title}</p>
           </Link>
           <div className="flex mt-1">
-            {tags.map((tag, index) => {
+            {forum_tags.map((tag, index) => {
               const randomColor =
                 colors[tagRandomIndexes[index] % colors.length];
-
               return (
                 <span
                   key={index}
@@ -94,7 +93,7 @@ const QuestionCard = (props) => {
                     index !== 0 && 'ml-2'
                   } px-2 py-1 select-none rounded-md text-xs uppercase font-medium tracking-wider bg-${randomColor}-200 text-${randomColor}-700`}
                 >
-                  {tag}
+                  {tag.tag.tag_name}
                 </span>
               );
             })}
@@ -109,15 +108,15 @@ const QuestionCard = (props) => {
             }}
             className="text-gray-500 my-3 tracking-wide"
           >
-            {description}
+            {content}
           </div>
         </div>
 
         <div className="mt-2 mb-4 flex items-center justify-between">
-          <Link to={`@${username}`} className="flex items-center">
+          <Link to={`user/@${username}`} className="flex items-center">
             <div
               className="w-10 h-10 rounded-full bg-blue-500 bg-cover"
-              style={{ backgroundImage: `url(${avatar})` }}
+              style={{ backgroundImage: `url(${avatar_src})` }}
             />
             <div className="text-gray-500 ml-3 text-sm font-medium select-none">
               <span className="hidden md:inline-block mr-1">Posted by</span>
@@ -131,8 +130,10 @@ const QuestionCard = (props) => {
 
           <div className="text-gray-500 hover:text-gray-800 hover:cursor-pointer text-sm font-medium select-none flex items-center">
             <IconComment className="w-6 h-6" />
-            <span className="mx-1">{comments}</span>
-            <span className="hidden md:inline-block">comments</span>
+            <span className="mx-1">
+              {forum_replies_aggregate.aggregate.count}
+            </span>
+            <span className="hidden md:inline-block">Answer</span>
           </div>
         </div>
       </div>
