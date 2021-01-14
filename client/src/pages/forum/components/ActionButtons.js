@@ -17,7 +17,7 @@ const ActionButtons = (props) => {
         }`}
       >
         <div
-          className={`flex items-center select-none hover:cursor-pointer transition-color duration-1000 ${
+          className={`flex items-center select-none hover:cursor-pointer transition-color duration-500 hover:text-blue-500 ${
             isLiked ? 'text-blue-500' : 'text-gray-600'
           }`}
           onClick={() => setIsLiked(!isLiked)}

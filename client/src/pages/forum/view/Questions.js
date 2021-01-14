@@ -5,10 +5,10 @@ import QuestionCard from '../components/QuestionCard';
 const items = [
   {
     id: 1,
+    votes: 100,
     title: 'What does the fox say?',
     tags: ['General', 'Animal', 'Sound'],
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam noncorrupti itaque nesciunt. Suscipit omnis perferendis earum excepturi officiis nisi consectetur, ad aliquid ducimus laudantium natus necessitatibus veritatis ratione et. Quaerat eum rem voluptates similique recusandae atque, tenetur aspernatur fuga? Vel, illo delectus sapiente expedita iste reiciendis asperiores. Nemo nobis reprehenderit numquam porro, vel voluptatum? Sunt fugiat laborum officiis ipsum. Provident nesciunt earum quidem minus voluptatum laudantium consequuntur incidunt enim ipsam necessitatibus cum maiores officiis repellat officia expedita corrupti dignissimos, tenetur reiciendis dicta! Nulla mollitia veritatis animi similique quod provident?',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing',
     avatar:
       'https://images.unsplash.com/photo-1608833970687-99bc4f54898d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
     display_name: 'Askash  Raj Dahal',
@@ -19,8 +19,7 @@ const items = [
   },
   {
     id: 2,
-    previousAction: 'liked', // ['liked', 'disliked']
-    votes: 200,
+    votes: 208,
     title: 'What do you like to do when you visit a new town or city?',
     tags: ['Travel', 'City', 'Interest', 'Culture'],
     description:
