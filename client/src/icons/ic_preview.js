@@ -19,7 +19,7 @@ const IconPreview = ({ filled, strokeWidth, className }) => {
 
 	return (
 		<svg
-			class={className}
+			className={className}
 			fill="none"
 			stroke="currentColor"
 			viewBox="0 0 24 24"
