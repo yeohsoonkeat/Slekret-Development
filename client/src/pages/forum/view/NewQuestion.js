@@ -4,25 +4,53 @@ import IconPlus from '../../../icons/ic_plus';
 import IconPreview from '../../../icons/ic_preview';
 import QuestionEditor from '../components/QuestionEditor';
 import QuestionPreview from '../components/QuestionPreview';
+import generateListOfTagObject from '../utils/generateListOfTagObject';
+import { gql, useMutation } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+import routes from '../../../constant/routes';
 
 export default function NewQuestion() {
-	const [questionTitle, setQuestionTitle] = useState('');
-	const [questionDescription, setQuestionDescription] = useState('');
+	const history = useHistory();
+	const [title, setTitle] = useState('');
+	const [content, setContent] = useState('');
 	const [listOfTags, setListofTags] = useState([]);
 	const [isHidden, setHidden] = useState(true);
 
-	const handleAskQuestion = () => {};
-
+	const [createQuestion, { data, loading, error }] = useMutation(
+		CREATE_QUESTION,
+		{
+			variables: {
+				tags: generateListOfTagObject(listOfTags),
+				title,
+				content,
+			},
+		}
+	);
+	if (data && !loading) {
+		console.log(data);
+		history.push({ pathname: routes.forum, state: { justPosted: true } });
+	}
+	if (error) {
+		return <h1>Error</h1>;
+	}
 	return (
 		<>
 			<div className="flex justify-between">
-				<button
-					className="px-4 py-2 bg-blue-600 text-sm text-white rounded-md flex items-center mb-2"
-					onClick={handleAskQuestion}
-				>
-					<IconPlus className="w-5 h-5" />
-					<span className="ml-1 font-medium ">Post Question</span>
-				</button>
+				{title && content ? (
+					<button
+						className="px-4 py-2 bg-blue-600 text-sm text-white rounded-md flex items-center mb-2"
+						onClick={createQuestion}
+					>
+						<IconPlus className="w-5 h-5" />
+						<span className="ml-1 font-medium ">Post Question</span>
+					</button>
+				) : (
+					<button className="px-4 py-2 bg-blue-600 text-sm text-white rounded-md flex items-center mb-2 opacity-40">
+						<IconPlus className="w-5 h-5" />
+						<span className="ml-1 font-medium ">Post Question</span>
+					</button>
+				)}
+
 				<button
 					className="ml-2 px-4 py-2  ring-2  text-sm  rounded-md flex items-center mb-2 hover:bg-blue-500 hover:text-white hover:outline-none xl:hidden"
 					onClick={() => setHidden(!isHidden)}
@@ -46,8 +74,8 @@ export default function NewQuestion() {
 					className={`${
 						isHidden ? 'block' : 'hidden'
 					} xl:block xl:w-6/12 w-full   `}
-					setQuestionTitle={setQuestionTitle}
-					setQuestionDescription={setQuestionDescription}
+					setTitle={setTitle}
+					setContent={setContent}
 					setListofTags={setListofTags}
 					listOfTags={listOfTags}
 				/>
@@ -56,11 +84,26 @@ export default function NewQuestion() {
 					className={`${
 						isHidden ? 'hidden' : 'block'
 					} xl:block xl:w-6/12 w-full  xl:max-w-4xl`}
-					questionTitle={questionTitle}
-					questionDescription={questionDescription}
+					title={title}
+					content={content}
 					listOfTags={listOfTags}
 				/>
 			</div>
 		</>
 	);
 }
+
+const CREATE_QUESTION = gql`
+	mutation MyMutation(
+		$content: String
+		$title: String
+		$tags: [forum_tags_insert_input!]!
+	) {
+		insert_forum_questions_one(
+			object: { content: $content, title: $title, forum_tags: { data: $tags } }
+		) {
+			id
+			title
+		}
+	}
+`;
