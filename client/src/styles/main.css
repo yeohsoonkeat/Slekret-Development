@@ -11291,6 +11291,42 @@ h3 {
   font-weight: 900;
 }
 
+.group:hover .group-hover\:font-thin{
+  font-weight: 100;
+}
+
+.group:hover .group-hover\:font-extralight{
+  font-weight: 200;
+}
+
+.group:hover .group-hover\:font-light{
+  font-weight: 300;
+}
+
+.group:hover .group-hover\:font-normal{
+  font-weight: 400;
+}
+
+.group:hover .group-hover\:font-medium{
+  font-weight: 500;
+}
+
+.group:hover .group-hover\:font-semibold{
+  font-weight: 600;
+}
+
+.group:hover .group-hover\:font-bold{
+  font-weight: 700;
+}
+
+.group:hover .group-hover\:font-extrabold{
+  font-weight: 800;
+}
+
+.group:hover .group-hover\:font-black{
+  font-weight: 900;
+}
+
 .hover\:font-thin:hover{
   font-weight: 100;
 }
@@ -24861,6 +24897,30 @@ h3 {
 }
 
 .tracking-widest{
+  letter-spacing: 0.1em;
+}
+
+.group:hover .group-hover\:tracking-tighter{
+  letter-spacing: -0.05em;
+}
+
+.group:hover .group-hover\:tracking-tight{
+  letter-spacing: -0.025em;
+}
+
+.group:hover .group-hover\:tracking-normal{
+  letter-spacing: 0em;
+}
+
+.group:hover .group-hover\:tracking-wide{
+  letter-spacing: 0.025em;
+}
+
+.group:hover .group-hover\:tracking-wider{
+  letter-spacing: 0.05em;
+}
+
+.group:hover .group-hover\:tracking-widest{
   letter-spacing: 0.1em;
 }
 
@@ -39946,6 +40006,42 @@ h3 {
     font-weight: 900;
   }
 
+  .group:hover .sm\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .sm\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .sm\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .sm\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .sm\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .sm\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .sm\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .sm\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .sm\:group-hover\:font-black{
+    font-weight: 900;
+  }
+
   .sm\:hover\:font-thin:hover{
     font-weight: 100;
   }
@@ -53503,6 +53599,30 @@ h3 {
   }
 
   .sm\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-widest{
     letter-spacing: 0.1em;
   }
 
@@ -68572,6 +68692,42 @@ h3 {
     font-weight: 900;
   }
 
+  .group:hover .md\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .md\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .md\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .md\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .md\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .md\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .md\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .md\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .md\:group-hover\:font-black{
+    font-weight: 900;
+  }
+
   .md\:hover\:font-thin:hover{
     font-weight: 100;
   }
@@ -82129,6 +82285,30 @@ h3 {
   }
 
   .md\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-widest{
     letter-spacing: 0.1em;
   }
 
@@ -97198,6 +97378,42 @@ h3 {
     font-weight: 900;
   }
 
+  .group:hover .lg\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .lg\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .lg\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .lg\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .lg\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .lg\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .lg\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .lg\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .lg\:group-hover\:font-black{
+    font-weight: 900;
+  }
+
   .lg\:hover\:font-thin:hover{
     font-weight: 100;
   }
@@ -110755,6 +110971,30 @@ h3 {
   }
 
   .lg\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-widest{
     letter-spacing: 0.1em;
   }
 
@@ -125824,6 +126064,42 @@ h3 {
     font-weight: 900;
   }
 
+  .group:hover .xl\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .xl\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .xl\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .xl\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .xl\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .xl\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .xl\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .xl\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .xl\:group-hover\:font-black{
+    font-weight: 900;
+  }
+
   .xl\:hover\:font-thin:hover{
     font-weight: 100;
   }
@@ -139381,6 +139657,30 @@ h3 {
   }
 
   .xl\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-widest{
     letter-spacing: 0.1em;
   }
 
@@ -154450,6 +154750,42 @@ h3 {
     font-weight: 900;
   }
 
+  .group:hover .\32xl\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-black{
+    font-weight: 900;
+  }
+
   .\32xl\:hover\:font-thin:hover{
     font-weight: 100;
   }
@@ -168007,6 +168343,30 @@ h3 {
   }
 
   .\32xl\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-widest{
     letter-spacing: 0.1em;
   }
 

@@ -167,7 +167,9 @@ const NavigationBar = () => {
                 className="flex items-center text-gray-400 hover:text-white"
               >
                 <IconUser className="w-8 h-8" strokeWidth={1.5} />
-                <span className="ml-1 font-medium">Account</span>
+                <span className="ml-1 font-medium hidden sm:block">
+                  Account
+                </span>
               </Link>
             )}
           </div>
