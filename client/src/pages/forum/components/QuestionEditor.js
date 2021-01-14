@@ -49,13 +49,13 @@ export default function QuestionEditor({
 				<input
 					value={tag}
 					placeholder="Add up to 4 tags.."
-					class=" m-2 p-2 w-11/12 resize-none   items-center focus:outline-none  text-lg md:text-xl"
+					className=" m-2 p-2 w-11/12 resize-none   items-center focus:outline-none  text-lg md:text-xl"
 					onChange={handleTag}
 				/>
 
 				<textarea
 					placeholder="Question description.."
-					class="flex-1  pt-2 m-2 p-2 w-11/12 resize-none  items-center  focus:outline-none break-all"
+					className="flex-1  pt-2 m-2 p-2 w-11/12 resize-none  items-center  focus:outline-none break-all"
 					onChange={(e) => {
 						setContent(e.target.value);
 					}}
