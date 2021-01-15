@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import gfm from 'remark-gfm';
+import MarkdownEditor from '../../../components/MarkdownEditor';
 import IconArrowNarrowDown from '../../../icons/ic_arrow_narrow_down';
 import IconArrowNarrowUp from '../../../icons/ic_arrow_narrow_up';
 import IconInfo from '../../../icons/ic_info';
@@ -111,9 +112,9 @@ const QuestionDetail = (props) => {
       <p className="text-2xl font-bold text-gray-800">{title}</p>
 
       {/* User Info */}
-      <div className="flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between">
         <Link to={`/@${username}`}>
-          <div className="flex items-center mt-4">
+          <div className="flex items-center">
             <div
               className="w-12 h-12 rounded-full bg-cover"
               style={{ backgroundImage: `url(${avatar})` }}
@@ -184,7 +185,8 @@ const QuestionDetail = (props) => {
 
       {/* Answers */}
       <div className="mt-4">
-        <AnswerEditor />
+        {/* <AnswerEditor /> */}
+        <MarkdownEditor placeholder="Write your answer here..." />
       </div>
       <div className="mt-12 mb-4 pb-4 border-b font-medium">
         {answers.length} Answers

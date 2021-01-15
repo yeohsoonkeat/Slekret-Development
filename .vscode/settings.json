@@ -1,4 +1,7 @@
 {
   "editor.formatOnSave": true,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "files.associations": {
+    "**/client/src/**/*.js": "javascriptreact"
+  }
 }

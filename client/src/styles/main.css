@@ -538,24 +538,6 @@ video {
   height: auto;
 }
 
-h1 {
-  font-weight: 900;
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
-h2 {
-  font-weight: 900;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
-
-h3 {
-  font-weight: 900;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .container{
   width: 100%;
 }
@@ -11253,6 +11235,10 @@ h3 {
 
 .font-mono{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.font-code{
+  font-family: Menlo, Monaco;
 }
 
 .font-thin{
@@ -29270,6 +29256,18 @@ h3 {
   animation: float 3s infinite;
 }
 
+@font-face {
+  font-family: 'Menlo';
+
+  src: local('Menlo'), url(../fonts/Menlo-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Monaco';
+
+  src: local('Monaco'), url(../fonts/Monaco.woff) format('woff');
+}
+
 @media (min-width: 640px){
   .sm\:container{
     width: 100%;
@@ -39968,6 +39966,10 @@ h3 {
 
   .sm\:font-mono{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .sm\:font-code{
+    font-family: Menlo, Monaco;
   }
 
   .sm\:font-thin{
@@ -68656,6 +68658,10 @@ h3 {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .md\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .md\:font-thin{
     font-weight: 100;
   }
@@ -97340,6 +97346,10 @@ h3 {
 
   .lg\:font-mono{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .lg\:font-code{
+    font-family: Menlo, Monaco;
   }
 
   .lg\:font-thin{
@@ -126028,6 +126038,10 @@ h3 {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .xl\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .xl\:font-thin{
     font-weight: 100;
   }
@@ -154712,6 +154726,10 @@ h3 {
 
   .\32xl\:font-mono{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .\32xl\:font-code{
+    font-family: Menlo, Monaco;
   }
 
   .\32xl\:font-thin{

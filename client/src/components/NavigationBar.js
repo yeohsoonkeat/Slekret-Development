@@ -57,7 +57,7 @@ const NavigationBar = () => {
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <Link to={routes.home}>
+            <Link to={routes.home} onClick={() => setActiveIndex()}>
               <div className="ml-14 sm:ml-0 flex-shrink-0 flex items-center">
                 <img
                   className="block lg:hidden h-8 w-auto"

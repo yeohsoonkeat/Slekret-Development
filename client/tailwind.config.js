@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter'],
+        code: ['Menlo', 'Monaco'],
       },
       maxWidth: {
         '8xl': '90rem',

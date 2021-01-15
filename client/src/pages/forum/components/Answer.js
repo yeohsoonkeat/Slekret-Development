@@ -27,12 +27,12 @@ const Answer = ({ answer }) => {
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-sm">
-      <div className="flex relative">
+      <div className="flex justify-center relative">
         {replies && replies.length > 0 && (
           <div className="w-12 border-l-2 border-b-2 h-full absolute top-6 left-6 rounded-bl-lg" />
         )}
 
-        <Link to={`/@${username}`} className="z-10">
+        <Link to={`/@${username}`} className="z-10 h-12">
           <div
             className="w-12 h-12 rounded-full bg-cover"
             style={{ backgroundImage: `url(${avatar})` }}

@@ -4,14 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  h1 {
-    @apply text-3xl font-black;
-  }
-  h2 {
-    @apply text-xl font-black;
-  }
-  h3 {
-    @apply text-lg font-black;
-  }
+@font-face {
+  font-family: 'Menlo';
+  src: local('Menlo'), url(../fonts/Menlo-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Monaco';
+  src: local('Monaco'), url(../fonts/Monaco.woff) format('woff');
 }
