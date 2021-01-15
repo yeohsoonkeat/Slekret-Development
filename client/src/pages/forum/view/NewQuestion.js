@@ -74,7 +74,7 @@ export default function NewQuestion() {
 				<QuestionEditor
 					className={`${
 						isHidden ? 'block' : 'hidden'
-					} xl:block xl:w-6/12 w-full   `}
+					} xl:block xl:w-6/12 w-full border-r-4   `}
 					setTitle={setTitle}
 					setContent={setContent}
 					setListofTags={setListofTags}
