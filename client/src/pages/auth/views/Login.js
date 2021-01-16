@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -14,7 +14,6 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
-	const history = useHistory();
 
 	const authDispatch = useAuthProvider()[1];
 	const [message, setMessage] = useState('');
