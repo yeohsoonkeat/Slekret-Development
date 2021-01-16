@@ -7,6 +7,7 @@ query MyQuery($email: String) {
 	email
 	password
 	username
+	avatar_src
   }
 }
 `;
