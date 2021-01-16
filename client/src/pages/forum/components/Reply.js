@@ -3,15 +3,9 @@ import { Link } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
 import ActionButtons from './ActionButtons';
 
-const Reply = (props) => {
-  const {
-    hasNext,
-    avatar,
-    display_name,
-    username,
-    publish_date,
-    content,
-  } = props;
+const Reply = ({reply, hasNext}) => {
+  const {created_at,slekret_user,content} =reply
+  const { avatar_src, displayname, username } = slekret_user
 
   return (
     <div className="flex items-stretch">
@@ -19,7 +13,7 @@ const Reply = (props) => {
         <Link to={`/@${username}`} className="z-10">
           <div
             className="w-12 h-12 rounded-full bg-cover"
-            style={{ backgroundImage: `url(${avatar})` }}
+            style={{ backgroundImage: `url(${avatar_src})` }}
           />
         </Link>
         {hasNext && <div className="flex-1 border"></div>}
@@ -28,10 +22,10 @@ const Reply = (props) => {
       <div className="ml-4">
         <div className="flex items-center">
           <p className="text-base font-bold tracking-normal text-gray-800">
-            {display_name}
+            {displayname}
           </p>
           <span className="mx-3">&middot;</span>
-          <p className="text-xs font-medium text-gray-400">{publish_date}</p>
+          <p className="text-xs font-medium text-gray-400">{created_at}</p>
         </div>
         <div className="text-xs font-medium text-gray-400 select-none">
           Reply to{' '}

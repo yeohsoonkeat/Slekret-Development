@@ -31,7 +31,7 @@ export default function NewQuestion() {
 	}
 
 	if (data && !loading) {
-		history.push({ pathname: routes.forum, state: { justPosted: true } });
+		window.open("/questions","_self")
 	}
 
 	return (
