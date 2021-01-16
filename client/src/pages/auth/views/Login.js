@@ -14,6 +14,7 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+
 	const authDispatch = useAuthProvider()[1];
 	const [message, setMessage] = useState('');
 	const { register, errors, handleSubmit } = useForm({
@@ -36,6 +37,7 @@ const Login = () => {
 				payload: { auth: res.data?.auth },
 			});
 			window.localStorage.setItem('auth', res.data?.auth);
+			window.open("/","_self")
 		}
 	};
 	const githubAuth = () => {

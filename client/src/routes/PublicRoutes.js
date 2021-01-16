@@ -6,7 +6,7 @@ export default function PublicRoutes({ auth, component: Component, ...rest }) {
 		<Route
 			{...rest}
 			render={() => {
-				return !isAuth ? <Component /> : <Redirect to="/admin" />
+				return !isAuth ? <Component /> : <Redirect to="/" />
 			}}
 		/>
 	)
