@@ -68,13 +68,14 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 	});
 });
 
-app.post('/file-upload', (req, res) => {
+app.post('/file-upload', isUserAuthenticated, (req, res) => {
 	const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 	form.parse(req, function(err, fields, files) {
 		if (fileTypes.indexOf(files.image.type) === -1) {
 			return res.json({ message: 'File not support' });
 		}
+
 		const oldPath = files.image.path;
 
 		const fileName = Date.now() + '.' + files.image.type.split('/')[1];
