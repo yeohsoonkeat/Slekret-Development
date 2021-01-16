@@ -897,6 +897,21 @@ ALTER SEQUENCE hdb_catalog.remote_schemas_id_seq OWNED BY hdb_catalog.remote_sch
 
 
 --
+-- Name: blog_article_likes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.blog_article_likes (
+    user_id uuid NOT NULL,
+    blog_articles_id uuid NOT NULL,
+    "isLike" boolean NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.blog_article_likes OWNER TO postgres;
+
+--
 -- Name: blog_articles; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1002,6 +1017,33 @@ CREATE TABLE public.reading_lists (
 
 
 ALTER TABLE public.reading_lists OWNER TO postgres;
+
+--
+-- Name: slekret_user_followings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.slekret_user_followings (
+    user_id uuid NOT NULL,
+    following uuid NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL
+);
+
+
+ALTER TABLE public.slekret_user_followings OWNER TO postgres;
+
+--
+-- Name: slekret_user_friendships; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.slekret_user_friendships (
+    user_one_id uuid NOT NULL,
+    user_two_id uuid NOT NULL,
+    status smallint NOT NULL,
+    last_action_user_id uuid NOT NULL
+);
+
+
+ALTER TABLE public.slekret_user_friendships OWNER TO postgres;
 
 --
 -- Name: slekret_users; Type: TABLE; Schema: public; Owner: postgres
@@ -1244,6 +1286,20 @@ public	slekret_users	forum_upvote_downvotes	array	{"foreign_key_constraint_on": 
 public	forum_questions	forum_upvote_downvotes	array	{"foreign_key_constraint_on": {"table": {"name": "forum_upvote_downvote", "schema": "public"}, "column": "forum_question_id"}}	\N	f
 public	forum_upvote_downvote	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
 public	forum_upvote_downvote	forum_question	object	{"foreign_key_constraint_on": "forum_question_id"}	\N	f
+public	slekret_users	blog_article_likes	array	{"foreign_key_constraint_on": {"table": {"name": "blog_article_likes", "schema": "public"}, "column": "user_id"}}	\N	f
+public	blog_articles	blog_article_likes	array	{"foreign_key_constraint_on": {"table": {"name": "blog_article_likes", "schema": "public"}, "column": "blog_articles_id"}}	\N	f
+public	blog_article_likes	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	blog_article_likes	blog_article	object	{"foreign_key_constraint_on": "blog_articles_id"}	\N	f
+public	slekret_users	slekret_user_followings	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_followings", "schema": "public"}, "column": "user_id"}}	\N	f
+public	slekret_users	slekretUserFollowingsByFollowing	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_followings", "schema": "public"}, "column": "following"}}	\N	f
+public	slekret_users	slekret_user_friendships	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_friendships", "schema": "public"}, "column": "user_one_id"}}	\N	f
+public	slekret_users	slekretUserFriendshipsByUserTwoId	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_friendships", "schema": "public"}, "column": "user_two_id"}}	\N	f
+public	slekret_users	slekretUserFriendshipsByLastActionUserId	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_friendships", "schema": "public"}, "column": "last_action_user_id"}}	\N	f
+public	slekret_user_followings	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	slekret_user_followings	slekretUserByFollowing	object	{"foreign_key_constraint_on": "following"}	\N	f
+public	slekret_user_friendships	slekret_user	object	{"foreign_key_constraint_on": "user_two_id"}	\N	f
+public	slekret_user_friendships	slekretUserByUserOneId	object	{"foreign_key_constraint_on": "user_one_id"}	\N	f
+public	slekret_user_friendships	slekretUserByLastActionUserId	object	{"foreign_key_constraint_on": "last_action_user_id"}	\N	f
 \.
 
 
@@ -1276,7 +1332,7 @@ COPY hdb_catalog.hdb_scheduled_events (id, webhook_conf, scheduled_time, retry_c
 --
 
 COPY hdb_catalog.hdb_schema_update_event (instance_id, occurred_at, invalidations) FROM stdin;
-f37c37ed-79b2-45e7-b1d0-e0123cb069ed	2021-01-14 07:17:19.982626+00	{"metadata":false,"remote_schemas":[]}
+65760f82-7ee8-400a-86ce-3b0981b85150	2021-01-15 08:14:12.464144+00	{"metadata":false,"remote_schemas":[]}
 \.
 
 
@@ -1326,6 +1382,9 @@ public	blog_tags	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 public	reading_lists	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 public	forum_replies	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 public	forum_upvote_downvote	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	blog_article_likes	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	slekret_user_friendships	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	slekret_user_followings	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 \.
 
 
@@ -1334,7 +1393,7 @@ public	forum_upvote_downvote	{"custom_root_fields": {}, "custom_column_names": {
 --
 
 COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, console_state) FROM stdin;
-67cad396-d6cc-4604-acc0-a7f8bd11baec	40	2021-01-13 07:51:26.786471+00	{}	{"console_notifications": {"admin": {"date": "2021-01-14T06:44:55.719Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
+67cad396-d6cc-4604-acc0-a7f8bd11baec	40	2021-01-13 07:51:26.786471+00	{}	{"console_notifications": {"admin": {"date": "2021-01-15T08:33:24.559Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
 \.
 
 
@@ -1343,6 +1402,14 @@ COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, cons
 --
 
 COPY hdb_catalog.remote_schemas (id, name, definition, comment) FROM stdin;
+\.
+
+
+--
+-- Data for Name: blog_article_likes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.blog_article_likes (user_id, blog_articles_id, "isLike", created_at, updated_at) FROM stdin;
 \.
 
 
@@ -1373,6 +1440,7 @@ COPY public.forum_questions (id, title, content, user_id, created_at, updated_at
 f8822b24-3eac-4827-878a-d4b920c2db50	hello world	heljslkfjdklfjdskalfjlkasdjfklsdjf	6453cdd4-46a6-4b16-8f62-e65b2b4b7837	2021-01-13 08:42:05.884278+00	2021-01-13 08:42:05.884278+00
 a3f56daa-37e5-4630-a422-5107f979f743	How to make fajitas	Guide on making the best fajitas in the world	6453cdd4-46a6-4b16-8f62-e65b2b4b7837	2021-01-14 03:36:19.796248+00	2021-01-14 03:36:19.796248+00
 a10e13ef-edd8-4913-a3a3-dd1504b66d2b	heading	paragraph	6453cdd4-46a6-4b16-8f62-e65b2b4b7837	2021-01-14 07:03:50.674504+00	2021-01-14 07:03:50.674504+00
+51f8a95f-049d-489b-ba8b-06b86503eb46	Testing Post	# Lorem Ipsum\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.	6453cdd4-46a6-4b16-8f62-e65b2b4b7837	2021-01-14 07:49:26.248425+00	2021-01-14 07:49:26.248425+00
 \.
 
 
@@ -1396,6 +1464,7 @@ a4c5e0ab-a311-4182-8595-37f7f1af5d64	ea9511b9-ef9d-4f14-8897-fd0694f1cc8f	f8822b
 0f37a09e-b43c-48d9-892d-dbe239618b85	01412053-5f6f-44cd-b5ec-352030f65e9c	a3f56daa-37e5-4630-a422-5107f979f743
 910cbf2f-5979-41bd-8268-748f8a32ea65	6a8c44df-5a71-4c71-982d-5c3527ec4385	a3f56daa-37e5-4630-a422-5107f979f743
 a32d5507-08ca-4fbe-a05d-36ba9beaed95	9e644d6c-fd73-49bb-8a62-617ec355661c	a10e13ef-edd8-4913-a3a3-dd1504b66d2b
+83f7c496-2f87-44af-b192-5b4ace8c209e	862db15a-5bb4-42ee-8863-2adb8e7c374d	51f8a95f-049d-489b-ba8b-06b86503eb46
 \.
 
 
@@ -1413,6 +1482,22 @@ a3f56daa-37e5-4630-a422-5107f979f743	6453cdd4-46a6-4b16-8f62-e65b2b4b7837	2021-0
 --
 
 COPY public.reading_lists (id, rl_description, rl_title, rl_cover, user_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: slekret_user_followings; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.slekret_user_followings (user_id, following, id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: slekret_user_friendships; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.slekret_user_friendships (user_one_id, user_two_id, status, last_action_user_id) FROM stdin;
 \.
 
 
@@ -1436,6 +1521,7 @@ a4c5e0ab-a311-4182-8595-37f7f1af5d64	hello
 0f37a09e-b43c-48d9-892d-dbe239618b85	Recipes
 910cbf2f-5979-41bd-8268-748f8a32ea65	Cooking
 a32d5507-08ca-4fbe-a05d-36ba9beaed95	testing 
+83f7c496-2f87-44af-b192-5b4ace8c209e	loremipsum 
 \.
 
 
@@ -1623,6 +1709,14 @@ ALTER TABLE ONLY hdb_catalog.remote_schemas
 
 
 --
+-- Name: blog_article_likes blog_article_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_likes
+    ADD CONSTRAINT blog_article_likes_pkey PRIMARY KEY (user_id, blog_articles_id);
+
+
+--
 -- Name: blog_articles blog_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1679,6 +1773,14 @@ ALTER TABLE ONLY public.reading_lists
 
 
 --
+-- Name: slekret_user_friendships slekret_user_friendships_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_pkey PRIMARY KEY (user_one_id, user_two_id);
+
+
+--
 -- Name: slekret_users slekret_users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1724,6 +1826,14 @@ ALTER TABLE ONLY public.tags
 
 ALTER TABLE ONLY public.tags
     ADD CONSTRAINT tags_tag_name_key UNIQUE (tag_name);
+
+
+--
+-- Name: slekret_user_followings user_follow_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_followings
+    ADD CONSTRAINT user_follow_pkey PRIMARY KEY (id);
 
 
 --
@@ -1801,6 +1911,20 @@ CREATE TRIGGER event_trigger_table_name_update_trigger AFTER UPDATE ON hdb_catal
 --
 
 CREATE TRIGGER hdb_schema_update_event_notifier AFTER INSERT OR UPDATE ON hdb_catalog.hdb_schema_update_event FOR EACH ROW EXECUTE FUNCTION hdb_catalog.hdb_schema_update_event_notifier();
+
+
+--
+-- Name: blog_article_likes set_public_blog_article_likes_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_blog_article_likes_updated_at BEFORE UPDATE ON public.blog_article_likes FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_blog_article_likes_updated_at ON blog_article_likes; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_blog_article_likes_updated_at ON public.blog_article_likes IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 
 
 --
@@ -1954,6 +2078,22 @@ ALTER TABLE ONLY hdb_catalog.hdb_scheduled_event_invocation_logs
 
 
 --
+-- Name: blog_article_likes blog_article_likes_blog_articles_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_likes
+    ADD CONSTRAINT blog_article_likes_blog_articles_id_fkey FOREIGN KEY (blog_articles_id) REFERENCES public.blog_articles(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: blog_article_likes blog_article_likes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_likes
+    ADD CONSTRAINT blog_article_likes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
 -- Name: blog_articles blog_articles_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2047,6 +2187,46 @@ ALTER TABLE ONLY public.forum_upvote_downvote
 
 ALTER TABLE ONLY public.reading_lists
     ADD CONSTRAINT reading_list_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_last_action_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_last_action_user_id_fkey FOREIGN KEY (last_action_user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_user_one_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_user_one_id_fkey FOREIGN KEY (user_one_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_user_two_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_user_two_id_fkey FOREIGN KEY (user_two_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_followings user_follow_following_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_followings
+    ADD CONSTRAINT user_follow_following_fkey FOREIGN KEY (following) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_followings user_follow_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_followings
+    ADD CONSTRAINT user_follow_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
