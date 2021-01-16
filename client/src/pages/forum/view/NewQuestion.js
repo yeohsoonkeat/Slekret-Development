@@ -26,13 +26,14 @@ export default function NewQuestion() {
 			},
 		}
 	);
-	if (data && !loading) {
-		console.log(data);
-		history.push({ pathname: routes.forum, state: { justPosted: true } });
-	}
 	if (error) {
 		return <h1>Error</h1>;
 	}
+
+	if (data && !loading) {
+		history.push({ pathname: routes.forum, state: { justPosted: true } });
+	}
+
 	return (
 		<>
 			<div className="flex justify-between">
@@ -73,7 +74,7 @@ export default function NewQuestion() {
 				<QuestionEditor
 					className={`${
 						isHidden ? 'block' : 'hidden'
-					} xl:block xl:w-6/12 w-full   `}
+					} xl:block xl:w-6/12 w-full border-r-4   `}
 					setTitle={setTitle}
 					setContent={setContent}
 					setListofTags={setListofTags}
