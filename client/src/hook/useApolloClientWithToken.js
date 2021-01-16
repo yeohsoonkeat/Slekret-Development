@@ -1,8 +1,6 @@
 import {
   ApolloClient,
-  ApolloLink,
   HttpLink,
-  concat,
   InMemoryCache,
 } from '@apollo/client';
 import { onError } from 'apollo-link-error';
@@ -12,15 +10,19 @@ import config from '../config';
 export default function useApolloClientWithToken(token, authDispatch) {
   const httpLink = new HttpLink({
     uri: config.hasuraGraphql,
+    headers: {
+      Authorization: `Bearer ${token ? token : config.guestToken}`
+    },
   });
 
   const logoutLink = onError(({ graphQLErrors, networkError, forward }) => {
     if (graphQLErrors) {
       graphQLErrors.forEach(({ extensions }) => {
+        console.log(extensions)
         if (extensions.code === 'invalid-jwt') {
           axios
             .post(
-              config.backendUrl + 'auth/logout',
+              config.backendUrl + '/auth/logout',
               {},
               {
                 withCredentials: true,
@@ -32,7 +34,7 @@ export default function useApolloClientWithToken(token, authDispatch) {
               }
             )
             .then(() => {
-              window.open('/auth', '_self');
+              window.open('/', '_self');
             });
           authDispatch({
             type: 'USER_LOGOUT',
@@ -45,19 +47,17 @@ export default function useApolloClientWithToken(token, authDispatch) {
       console.log('hello world');
   });
 
-  const authMiddleware = new ApolloLink((operation, forward) => {
-    if (token) {
-      operation.setContext({
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
-    return forward(operation);
-  });
+  // const authMiddleware = new ApolloLink((operation, forward) => {
+  //   if (token) {
+  //     operation.setContext({
+  
+  //     });
+  //   }
+  //   return forward(operation);
+  // });
 
   const apolloClient = new ApolloClient({
-    link: logoutLink.concat(concat(authMiddleware, httpLink)),
+    link:logoutLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
   return { apolloClient };
