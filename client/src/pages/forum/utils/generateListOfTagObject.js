@@ -3,7 +3,7 @@ const tagObject = (tagName) => {
 		tag: {
 			data: { tag_name: tagName },
 			on_conflict: {
-				constraint: 'tags_tag_name_key',
+				constraint: 'tags_pkey',
 				update_columns: ['tag_name'],
 			},
 		},
