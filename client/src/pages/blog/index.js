@@ -1,15 +1,16 @@
 import { Route, Switch } from 'react-router-dom';
-import routes from '../../constant/routes';
-import DefaultLayout from '../../layout/default';
 import BlogHome from './view/BlogHome';
 
-const Blog = () => {
+const Blog = (props) => {
+  const { match } = props;
+  const current_url = match.url;
+
   return (
-    <DefaultLayout>
+    <div className="w-full max-w-8xl flex-1">
       <Switch>
-        <Route path={routes.blog} component={BlogHome} />
+        <Route exact path={current_url} component={BlogHome} />
       </Switch>
-    </DefaultLayout>
+    </div>
   );
 };
 

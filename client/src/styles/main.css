@@ -11237,6 +11237,10 @@ video {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.font-code{
+  font-family: Menlo, Monaco;
+}
+
 .font-thin{
   font-weight: 100;
 }
@@ -11270,6 +11274,42 @@ video {
 }
 
 .font-black{
+  font-weight: 900;
+}
+
+.group:hover .group-hover\:font-thin{
+  font-weight: 100;
+}
+
+.group:hover .group-hover\:font-extralight{
+  font-weight: 200;
+}
+
+.group:hover .group-hover\:font-light{
+  font-weight: 300;
+}
+
+.group:hover .group-hover\:font-normal{
+  font-weight: 400;
+}
+
+.group:hover .group-hover\:font-medium{
+  font-weight: 500;
+}
+
+.group:hover .group-hover\:font-semibold{
+  font-weight: 600;
+}
+
+.group:hover .group-hover\:font-bold{
+  font-weight: 700;
+}
+
+.group:hover .group-hover\:font-extrabold{
+  font-weight: 800;
+}
+
+.group:hover .group-hover\:font-black{
   font-weight: 900;
 }
 
@@ -24846,6 +24886,30 @@ video {
   letter-spacing: 0.1em;
 }
 
+.group:hover .group-hover\:tracking-tighter{
+  letter-spacing: -0.05em;
+}
+
+.group:hover .group-hover\:tracking-tight{
+  letter-spacing: -0.025em;
+}
+
+.group:hover .group-hover\:tracking-normal{
+  letter-spacing: 0em;
+}
+
+.group:hover .group-hover\:tracking-wide{
+  letter-spacing: 0.025em;
+}
+
+.group:hover .group-hover\:tracking-wider{
+  letter-spacing: 0.05em;
+}
+
+.group:hover .group-hover\:tracking-widest{
+  letter-spacing: 0.1em;
+}
+
 .hover\:tracking-tighter:hover{
   letter-spacing: -0.05em;
 }
@@ -29171,55 +29235,37 @@ video {
   transition-delay: 1000ms;
 }
 
-@keyframes spin{
-  to{
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes ping{
-  75%, 100%{
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-@keyframes pulse{
-  50%{
-    opacity: .5;
-  }
-}
-
-@keyframes bounce{
-  0%, 100%{
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8,0,1,1);
+@keyframes float{
+  0%{
+    transform: translateY(0px);
+    animation-timing-function: ease-in-out;
   }
 
   50%{
-    transform: none;
-    animation-timing-function: cubic-bezier(0,0,0.2,1);
+    transform: translateY(-20px);
+    animation-timing-function: ease-in-out;
+  }
+
+  100%{
+    transform: translateY(0px);
+    animation-timing-function: ease-in-out;
   }
 }
 
-.animate-none{
-  animation: none;
+.animate-float{
+  animation: float 3s infinite;
 }
 
-.animate-spin{
-  animation: spin 1s linear infinite;
+@font-face {
+  font-family: 'Menlo';
+
+  src: local('Menlo'), url(../fonts/Menlo-Regular.woff) format('woff');
 }
 
-.animate-ping{
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
+@font-face {
+  font-family: 'Monaco';
 
-.animate-pulse{
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-bounce{
-  animation: bounce 1s infinite;
+  src: local('Monaco'), url(../fonts/Monaco.woff) format('woff');
 }
 
 @media (min-width: 640px){
@@ -39922,6 +39968,10 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .sm\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .sm\:font-thin{
     font-weight: 100;
   }
@@ -39955,6 +40005,42 @@ video {
   }
 
   .sm\:font-black{
+    font-weight: 900;
+  }
+
+  .group:hover .sm\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .sm\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .sm\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .sm\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .sm\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .sm\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .sm\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .sm\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .sm\:group-hover\:font-black{
     font-weight: 900;
   }
 
@@ -53518,6 +53604,30 @@ video {
     letter-spacing: 0.1em;
   }
 
+  .group:hover .sm\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .sm\:group-hover\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
   .sm\:hover\:tracking-tighter:hover{
     letter-spacing: -0.05em;
   }
@@ -57843,24 +57953,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .sm\:animate-none{
-    animation: none;
-  }
-
-  .sm\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .sm\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .sm\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .sm\:animate-bounce{
-    animation: bounce 1s infinite;
+  .sm\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -68564,6 +68658,10 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .md\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .md\:font-thin{
     font-weight: 100;
   }
@@ -68597,6 +68695,42 @@ video {
   }
 
   .md\:font-black{
+    font-weight: 900;
+  }
+
+  .group:hover .md\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .md\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .md\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .md\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .md\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .md\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .md\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .md\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .md\:group-hover\:font-black{
     font-weight: 900;
   }
 
@@ -82160,6 +82294,30 @@ video {
     letter-spacing: 0.1em;
   }
 
+  .group:hover .md\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .md\:group-hover\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
   .md\:hover\:tracking-tighter:hover{
     letter-spacing: -0.05em;
   }
@@ -86485,24 +86643,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .md\:animate-none{
-    animation: none;
-  }
-
-  .md\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .md\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .md\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .md\:animate-bounce{
-    animation: bounce 1s infinite;
+  .md\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -97206,6 +97348,10 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .lg\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .lg\:font-thin{
     font-weight: 100;
   }
@@ -97239,6 +97385,42 @@ video {
   }
 
   .lg\:font-black{
+    font-weight: 900;
+  }
+
+  .group:hover .lg\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .lg\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .lg\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .lg\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .lg\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .lg\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .lg\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .lg\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .lg\:group-hover\:font-black{
     font-weight: 900;
   }
 
@@ -110802,6 +110984,30 @@ video {
     letter-spacing: 0.1em;
   }
 
+  .group:hover .lg\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .lg\:group-hover\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
   .lg\:hover\:tracking-tighter:hover{
     letter-spacing: -0.05em;
   }
@@ -115127,24 +115333,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .lg\:animate-none{
-    animation: none;
-  }
-
-  .lg\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .lg\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .lg\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .lg\:animate-bounce{
-    animation: bounce 1s infinite;
+  .lg\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -125848,6 +126038,10 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .xl\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .xl\:font-thin{
     font-weight: 100;
   }
@@ -125881,6 +126075,42 @@ video {
   }
 
   .xl\:font-black{
+    font-weight: 900;
+  }
+
+  .group:hover .xl\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .xl\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .xl\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .xl\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .xl\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .xl\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .xl\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .xl\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .xl\:group-hover\:font-black{
     font-weight: 900;
   }
 
@@ -139444,6 +139674,30 @@ video {
     letter-spacing: 0.1em;
   }
 
+  .group:hover .xl\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .xl\:group-hover\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
   .xl\:hover\:tracking-tighter:hover{
     letter-spacing: -0.05em;
   }
@@ -143769,24 +144023,8 @@ video {
     transition-delay: 1000ms;
   }
 
-  .xl\:animate-none{
-    animation: none;
-  }
-
-  .xl\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .xl\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .xl\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .xl\:animate-bounce{
-    animation: bounce 1s infinite;
+  .xl\:animate-float{
+    animation: float 3s infinite;
   }
 }
 
@@ -154490,6 +154728,10 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .\32xl\:font-code{
+    font-family: Menlo, Monaco;
+  }
+
   .\32xl\:font-thin{
     font-weight: 100;
   }
@@ -154523,6 +154765,42 @@ video {
   }
 
   .\32xl\:font-black{
+    font-weight: 900;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-thin{
+    font-weight: 100;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-extralight{
+    font-weight: 200;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-light{
+    font-weight: 300;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-normal{
+    font-weight: 400;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-medium{
+    font-weight: 500;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-semibold{
+    font-weight: 600;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-bold{
+    font-weight: 700;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-extrabold{
+    font-weight: 800;
+  }
+
+  .group:hover .\32xl\:group-hover\:font-black{
     font-weight: 900;
   }
 
@@ -168086,6 +168364,30 @@ video {
     letter-spacing: 0.1em;
   }
 
+  .group:hover .\32xl\:group-hover\:tracking-tighter{
+    letter-spacing: -0.05em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-tight{
+    letter-spacing: -0.025em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-normal{
+    letter-spacing: 0em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-wide{
+    letter-spacing: 0.025em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-wider{
+    letter-spacing: 0.05em;
+  }
+
+  .group:hover .\32xl\:group-hover\:tracking-widest{
+    letter-spacing: 0.1em;
+  }
+
   .\32xl\:hover\:tracking-tighter:hover{
     letter-spacing: -0.05em;
   }
@@ -172411,23 +172713,7 @@ video {
     transition-delay: 1000ms;
   }
 
-  .\32xl\:animate-none{
-    animation: none;
-  }
-
-  .\32xl\:animate-spin{
-    animation: spin 1s linear infinite;
-  }
-
-  .\32xl\:animate-ping{
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  .\32xl\:animate-pulse{
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .\32xl\:animate-bounce{
-    animation: bounce 1s infinite;
+  .\32xl\:animate-float{
+    animation: float 3s infinite;
   }
 }

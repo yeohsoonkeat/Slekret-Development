@@ -39,7 +39,6 @@ export default function Register() {
 				},
 			})
 			.catch((er) => console.log());
-		console.log(res);
 		if (res.data?.verify) {
 			history.push({ pathname: '/auth/verify', state: { data } });
 		}

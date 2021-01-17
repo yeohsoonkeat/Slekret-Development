@@ -1,5 +1,6 @@
 //app.js
 require('dotenv').config();
+const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const express = require('express');
@@ -9,7 +10,9 @@ const authRoutes = require('./routes/authenticationRoutes/AuthRoutes');
 const jwtUtils = require('./utils/jwt');
 const isUserAuthenticated = require('./middleware/isUserAuthenticated');
 const appConfig = require('./config/app.config');
+const form = require('./config/fileUpload.config');
 const api = require('./api');
+
 const app = express();
 
 // passport config
@@ -55,7 +58,6 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 		refreshToken,
 		process.env.JWT_REFRESH_SECRET
 	);
-	console.log(userId);
 
 	const token = jwtUtils.hasuraJwtToken(userId);
 
@@ -65,6 +67,31 @@ app.get('/token', isUserAuthenticated, (req, res) => {
 		token,
 		auth: true,
 		user,
+	});
+});
+
+app.post('/file-upload', isUserAuthenticated, (req, res) => {
+	const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+	form.parse(req, function(err, fields, files) {
+		if (fileTypes.indexOf(files.image.type) === -1) {
+			return res.json({ message: 'File not support' });
+		}
+
+		const oldPath = files.image.path;
+
+		const fileName = Date.now() + '.' + files.image.type.split('/')[1];
+		const newPath = path.join(__dirname, 'assets') + '/' + fileName;
+
+		const rawData = fs.readFileSync(oldPath);
+
+		fs.writeFile(newPath, rawData, function(err) {
+			if (err) res.json(err);
+
+			return res.json({
+				file_link: appConfig.backendUrl + '/static/' + fileName,
+			});
+		});
 	});
 });
 

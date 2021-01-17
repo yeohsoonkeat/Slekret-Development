@@ -13,11 +13,9 @@ auth.route('/login').post(authController.login);
 auth.route('/logout').post(authController.logout);
 
 auth.route('/forget-password').post(authController.forgetPassword);
-
 auth.route('/verifyPassword').post(authController.verifyPassword);
 
 auth.route('/set-username').post(authController.setUsername);
-
 auth.route('/github').get(passport.authenticate('github'));
 
 auth.route('/github/callback').get(

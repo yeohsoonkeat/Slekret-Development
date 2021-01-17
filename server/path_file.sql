@@ -178,6 +178,25 @@ $$;
 
 ALTER FUNCTION hdb_catalog.insert_event_log(schema_name text, table_name text, trigger_name text, op text, row_data json) OWNER TO postgres;
 
+--
+-- Name: set_current_timestamp_updated_at(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.set_current_timestamp_updated_at() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  _new record;
+BEGIN
+  _new := NEW;
+  _new."updated_at" = NOW();
+  RETURN _new;
+END;
+$$;
+
+
+ALTER FUNCTION public.set_current_timestamp_updated_at() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -878,35 +897,215 @@ ALTER SEQUENCE hdb_catalog.remote_schemas_id_seq OWNED BY hdb_catalog.remote_sch
 
 
 --
+-- Name: blog_article_likes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.blog_article_likes (
+    user_id uuid NOT NULL,
+    blog_article_id uuid NOT NULL,
+    is_like boolean NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.blog_article_likes OWNER TO postgres;
+
+--
+-- Name: blog_article_tags; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.blog_article_tags (
+    tag_name text NOT NULL,
+    blog_article_id uuid NOT NULL
+);
+
+
+ALTER TABLE public.blog_article_tags OWNER TO postgres;
+
+--
+-- Name: blog_articles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.blog_articles (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    title text NOT NULL,
+    content text NOT NULL,
+    article_cover text,
+    user_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.blog_articles OWNER TO postgres;
+
+--
+-- Name: forum_question_votes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.forum_question_votes (
+    forum_question_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    vote smallint DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.forum_question_votes OWNER TO postgres;
+
+--
+-- Name: forum_questions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.forum_questions (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    title text NOT NULL,
+    content text NOT NULL,
+    user_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.forum_questions OWNER TO postgres;
+
+--
+-- Name: forum_replies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.forum_replies (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    content text NOT NULL,
+    user_id uuid NOT NULL,
+    reply_to_answer uuid,
+    forum_question_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    reply_to_user uuid
+);
+
+
+ALTER TABLE public.forum_replies OWNER TO postgres;
+
+--
+-- Name: forum_reply_votes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.forum_reply_votes (
+    forum_reply_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    vote smallint DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.forum_reply_votes OWNER TO postgres;
+
+--
+-- Name: forum_tags; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.forum_tags (
+    tag_name text NOT NULL,
+    forum_question_id uuid NOT NULL
+);
+
+
+ALTER TABLE public.forum_tags OWNER TO postgres;
+
+--
+-- Name: reading_list_entries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reading_list_entries (
+    reading_list_id uuid NOT NULL,
+    blog_article_id uuid NOT NULL
+);
+
+
+ALTER TABLE public.reading_list_entries OWNER TO postgres;
+
+--
+-- Name: slekret_user_followings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.slekret_user_followings (
+    user_id uuid NOT NULL,
+    follow_user_id uuid NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL
+);
+
+
+ALTER TABLE public.slekret_user_followings OWNER TO postgres;
+
+--
+-- Name: slekret_user_friendships; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.slekret_user_friendships (
+    user_id_one uuid NOT NULL,
+    user_id_two uuid NOT NULL,
+    status smallint NOT NULL,
+    last_action_user_id uuid NOT NULL
+);
+
+
+ALTER TABLE public.slekret_user_friendships OWNER TO postgres;
+
+--
 -- Name: slekret_users; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.slekret_users (
-    password character varying,
-    last_login date,
-    username character varying NOT NULL,
-    email character varying NOT NULL,
-    avatar_src character varying DEFAULT 'http://localhost:8000/static/default_profile.svg'::character varying,
-    created_at timestamp with time zone,
-    following integer DEFAULT 0 NOT NULL,
-    followers integer DEFAULT 0 NOT NULL,
-    last_posted_on date,
-    is_hiding_present boolean DEFAULT false NOT NULL,
-    is_superuser boolean DEFAULT false NOT NULL,
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    displayname text,
-    description text
+    username text NOT NULL,
+    displayname text NOT NULL,
+    description text,
+    avatar_src text DEFAULT 'http://localhost:8000/static/default_profile.svg'::text NOT NULL,
+    last_posted_on text,
+    is_superuser boolean DEFAULT false NOT NULL,
+    is_hiding_present boolean DEFAULT false NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    email text NOT NULL,
+    password text,
+    last_login timestamp with time zone DEFAULT now()
 );
 
 
 ALTER TABLE public.slekret_users OWNER TO postgres;
 
 --
--- Name: TABLE slekret_users; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: tags; Type: TABLE; Schema: public; Owner: postgres
 --
 
-COMMENT ON TABLE public.slekret_users IS 'to be updated';
+CREATE TABLE public.tags (
+    tag_name text NOT NULL,
+    tag_description text
+);
 
+
+ALTER TABLE public.tags OWNER TO postgres;
+
+--
+-- Name: user_reading_lists; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_reading_lists (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    rl_title text NOT NULL,
+    rl_description text,
+    rl_cover text,
+    user_id uuid NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.user_reading_lists OWNER TO postgres;
 
 --
 -- Name: remote_schemas id; Type: DEFAULT; Schema: hdb_catalog; Owner: postgres
@@ -1024,9 +1223,39 @@ COPY hdb_catalog.hdb_function (function_schema, function_name, configuration, is
 --
 
 COPY hdb_catalog.hdb_permission (table_schema, table_name, role_name, perm_type, perm_def, comment, is_system_defined) FROM stdin;
-public	slekret_users	guest	select	{"filter": {}, "columns": ["avatar_src", "description", "displayname", "followers", "following", "username"], "computed_fields": [], "allow_aggregations": false}	\N	f
-public	slekret_users	user	update	{"set": {}, "check": {"id": {"_eq": "X-Hasura-User-Id"}}, "filter": {"id": {"_eq": "X-Hasura-User-Id"}}, "columns": ["description", "displayname", "password", "username"]}	\N	f
-public	slekret_users	user	select	{"filter": {"id": {"_eq": "X-Hasura-User-Id"}}, "columns": ["avatar_src", "description", "displayname", "followers", "following", "username"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	tags	guest	select	{"filter": {}, "columns": ["tag_name", "tag_description"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_tags	guest	select	{"filter": {}, "columns": ["tag_name", "forum_question_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_reply_votes	guest	select	{"filter": {}, "columns": ["forum_reply_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_questions	guest	select	{"filter": {}, "columns": ["id", "title", "content", "user_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	blog_articles	guest	select	{"filter": {}, "columns": ["article_cover", "content", "title", "created_at", "updated_at", "id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	blog_article_tags	guest	select	{"filter": {}, "columns": ["tag_name", "blog_article_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_users	guest	select	{"filter": {}, "columns": ["avatar_src", "created_at", "description", "displayname", "id", "is_hiding_present", "last_login", "last_posted_on", "updated_at", "username"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_user_followings	guest	select	{"filter": {}, "columns": ["follow_user_id", "id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_user_friendships	guest	select	{"filter": {}, "columns": ["status", "last_action_user_id", "user_id_one", "user_id_two"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	blog_article_likes	guest	select	{"filter": {}, "columns": ["is_like", "created_at", "updated_at", "blog_article_id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	user_reading_lists	guest	select	{"filter": {}, "columns": ["rl_cover", "rl_description", "rl_title", "created_at", "updated_at", "id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	reading_list_entries	guest	select	{"filter": {}, "columns": ["blog_article_id", "reading_list_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_question_votes	guest	select	{"filter": {}, "columns": ["forum_question_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_users	user	select	{"filter": {}, "columns": ["avatar_src", "created_at", "description", "displayname", "id", "is_hiding_present", "last_login", "last_posted_on", "updated_at", "username"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_questions	user	select	{"filter": {}, "columns": ["id", "title", "content", "user_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	tags	user	select	{"filter": {}, "columns": ["tag_name", "tag_description"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_tags	user	select	{"filter": {}, "columns": ["tag_name", "forum_question_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_question_votes	user	select	{"filter": {}, "columns": ["forum_question_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_reply_votes	user	select	{"filter": {}, "columns": ["forum_reply_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_user_followings	user	select	{"filter": {}, "columns": ["follow_user_id", "id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_user_friendships	user	select	{"filter": {}, "columns": ["status", "last_action_user_id", "user_id_one", "user_id_two"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_replies	guest	select	{"filter": {}, "columns": ["id", "content", "user_id", "reply_to_answer", "forum_question_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_articles	user	select	{"filter": {}, "columns": ["article_cover", "content", "title", "created_at", "updated_at", "id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	blog_article_tags	user	select	{"filter": {}, "columns": ["tag_name", "blog_article_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	blog_article_likes	user	select	{"filter": {}, "columns": ["is_like", "created_at", "updated_at", "blog_article_id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	user_reading_lists	user	select	{"filter": {}, "columns": ["rl_cover", "rl_description", "rl_title", "created_at", "updated_at", "id", "user_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	reading_list_entries	user	select	{"filter": {}, "columns": ["blog_article_id", "reading_list_id"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	forum_questions	user	insert	{"set": {"user_id": "x-hasura-user-id"}, "check": {}, "columns": ["content", "title"], "backend_only": false}	\N	f
+public	tags	user	update	{"set": {}, "filter": {}, "columns": ["tag_name", "tag_description"]}	\N	f
+public	forum_tags	user	insert	{"set": {}, "check": {}, "columns": ["tag_name", "forum_question_id"], "backend_only": false}	\N	f
+public	forum_tags	user	update	{"set": {}, "filter": {}, "columns": ["tag_name", "forum_question_id"]}	\N	f
+public	tags	user	insert	{"set": {}, "check": {}, "columns": ["tag_name", "tag_description"], "backend_only": false}	\N	f
+public	forum_replies	user	select	{"filter": {}, "columns": ["content", "created_at", "forum_question_id", "id", "reply_to_answer", "user_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
 \.
 
 
@@ -1066,6 +1295,54 @@ hdb_catalog	hdb_cron_events	cron_event_logs	array	{"foreign_key_constraint_on": 
 hdb_catalog	hdb_cron_event_invocation_logs	cron_event	object	{"foreign_key_constraint_on": "event_id"}	\N	t
 hdb_catalog	hdb_scheduled_events	scheduled_event_logs	array	{"foreign_key_constraint_on": {"table": {"name": "hdb_scheduled_event_invocation_logs", "schema": "hdb_catalog"}, "column": "event_id"}}	\N	t
 hdb_catalog	hdb_scheduled_event_invocation_logs	scheduled_event	object	{"foreign_key_constraint_on": "event_id"}	\N	t
+public	slekret_users	forum_questions	array	{"foreign_key_constraint_on": {"table": {"name": "forum_questions", "schema": "public"}, "column": "user_id"}}	\N	f
+public	slekret_users	forum_replies	array	{"foreign_key_constraint_on": {"table": {"name": "forum_replies", "schema": "public"}, "column": "user_id"}}	\N	f
+public	forum_questions	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	forum_questions	forum_replies	array	{"foreign_key_constraint_on": {"table": {"name": "forum_replies", "schema": "public"}, "column": "forum_question_id"}}	\N	f
+public	forum_questions	forum_tags	array	{"foreign_key_constraint_on": {"table": {"name": "forum_tags", "schema": "public"}, "column": "forum_question_id"}}	\N	f
+public	forum_replies	forum_question	object	{"foreign_key_constraint_on": "forum_question_id"}	\N	f
+public	forum_replies	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	tags	forum_tags	array	{"foreign_key_constraint_on": {"table": {"name": "forum_tags", "schema": "public"}, "column": "tag_name"}}	\N	f
+public	forum_tags	forum_question	object	{"foreign_key_constraint_on": "forum_question_id"}	\N	f
+public	forum_tags	tag	object	{"foreign_key_constraint_on": "tag_name"}	\N	f
+public	slekret_users	forum_question_votes	array	{"foreign_key_constraint_on": {"table": {"name": "forum_question_votes", "schema": "public"}, "column": "user_id"}}	\N	f
+public	slekret_users	forum_reply_votes	array	{"foreign_key_constraint_on": {"table": {"name": "forum_reply_votes", "schema": "public"}, "column": "user_id"}}	\N	f
+public	forum_questions	forum_question_votes	array	{"foreign_key_constraint_on": {"table": {"name": "forum_question_votes", "schema": "public"}, "column": "forum_question_id"}}	\N	f
+public	forum_replies	forum_reply_votes	array	{"foreign_key_constraint_on": {"table": {"name": "forum_reply_votes", "schema": "public"}, "column": "forum_reply_id"}}	\N	f
+public	forum_question_votes	forum_question	object	{"foreign_key_constraint_on": "forum_question_id"}	\N	f
+public	forum_question_votes	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	forum_reply_votes	forum_reply	object	{"foreign_key_constraint_on": "forum_reply_id"}	\N	f
+public	forum_reply_votes	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	slekret_users	slekret_user_followings	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_followings", "schema": "public"}, "column": "user_id"}}	\N	f
+public	slekret_users	slekretUserFollowingsByFollowUserId	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_followings", "schema": "public"}, "column": "follow_user_id"}}	\N	f
+public	slekret_users	slekret_user_friendships	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_friendships", "schema": "public"}, "column": "user_id_one"}}	\N	f
+public	slekret_users	slekretUserFriendshipsByUserIdTwo	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_friendships", "schema": "public"}, "column": "user_id_two"}}	\N	f
+public	slekret_users	slekretUserFriendshipsByLastActionUserId	array	{"foreign_key_constraint_on": {"table": {"name": "slekret_user_friendships", "schema": "public"}, "column": "last_action_user_id"}}	\N	f
+public	slekret_user_followings	slekret_user	object	{"foreign_key_constraint_on": "follow_user_id"}	\N	f
+public	slekret_user_followings	slekretUserByUserId	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	slekret_user_friendships	slekret_user	object	{"foreign_key_constraint_on": "last_action_user_id"}	\N	f
+public	slekret_user_friendships	slekretUserByUserIdOne	object	{"foreign_key_constraint_on": "user_id_one"}	\N	f
+public	slekret_user_friendships	slekretUserByUserIdTwo	object	{"foreign_key_constraint_on": "user_id_two"}	\N	f
+public	slekret_users	blog_articles	array	{"foreign_key_constraint_on": {"table": {"name": "blog_articles", "schema": "public"}, "column": "user_id"}}	\N	f
+public	slekret_users	blog_article_likes	array	{"foreign_key_constraint_on": {"table": {"name": "blog_article_likes", "schema": "public"}, "column": "user_id"}}	\N	f
+public	slekret_users	user_reading_lists	array	{"foreign_key_constraint_on": {"table": {"name": "user_reading_lists", "schema": "public"}, "column": "user_id"}}	\N	f
+public	tags	blog_article_tags	array	{"foreign_key_constraint_on": {"table": {"name": "blog_article_tags", "schema": "public"}, "column": "tag_name"}}	\N	f
+public	blog_articles	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	blog_articles	blog_article_tags	array	{"foreign_key_constraint_on": {"table": {"name": "blog_article_tags", "schema": "public"}, "column": "blog_article_id"}}	\N	f
+public	blog_articles	blog_article_likes	array	{"foreign_key_constraint_on": {"table": {"name": "blog_article_likes", "schema": "public"}, "column": "blog_article_id"}}	\N	f
+public	blog_articles	reading_list_entries	array	{"foreign_key_constraint_on": {"table": {"name": "reading_list_entries", "schema": "public"}, "column": "blog_article_id"}}	\N	f
+public	blog_article_tags	blog_article	object	{"foreign_key_constraint_on": "blog_article_id"}	\N	f
+public	blog_article_tags	tag	object	{"foreign_key_constraint_on": "tag_name"}	\N	f
+public	blog_article_likes	blog_article	object	{"foreign_key_constraint_on": "blog_article_id"}	\N	f
+public	blog_article_likes	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	user_reading_lists	slekret_user	object	{"foreign_key_constraint_on": "user_id"}	\N	f
+public	user_reading_lists	reading_list_entries	array	{"foreign_key_constraint_on": {"table": {"name": "reading_list_entries", "schema": "public"}, "column": "reading_list_id"}}	\N	f
+public	reading_list_entries	blog_article	object	{"foreign_key_constraint_on": "blog_article_id"}	\N	f
+public	reading_list_entries	user_reading_list	object	{"foreign_key_constraint_on": "reading_list_id"}	\N	f
+public	forum_replies	forum_reply	object	{"foreign_key_constraint_on": "reply_to_answer"}	\N	f
+public	forum_replies	forum_replies	array	{"foreign_key_constraint_on": {"table": {"name": "forum_replies", "schema": "public"}, "column": "reply_to_answer"}}	\N	f
+public	slekret_users	forumRepliesByReplyToUser	array	{"foreign_key_constraint_on": {"table": {"name": "forum_replies", "schema": "public"}, "column": "reply_to_user"}}	\N	f
+public	forum_replies	slekretUserByReplyToUser	object	{"foreign_key_constraint_on": "reply_to_user"}	\N	f
 \.
 
 
@@ -1098,7 +1375,7 @@ COPY hdb_catalog.hdb_scheduled_events (id, webhook_conf, scheduled_time, retry_c
 --
 
 COPY hdb_catalog.hdb_schema_update_event (instance_id, occurred_at, invalidations) FROM stdin;
-8014a682-982c-4a15-940c-292e248fc175	2021-01-12 02:58:33.740732+00	{"metadata":false,"remote_schemas":[]}
+c2421740-3f71-4746-81ec-9663e48a4775	2021-01-16 10:05:37.069213+00	{"metadata":false,"remote_schemas":[]}
 \.
 
 
@@ -1140,6 +1417,19 @@ hdb_catalog	hdb_cron_event_invocation_logs	{"custom_root_fields": {}, "custom_co
 hdb_catalog	hdb_scheduled_events	{"custom_root_fields": {}, "custom_column_names": {}}	t	f
 hdb_catalog	hdb_scheduled_event_invocation_logs	{"custom_root_fields": {}, "custom_column_names": {}}	t	f
 public	slekret_users	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	forum_questions	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	forum_replies	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	tags	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	forum_tags	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	forum_question_votes	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	forum_reply_votes	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	slekret_user_followings	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	slekret_user_friendships	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	blog_articles	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	blog_article_tags	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	blog_article_likes	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	user_reading_lists	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
+public	reading_list_entries	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 \.
 
 
@@ -1148,7 +1438,7 @@ public	slekret_users	{"custom_root_fields": {}, "custom_column_names": {}}	f	f
 --
 
 COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, console_state) FROM stdin;
-87449576-32f0-4570-83b1-8f3137ecabb5	40	2021-01-10 03:41:43.248826+00	{}	{"console_notifications": {"admin": {"date": "2021-01-12T02:46:42.113Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
+632e4e9a-a81e-4c37-8806-42e94b48f753	40	2021-01-16 03:05:38.253101+00	{}	{"console_notifications": {"admin": {"date": "2021-01-16T09:21:06.458Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
 \.
 
 
@@ -1161,11 +1451,140 @@ COPY hdb_catalog.remote_schemas (id, name, definition, comment) FROM stdin;
 
 
 --
+-- Data for Name: blog_article_likes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.blog_article_likes (user_id, blog_article_id, is_like, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: blog_article_tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.blog_article_tags (tag_name, blog_article_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: blog_articles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.blog_articles (id, title, content, article_cover, user_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: forum_question_votes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.forum_question_votes (forum_question_id, user_id, vote, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: forum_questions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.forum_questions (id, title, content, user_id, created_at, updated_at) FROM stdin;
+ed3560b8-4219-4197-b683-34de21e6e5c4	What does the fox say?	Lorem ipsum dolor sit amet consectetur adipisicing	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 07:15:20.743193+00	2021-01-16 07:15:20.743193+00
+9710168c-af13-4fad-8f76-bb056ebc7812	testing	hello wol	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 08:09:54.22818+00	2021-01-16 08:09:54.22818+00
+14d32f93-82c0-47f7-a49e-5d4d2c5e9044	testing	hello wol	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 08:18:00.82714+00	2021-01-16 08:18:00.82714+00
+bc5e85c4-014b-45e3-b8cf-c2a93416c160	hello	hellllo	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 08:31:02.168549+00	2021-01-16 08:31:02.168549+00
+e9f0d03f-fb86-4915-b1de-9aa7d03dfa0e	new post	```js\nquery m($user_id:uuid){\n  forum_questions {\n    id\n    title\n    content\n    created_at\n    forum_tags {\n      tag {\n        tag_name\n      }\n    }\n    slekret_user {\n      username\n      displayname\n      avatar_src\n    }\n    forum_replies_aggregate {\n      aggregate {\n```	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 08:33:42.047737+00	2021-01-16 08:33:42.047737+00
+93775451-d50f-4ace-b30b-3b1e2fea49fc	Testing	Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dolor ducimus est labore placeat repudiandae, minima alias, voluptates aliquam consequatur laudantium tempora hic doloribus nesciunt harum ipsam corrupti quasi ipsum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dolor ducimus est labore placeat repudiandae, minima alias, voluptates aliquam consequatur laudantium tempora hic doloribus nesciunt harum ipsam corrupti quasi ipsum.\n\n	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 08:34:57.399791+00	2021-01-16 08:34:57.399791+00
+02d9f618-78d6-4949-a502-7ab907df2be8	hello	\nGuides / Tutorials / Resources\nData modelling guides\nOne-to-one relationship\nOne-to-many relationship\nMany-to-many relationship\nSetting up soft deletes for data\nPostgres basics\nDocker networking\nSample apps & boilerplates\nIntegration/migration tutorials\nIntegrating with monitoring frameworks\nAuditing tables\nTelemetry\nCode Editor Integrations\nMySQL preview\nSecurity Vulnerability Protocol\nSearch docs...\nGitHub\nEdit on GitHub\nModelling many-to-many table relationships\nTable of contents\n\nIntroduction\nStep 1: Set up a table relationship in the database\nStep 2: Set up GraphQL relationships\nStep 3: Query using relationships\nFetching relationship information\nFlattening a many-to-many relationship query\nIntroduction\nA many-to-many relationship between two tables can be established by creating a table typically called as bridge/junction/join table and adding foreign-key constraints from it to the original tables.\n\nSay we have the following two tables in our database schema:\n\narticle (\n  id SERIAL PRIMARY KEY,\n  title TEXT\n  ...\n)\n\ntag (\n  id SERIAL PRIMARY KEY,\n  tag_value TEXT\n  ...\n)\nThese two tables are related via a many-to-many relationship. i.e:\n\nan article can have many tags\na tag has many articles\nStep 1: Set up a table relationship in the database\nThis many-to-many relationship can be established in the database by:\n\nCreating a bridge table called article_tag with the following structure:\n\narticle_tag (\n  article_id INT\n  tag_id INT\n  PRIMARY KEY (article_id, tag_id)\n  ...\n)\nAdding foreign key constraints from the article_tag table to:\n\nthe article table using the article_id and id columns of the tables respectively\nthe tag table using the tag_id and id columns of the tables respectively\nThe table article_tag sits between the two tables involved in the many-to-many relationship and captures possible permutations of their association via the foreign keys.	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	2021-01-16 08:35:31.488704+00	2021-01-16 08:35:31.488704+00
+\.
+
+
+--
+-- Data for Name: forum_replies; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.forum_replies (id, content, user_id, reply_to_answer, forum_question_id, created_at, updated_at, reply_to_user) FROM stdin;
+62082d77-077b-4c0c-b1e1-d7724d33e904	niceso document.getElementById("demo").innerHTML = d.toDateString(); document.getElementById("demo").innerHTML = d.toDateString(); document.getElementById("demo").innerHTML = d.toDateString();	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	\N	ed3560b8-4219-4197-b683-34de21e6e5c4	2021-01-16 09:22:16.259089+00	2021-01-16 09:37:14.750951+00	\N
+56bd23c6-98f6-49d1-8b7a-2fd1b6c0a6b5	niceso document.getElementById("demo").innerHTML = d.toDateString(); document.getElementById("demo").innerHTML = d.toDateString(); document.getElementById("demo").innerHTML = d.toDateString();	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	62082d77-077b-4c0c-b1e1-d7724d33e904	ed3560b8-4219-4197-b683-34de21e6e5c4	2021-01-16 09:22:16.259089+00	2021-01-16 09:37:14.750951+00	\N
+b72b8112-3d5c-480c-abde-48390a356cab	niceso document.getElementById("demo").innerHTML = d.toDateString(); document.getElementById("demo").innerHTML = d.toDateString(); document.getElementById("demo").innerHTML = d.toDateString();	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	62082d77-077b-4c0c-b1e1-d7724d33e904	ed3560b8-4219-4197-b683-34de21e6e5c4	2021-01-16 09:54:05.316978+00	2021-01-16 09:54:05.316978+00	\N
+0354cf7b-ab6e-4025-a4a0-2e5cadc00a0f	niceso	4c92dc72-7579-46f8-93f6-4d6ffcfe650e	\N	ed3560b8-4219-4197-b683-34de21e6e5c4	2021-01-16 09:22:16.259089+00	2021-01-16 10:01:41.14778+00	\N
+\.
+
+
+--
+-- Data for Name: forum_reply_votes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.forum_reply_votes (forum_reply_id, user_id, vote, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: forum_tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.forum_tags (tag_name, forum_question_id) FROM stdin;
+General	ed3560b8-4219-4197-b683-34de21e6e5c4
+Testing	ed3560b8-4219-4197-b683-34de21e6e5c4
+react	9710168c-af13-4fad-8f76-bb056ebc7812
+TEST	14d32f93-82c0-47f7-a49e-5d4d2c5e9044
+TEST1	14d32f93-82c0-47f7-a49e-5d4d2c5e9044
+node 	bc5e85c4-014b-45e3-b8cf-c2a93416c160
+node 	e9f0d03f-fb86-4915-b1de-9aa7d03dfa0e
+node 	93775451-d50f-4ace-b30b-3b1e2fea49fc
+\.
+
+
+--
+-- Data for Name: reading_list_entries; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.reading_list_entries (reading_list_id, blog_article_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: slekret_user_followings; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.slekret_user_followings (user_id, follow_user_id, id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: slekret_user_friendships; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.slekret_user_friendships (user_id_one, user_id_two, status, last_action_user_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: slekret_users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.slekret_users (password, last_login, username, email, avatar_src, created_at, following, followers, last_posted_on, is_hiding_present, is_superuser, id, displayname, description) FROM stdin;
-$2b$10$zRfXPqoiITUYxN.6SnCOtu8hLyl.q4yLhPFHmsxP05rabwoTuIRdO	\N	testing	sibago1621@izzum.com	http://localhost:8000/static/default_profile.svg	\N	0	0	\N	f	f	0933cf03-26ca-4c60-92a8-e07eeaa5f97f	sokheng uchiha	\N
+COPY public.slekret_users (id, username, displayname, description, avatar_src, last_posted_on, is_superuser, is_hiding_present, created_at, updated_at, email, password, last_login) FROM stdin;
+4c92dc72-7579-46f8-93f6-4d6ffcfe650e	ysk	Yeoh Soon Keat	\N	https://avatars0.githubusercontent.com/u/44747833?v=4	\N	f	f	2021-01-16 04:20:29.19636+00	2021-01-16 04:20:29.19636+00	yeohsoonkeat18@kit.edu.kh	\N	2021-01-16 04:23:45.508909+00
+\.
+
+
+--
+-- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tags (tag_name, tag_description) FROM stdin;
+General	\N
+Testing	\N
+react	\N
+TEST	\N
+TEST1	\N
+node 	\N
+\.
+
+
+--
+-- Data for Name: user_reading_lists; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_reading_lists (id, rl_title, rl_description, rl_cover, user_id, updated_at, created_at) FROM stdin;
 \.
 
 
@@ -1353,19 +1772,107 @@ ALTER TABLE ONLY hdb_catalog.remote_schemas
 
 
 --
+-- Name: blog_article_likes blog_article_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_likes
+    ADD CONSTRAINT blog_article_likes_pkey PRIMARY KEY (user_id, blog_article_id);
+
+
+--
+-- Name: blog_article_tags blog_article_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_tags
+    ADD CONSTRAINT blog_article_tags_pkey PRIMARY KEY (tag_name, blog_article_id);
+
+
+--
+-- Name: blog_articles blog_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_articles
+    ADD CONSTRAINT blog_articles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: forum_question_votes forum_question_upvote_downvotes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_question_votes
+    ADD CONSTRAINT forum_question_upvote_downvotes_pkey PRIMARY KEY (forum_question_id, user_id);
+
+
+--
+-- Name: forum_questions forum_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_questions
+    ADD CONSTRAINT forum_questions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: forum_replies forum_replies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_replies
+    ADD CONSTRAINT forum_replies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: forum_reply_votes forum_reply_votes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_reply_votes
+    ADD CONSTRAINT forum_reply_votes_pkey PRIMARY KEY (forum_reply_id, user_id);
+
+
+--
+-- Name: forum_tags forum_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_tags
+    ADD CONSTRAINT forum_tags_pkey PRIMARY KEY (tag_name, forum_question_id);
+
+
+--
+-- Name: reading_list_entries reading_list_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reading_list_entries
+    ADD CONSTRAINT reading_list_entries_pkey PRIMARY KEY (reading_list_id, blog_article_id);
+
+
+--
+-- Name: user_reading_lists reading_list_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_reading_lists
+    ADD CONSTRAINT reading_list_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: slekret_user_followings slekret_user_followings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_followings
+    ADD CONSTRAINT slekret_user_followings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_pkey PRIMARY KEY (user_id_one, user_id_two);
+
+
+--
 -- Name: slekret_users slekret_users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.slekret_users
     ADD CONSTRAINT slekret_users_email_key UNIQUE (email);
-
-
---
--- Name: slekret_users slekret_users_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.slekret_users
-    ADD CONSTRAINT slekret_users_id_key UNIQUE (id);
 
 
 --
@@ -1382,6 +1889,14 @@ ALTER TABLE ONLY public.slekret_users
 
 ALTER TABLE ONLY public.slekret_users
     ADD CONSTRAINT slekret_users_username_key UNIQUE (username);
+
+
+--
+-- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (tag_name);
 
 
 --
@@ -1462,6 +1977,118 @@ CREATE TRIGGER hdb_schema_update_event_notifier AFTER INSERT OR UPDATE ON hdb_ca
 
 
 --
+-- Name: blog_article_likes set_public_blog_article_likes_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_blog_article_likes_updated_at BEFORE UPDATE ON public.blog_article_likes FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_blog_article_likes_updated_at ON blog_article_likes; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_blog_article_likes_updated_at ON public.blog_article_likes IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: blog_articles set_public_blog_articles_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_blog_articles_updated_at BEFORE UPDATE ON public.blog_articles FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_blog_articles_updated_at ON blog_articles; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_blog_articles_updated_at ON public.blog_articles IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: forum_question_votes set_public_forum_question_upvote_downvotes_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_forum_question_upvote_downvotes_updated_at BEFORE UPDATE ON public.forum_question_votes FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_forum_question_upvote_downvotes_updated_at ON forum_question_votes; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_forum_question_upvote_downvotes_updated_at ON public.forum_question_votes IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: forum_questions set_public_forum_questions_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_forum_questions_updated_at BEFORE UPDATE ON public.forum_questions FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_forum_questions_updated_at ON forum_questions; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_forum_questions_updated_at ON public.forum_questions IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: forum_replies set_public_forum_replies_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_forum_replies_updated_at BEFORE UPDATE ON public.forum_replies FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_forum_replies_updated_at ON forum_replies; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_forum_replies_updated_at ON public.forum_replies IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: forum_reply_votes set_public_forum_reply_votes_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_forum_reply_votes_updated_at BEFORE UPDATE ON public.forum_reply_votes FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_forum_reply_votes_updated_at ON forum_reply_votes; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_forum_reply_votes_updated_at ON public.forum_reply_votes IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: user_reading_lists set_public_reading_list_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_reading_list_updated_at BEFORE UPDATE ON public.user_reading_lists FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_reading_list_updated_at ON user_reading_lists; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_reading_list_updated_at ON public.user_reading_lists IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
+-- Name: slekret_users set_public_slekret_users_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER set_public_slekret_users_updated_at BEFORE UPDATE ON public.slekret_users FOR EACH ROW EXECUTE FUNCTION public.set_current_timestamp_updated_at();
+
+
+--
+-- Name: TRIGGER set_public_slekret_users_updated_at ON slekret_users; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TRIGGER set_public_slekret_users_updated_at ON public.slekret_users IS 'trigger to set value of column "updated_at" to current timestamp on row update';
+
+
+--
 -- Name: event_invocation_logs event_invocation_logs_event_id_fkey; Type: FK CONSTRAINT; Schema: hdb_catalog; Owner: postgres
 --
 
@@ -1539,6 +2166,198 @@ ALTER TABLE ONLY hdb_catalog.hdb_remote_relationship
 
 ALTER TABLE ONLY hdb_catalog.hdb_scheduled_event_invocation_logs
     ADD CONSTRAINT hdb_scheduled_event_invocation_logs_event_id_fkey FOREIGN KEY (event_id) REFERENCES hdb_catalog.hdb_scheduled_events(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: blog_article_likes blog_article_likes_blog_article_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_likes
+    ADD CONSTRAINT blog_article_likes_blog_article_id_fkey FOREIGN KEY (blog_article_id) REFERENCES public.blog_articles(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: blog_article_likes blog_article_likes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_likes
+    ADD CONSTRAINT blog_article_likes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: blog_article_tags blog_article_tags_blog_article_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_tags
+    ADD CONSTRAINT blog_article_tags_blog_article_id_fkey FOREIGN KEY (blog_article_id) REFERENCES public.blog_articles(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: blog_article_tags blog_article_tags_tag_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_article_tags
+    ADD CONSTRAINT blog_article_tags_tag_name_fkey FOREIGN KEY (tag_name) REFERENCES public.tags(tag_name) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: blog_articles blog_articles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_articles
+    ADD CONSTRAINT blog_articles_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_question_votes forum_question_upvote_downvotes_forum_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_question_votes
+    ADD CONSTRAINT forum_question_upvote_downvotes_forum_question_id_fkey FOREIGN KEY (forum_question_id) REFERENCES public.forum_questions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_question_votes forum_question_upvote_downvotes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_question_votes
+    ADD CONSTRAINT forum_question_upvote_downvotes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_questions forum_questions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_questions
+    ADD CONSTRAINT forum_questions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_replies forum_replies_forum_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_replies
+    ADD CONSTRAINT forum_replies_forum_question_id_fkey FOREIGN KEY (forum_question_id) REFERENCES public.forum_questions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_replies forum_replies_reply_to_reply_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_replies
+    ADD CONSTRAINT forum_replies_reply_to_reply_id_fkey FOREIGN KEY (reply_to_answer) REFERENCES public.forum_replies(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_replies forum_replies_reply_to_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_replies
+    ADD CONSTRAINT forum_replies_reply_to_user_fkey FOREIGN KEY (reply_to_user) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_replies forum_replies_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_replies
+    ADD CONSTRAINT forum_replies_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_reply_votes forum_reply_votes_forum_reply_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_reply_votes
+    ADD CONSTRAINT forum_reply_votes_forum_reply_id_fkey FOREIGN KEY (forum_reply_id) REFERENCES public.forum_replies(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_reply_votes forum_reply_votes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_reply_votes
+    ADD CONSTRAINT forum_reply_votes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_tags forum_tags_forum_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_tags
+    ADD CONSTRAINT forum_tags_forum_question_id_fkey FOREIGN KEY (forum_question_id) REFERENCES public.forum_questions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: forum_tags forum_tags_tag_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.forum_tags
+    ADD CONSTRAINT forum_tags_tag_name_fkey FOREIGN KEY (tag_name) REFERENCES public.tags(tag_name) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: reading_list_entries reading_list_entries_blog_article_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reading_list_entries
+    ADD CONSTRAINT reading_list_entries_blog_article_id_fkey FOREIGN KEY (blog_article_id) REFERENCES public.blog_articles(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: reading_list_entries reading_list_entries_reading_list_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reading_list_entries
+    ADD CONSTRAINT reading_list_entries_reading_list_id_fkey FOREIGN KEY (reading_list_id) REFERENCES public.user_reading_lists(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: user_reading_lists reading_list_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_reading_lists
+    ADD CONSTRAINT reading_list_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_followings slekret_user_followings_follow_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_followings
+    ADD CONSTRAINT slekret_user_followings_follow_user_id_fkey FOREIGN KEY (follow_user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_followings slekret_user_followings_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_followings
+    ADD CONSTRAINT slekret_user_followings_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_last_action_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_last_action_user_id_fkey FOREIGN KEY (last_action_user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_user_id_one_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_user_id_one_fkey FOREIGN KEY (user_id_one) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: slekret_user_friendships slekret_user_friendships_user_id_two_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.slekret_user_friendships
+    ADD CONSTRAINT slekret_user_friendships_user_id_two_fkey FOREIGN KEY (user_id_two) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --

@@ -4,7 +4,7 @@ import { ProfilePage } from '../views/';
 export default function ProfileRoute() {
   return (
     <Switch>
-      <Route path="/user/:id" exact component={ProfilePage} />
+      <Route path="/user/:username" exact component={ProfilePage} />
     </Switch>
   );
 }

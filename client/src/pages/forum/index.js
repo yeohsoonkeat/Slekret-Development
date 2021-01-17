@@ -1,16 +1,30 @@
-import { Route, Switch } from "react-router-dom";
-import routes from "../../constant/routes";
-import DefaultLayout from "../../layout/default";
-import ForumHome from "./view/ForumHome";
+import { Route, Switch } from 'react-router-dom';
+import ForumLayout from './layout/ForumLayout';
+import NewQuestion from './view/NewQuestion';
+import QuestionDetail from './view/QuestionDetail';
+import Questions from './view/Questions';
 
-const Forum = () => {
-  return (
-    <DefaultLayout>
-      <Switch>
-        <Route path={routes.forum} component={ForumHome} />
-      </Switch>
-    </DefaultLayout>
-  );
+const Forum = (props) => {
+	const { match } = props;
+	const current_url = match.url;
+
+	return (
+		<ForumLayout>
+			<Switch>
+				<Route exact path={current_url} component={Questions} />
+				<Route
+					exact
+					path={`${current_url}/:id/:title`}
+					component={QuestionDetail}
+				/>
+				<Route
+					exact
+					path={`${current_url}/new-question`}
+					component={NewQuestion}
+				/>
+			</Switch>
+		</ForumLayout>
+	);
 };
 
 export default Forum;
