@@ -7,7 +7,8 @@ const generateVerifyLink = (reqBody, path) => {
 		algorithm: 'HS256',
 		expiresIn: '2m',
 	});
-	const link = appConfig.backendUrl + `/auth/${path}?token=${token}`;
+	const link = appConfig.backendUrl + `/api/v1/auth${path}?token=${token}`;
+	console.log(link, '==');
 	return link;
 };
 

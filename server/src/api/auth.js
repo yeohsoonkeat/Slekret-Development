@@ -7,7 +7,7 @@ const AuthController = require('../controller/AuthController');
 const authController = new AuthController();
 
 auth.route('/register').post(authController.register);
-auth.route('/verify-user').post(authController.verifyUser);
+auth.route('/verify-user').get(authController.verifyUser);
 
 auth.route('/login').post(authController.login);
 auth.route('/logout').post(authController.logout);
