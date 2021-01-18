@@ -1,3 +1,4 @@
+import IconMail from '../../../icons/icon_mail';
 import IconEmail from '../../../icons/ic_email';
 import IconEye from '../../../icons/ic_eye';
 import IconPassword from '../../../icons/ic_password';
@@ -9,13 +10,13 @@ const content = {
 			type: 'email',
 			name: 'email',
 			placeholder: 'example@gmail.com',
-			icon: IconEmail,
+			icon: IconMail,
 		},
 		{
 			type: 'text',
 			name: 'username',
 			placeholder: 'username',
-			icon: IconUser,
+			icon: IconEmail,
 		},
 		{
 			type: 'text',

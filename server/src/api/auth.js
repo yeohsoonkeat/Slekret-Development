@@ -31,6 +31,7 @@ auth
 		authValidator.login(),
 		authController.login
 	);
+
 auth.route('/logout').post(authController.logout);
 
 auth

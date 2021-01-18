@@ -71,7 +71,12 @@ class AuthController {
 
 		return res.json({ user: req.body });
 	}
-	async logout() {}
+
+	async logout(req, res) {
+		req.logout();
+		req.sessoin.destroy();
+		res.json({ auth: false });
+	}
 	async forgetPassword() {}
 	async verifyPassword() {}
 	async setUsername() {}
