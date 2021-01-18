@@ -7,6 +7,8 @@ const jwtUtils = require('../utils/jwt');
 const appConfig = require('../config/app.config');
 const setUserSession = require('../utils/setUserSession');
 const UserService = require('../service/UserService');
+const comparePassword = require('../utils/comparePassword');
+const hashPassword = require('../utils/hashPassword');
 
 const userService = new UserService();
 
@@ -52,6 +54,20 @@ class AuthController {
 		}
 
 		try {
+			// check if user is using the same generate link
+			const userByEmail = await userService.getUserByEmail(user.email);
+
+			if (userByEmail.length !== 0) {
+				const userObj = userByEmail[0];
+				const userSession = {
+					id: userObj.id,
+					username: userObj.username,
+					avatar_src: userObj.avatar_src,
+				};
+				setUserSession(userSession, req);
+				return res.redirect(appConfig.clientURl);
+			}
+
 			const result = await userService.createUser(user);
 
 			setUserSession(result, req);
@@ -68,8 +84,42 @@ class AuthController {
 				message: 'Unable to login',
 			});
 		}
+		const user = req.body;
+		const hashedPassword = await hashPassword(user.password);
 
-		return res.json({ user: req.body });
+		try {
+			const result = await userService.getUserByEmail(user.email);
+			if (result.length === 0) {
+				return res.json({ message: 'Unable to login' });
+			}
+			const userObj = result[0];
+
+			const isPasswordCorrect = await comparePassword(
+				user.password,
+				hashedPassword
+			);
+			console.log(userObj);
+
+			if (!isPasswordCorrect) {
+				console.log('hello');
+				return res.json({ message: 'Unable to login' });
+			}
+
+			const userSession = {
+				id: userObj.id,
+				username: userObj.username,
+				avatar_src: userObj.avatar_src,
+			};
+
+			setUserSession(userSession, req);
+			return res.json({
+				auth: true,
+				user: userSession,
+			});
+		} catch (error) {
+			console.log(error);
+			return res.status(500).json({ message: 'Server Internal Error' });
+		}
 	}
 
 	async logout(req, res) {
@@ -77,6 +127,7 @@ class AuthController {
 		req.sessoin.destroy();
 		res.json({ auth: false });
 	}
+
 	async forgetPassword() {}
 	async verifyPassword() {}
 	async setUsername() {}
