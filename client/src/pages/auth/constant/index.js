@@ -1,4 +1,5 @@
 import IconEmail from '../../../icons/ic_email';
+import IconEye from '../../../icons/ic_eye';
 import IconPassword from '../../../icons/ic_password';
 import IconUser from '../../../icons/ic_user';
 
@@ -7,32 +8,36 @@ const content = {
 		{
 			type: 'email',
 			name: 'email',
-			placeholder: 'Example@gmail.com',
+			placeholder: 'example@gmail.com',
 			icon: IconEmail,
-		},
-		{
-			type: 'password',
-			name: 'password',
-			placeholder: 'Password',
-			icon: IconPassword,
-		},
-		{
-			type: 'password',
-			name: 'confirm-password',
-			placeholder: 'Confirm password',
-			icon: IconPassword,
 		},
 		{
 			type: 'text',
 			name: 'username',
-			placeholder: 'Username',
+			placeholder: 'username',
 			icon: IconUser,
 		},
 		{
 			type: 'text',
 			name: 'displayname',
-			placeholder: 'Display Name',
+			placeholder: 'display Name',
 			icon: IconUser,
+		},
+	],
+	passwordInputs: [
+		{
+			type: 'password',
+			name: 'password',
+			placeholder: 'Password',
+			firstIcon: IconPassword,
+			lostIcon: IconEye,
+		},
+		{
+			type: 'password',
+			name: 'confirm-password',
+			placeholder: 'Confirm password',
+			firstIcon: IconPassword,
+			lostIcon: IconEye,
 		},
 	],
 	loginForm: [
@@ -53,7 +58,6 @@ const content = {
 			name: 'username',
 			placeholder: 'username',
 			icon: IconUser,
-
 		},
 		{
 			type: 'text',

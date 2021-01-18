@@ -5,14 +5,20 @@ const auth = express.Router();
 const AuthController = require('../controller/AuthController');
 const limiter = require('../middleware/limiter');
 const speedLimiter = require('../middleware/speedLimiter');
-
+const AuthValidator = require('../validator/AuthValidator');
+const authValidator = new AuthValidator();
 const authController = new AuthController();
+
+const anHour = 60 * 60 * 1000;
+const canRequest = 5;
+const increaseOneSecond = 1000;
 
 auth
 	.route('/register')
 	.post(
-		speedLimiter(60 * 60 * 1000, 5, 1000),
-		limiter(60 * 60 * 1000, 5),
+		speedLimiter(anHour, canRequest, increaseOneSecond),
+		limiter(anHour, canRequest),
+		authValidator.register(),
 		authController.register
 	);
 auth.route('/verify-user').get(authController.verifyUser);
@@ -20,8 +26,9 @@ auth.route('/verify-user').get(authController.verifyUser);
 auth
 	.route('/login')
 	.post(
-		speedLimiter(60 * 60 * 1000, 5, 1000),
-		limiter(60 * 60 * 1000, 5),
+		speedLimiter(anHour, canRequest, increaseOneSecond),
+		limiter(anHour, canRequest),
+		authValidator.login(),
 		authController.login
 	);
 auth.route('/logout').post(authController.logout);
@@ -29,8 +36,8 @@ auth.route('/logout').post(authController.logout);
 auth
 	.route('/forget-password')
 	.post(
-		speedLimiter(60 * 60 * 1000, 5, 1000),
-		limiter(60 * 60 * 1000, 5),
+		speedLimiter(anHour, canRequest, increaseOneSecond),
+		limiter(anHour, canRequest),
 		authController.forgetPassword
 	);
 auth.route('/verifyPassword').post(authController.verifyPassword);
@@ -38,8 +45,8 @@ auth.route('/verifyPassword').post(authController.verifyPassword);
 auth
 	.route('/set-username')
 	.post(
-		speedLimiter(60 * 60 * 1000, 5, 1000),
-		limiter(60 * 60 * 1000, 5),
+		speedLimiter(anHour, canRequest, increaseOneSecond),
+		limiter(anHour, canRequest),
 		authController.setUsername
 	);
 auth.route('/github').get(passport.authenticate('github'));

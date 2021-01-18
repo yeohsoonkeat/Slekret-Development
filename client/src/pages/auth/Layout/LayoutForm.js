@@ -4,7 +4,7 @@ import Cricle from '../components/Cricle';
 export default function LayoutForm({ children }) {
 	return (
 		<div
-			className="h-screen flex items-center justify-center relative overflow-hidden"
+			className="h-screen flex flex-col items-center justify-center relative overflow-hidden"
 			style={{
 				backgroundColor: '#F2F6FF',
 			}}

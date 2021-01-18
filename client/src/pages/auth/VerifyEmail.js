@@ -1,8 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import IconLeft from '../../icons/ic_left';
+import ApiService from '../../service/api';
+const api = new ApiService();
 
 export default function VerifyEmail() {
+	const [loading, setLoading] = useState(false);
+	const [emailSent, setEmailSent] = useState(false);
+	const location = useLocation();
+	const history = useHistory();
+	if (!location.state) {
+		history.push('/auth/signup');
+	}
+	const user = location.state;
+	const resendEmail = async () => {
+		setLoading(true);
+		const res = await api.register('/auth/register', user);
+		console.log(res, '===');
+		setEmailSent(res?.data?.emailSent);
+		setLoading(false);
+	};
 	return (
 		<div className="h-screen flex flex-col items-center justify-center">
 			<h1 className="text-sm text-gray-500">Thank you for registering</h1>
@@ -23,9 +40,22 @@ export default function VerifyEmail() {
 					back to register
 				</Link>
 
-				<button className="text-white px-10 py-3 bg-blue-500 rounded hover:tracking-wider transition-all hover:shadow-inner focus:outline-none ">
-					Resent
-				</button>
+				{emailSent ? (
+					<button
+						className={` px-10 py-3 ring-1 ring-blue-500 rounded hover:tracking-wider transition-all hover:shadow-inner focus:outline-none `}
+					>
+						Sent
+					</button>
+				) : (
+					<button
+						onClick={resendEmail}
+						className={` ${
+							loading ? 'animate-pulse' : ''
+						} px-10 py-3 bg-blue-500 text-white rounded hover:tracking-wider transition-all hover:shadow-inner focus:outline-none `}
+					>
+						Resent
+					</button>
+				)}
 			</div>
 		</div>
 	);

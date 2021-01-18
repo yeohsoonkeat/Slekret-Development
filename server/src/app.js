@@ -6,8 +6,6 @@ const cors = require('cors');
 const express = require('express');
 const passport = require('passport');
 const sessions = require('express-session');
-const authRoutes = require('./routes/authenticationRoutes/AuthRoutes');
-const jwtUtils = require('./utils/jwt');
 const isUserAuthenticated = require('./middleware/isUserAuthenticated');
 const appConfig = require('./config/app.config');
 const form = require('./config/fileUpload.config');
@@ -52,26 +50,7 @@ app.use(
 app.use('/static', express.static(path.join(__dirname, 'assets')));
 
 // router
-app.use('/auth', authRoutes);
 app.use('/api/v1', api);
-
-app.get('/token', isUserAuthenticated, (req, res) => {
-	const refreshToken = req.session.refreshToken;
-	const userId = jwtUtils.verifyToken(
-		refreshToken,
-		process.env.JWT_REFRESH_SECRET
-	);
-
-	const token = jwtUtils.hasuraJwtToken(userId);
-
-	const user = req.session.user;
-
-	return res.json({
-		token,
-		auth: true,
-		user,
-	});
-});
 
 app.post('/file-upload', isUserAuthenticated, (req, res) => {
 	const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];

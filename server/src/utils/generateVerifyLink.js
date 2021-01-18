@@ -8,7 +8,6 @@ const generateVerifyLink = (reqBody, path) => {
 		expiresIn: '2m',
 	});
 	const link = appConfig.backendUrl + `/api/v1/auth${path}?token=${token}`;
-	console.log(link, '==');
 	return link;
 };
 

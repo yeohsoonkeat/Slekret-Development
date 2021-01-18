@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { validationResult } = require('express-validator');
 const isUserEmailExist = require('../utils/isUserEmailExist');
 const isUserUsernameExist = require('../utils/isUserUsernameExist');
 const sendEmail = require('../utils/sendEmailVerify');
@@ -11,6 +12,13 @@ const userService = new UserService();
 
 class AuthController {
 	async register(req, res) {
+		const error = validationResult(req);
+		if (error.errors.length > 0) {
+			return res.json({
+				message: 'Unable to create user',
+			});
+		}
+
 		const user = req.body;
 
 		if (await isUserEmailExist(user.email)) {
@@ -53,7 +61,16 @@ class AuthController {
 		}
 	}
 
-	async login() {}
+	async login(req, res) {
+		const error = validationResult(req);
+		if (error.errors.length > 0) {
+			return res.json({
+				message: 'Unable to login',
+			});
+		}
+
+		return res.json({ user: req.body });
+	}
 	async logout() {}
 	async forgetPassword() {}
 	async verifyPassword() {}

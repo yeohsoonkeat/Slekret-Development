@@ -4,7 +4,11 @@ const limiter = (windowMs, max) =>
 	rateLimit({
 		windowMs,
 		max,
-		message: { message: 'To many request, Please Try again after an hour' },
+		statusCode: 200,
+		message: {
+			status: 429,
+			message: 'You are doing that too much. Please try again in one hour.',
+		},
 	});
 
 module.exports = limiter;

@@ -19,6 +19,7 @@
     "express-rate-limit": "^5.2.3",
     "express-session": "^1.17.1",
     "express-slow-down": "^1.4.0",
+    "express-validator": "^6.9.2",
     "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.1",

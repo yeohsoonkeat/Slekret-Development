@@ -13,6 +13,7 @@ module.exports = {
 		},
 		animation: {
 			float: 'float 3s infinite',
+			pulse: 'pulse 1.5s infinite',
 		},
 		keyframes: {
 			float: {
@@ -27,6 +28,14 @@ module.exports = {
 				'100%': {
 					transform: 'translateY(0px)',
 					animationTimingFunction: 'ease-in-out',
+				},
+			},
+			pulse: {
+				'0%, 100%': {
+					opacity: 0.8,
+				},
+				'50%': {
+					opacity: 0.5,
 				},
 			},
 		},
