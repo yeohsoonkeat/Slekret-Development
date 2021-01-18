@@ -34,6 +34,7 @@ const App = () => {
 			.then((res) => {
 				const { auth, token, user } = res?.data;
 				setToken(token);
+				console.log(res)
 				window.localStorage.setItem('auth', auth);
 				authDispatch({
 					type: 'UPDATE_AUTH',

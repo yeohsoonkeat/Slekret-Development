@@ -52,6 +52,7 @@ app.use('/auth', authRoutes);
 
 app.get('/token', isUserAuthenticated, (req, res) => {
 	const refreshToken = req.session.refreshToken;
+	console.log(refreshToken);
 	const userId = jwtUtils.verifyToken(
 		refreshToken,
 		process.env.JWT_REFRESH_SECRET
