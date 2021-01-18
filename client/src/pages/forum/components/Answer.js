@@ -34,9 +34,11 @@ const Answer = ({ answer, replies }) => {
           <div className="flex justify-between items-center w-full">
             <div>
               <div className="flex items-center">
-                <p className="text-base font-bold tracking-normal text-gray-800">
-                  {author.display_name}
-                </p>
+                <Link to={`/@${author.username}`}>
+                  <p className="text-base font-bold tracking-normal text-gray-800">
+                    {author.display_name}
+                  </p>
+                </Link>
 
                 {answer.isAccepted && (
                   <span className="ml-2 rounded-full bg-green-200 text-green-800 font-medium text-xs px-3 py-1">

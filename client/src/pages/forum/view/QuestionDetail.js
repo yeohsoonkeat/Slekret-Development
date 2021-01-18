@@ -11,6 +11,7 @@ import UserAvatar from '../components/UserAvatar';
 import formatDistance from 'date-fns/formatDistance';
 import numeral from 'numeral';
 import { FieldsOnCorrectTypeRule } from 'graphql';
+import UserProfile from '../components/UserProfile';
 
 const initial_question = {
   title: '',
@@ -57,46 +58,24 @@ const actionDownVoted = -1;
 const QuestionDetail = () => {
   const question = initial_question;
   const answers = [initial_answer];
-  const replies = [initial_reply].filter((reply) => reply !== initial_reply);
+  const replies = [initial_reply];
 
   const [questionVoteAction, setQuestionVoteAction] = useState(
     question.voteAction
   );
-  const [following, setFollowing] = useState(question.author.isFollowing);
 
   return (
     <div>
       <p className="text-2xl font-bold text-gray-800">{question.title}</p>
 
       {/* User Info */}
-      <div className="mt-4 flex items-center justify-between">
-        <Link to={`/@${question.author.username}`}>
-          <div className="flex items-center">
-            <UserAvatar src={question.author.avatar} />
-
-            <div className="ml-2">
-              <p className="text-base font-bold tracking-normal text-gray-800">
-                {question.author.display_name}
-              </p>
-              <p className="text-xs font-medium text-gray-400">
-                {formatDistance(question.published_date, new Date(), {
-                  addSuffix: true,
-                })}
-              </p>
-            </div>
-          </div>
-        </Link>
-        <div
-          className={`px-6 py-2 text-sm font-medium rounded cursor-pointer select-none ${
-            following
-              ? 'bg-gray-500 text-white hover:bg-gray-800'
-              : 'border border-blue-600 text-blue-600 hover:bg-blue-200'
-          }`}
-          onClick={() => setFollowing(!following)}
-        >
-          {following ? 'Following' : 'Follow'}
-        </div>
-      </div>
+      <UserProfile
+        username={question.author.username}
+        avatar={question.author.avatar}
+        display_name={question.author.display_name}
+        published_date={question.published_date}
+        is_following={question.author.is_following}
+      />
 
       <div className="py-4">
         <ReactMarkdown plugins={[gfm]}>{question.content}</ReactMarkdown>
