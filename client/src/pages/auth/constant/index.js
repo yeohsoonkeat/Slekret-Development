@@ -1,24 +1,38 @@
+import IconEmail from '../../../icons/ic_email';
+import IconPassword from '../../../icons/ic_password';
+import IconUser from '../../../icons/ic_user';
+
 const content = {
-	form: [
+	signupForm: [
 		{
 			type: 'email',
 			name: 'email',
-			placeholder: 'example@gmail.com',
+			placeholder: 'Example@gmail.com',
+			icon: IconEmail,
 		},
 		{
 			type: 'password',
 			name: 'password',
-			placeholder: 'password',
+			placeholder: 'Password',
+			icon: IconPassword,
+		},
+		{
+			type: 'password',
+			name: 'confirm-password',
+			placeholder: 'Confirm password',
+			icon: IconPassword,
 		},
 		{
 			type: 'text',
 			name: 'username',
-			placeholder: 'username',
+			placeholder: 'Username',
+			icon: IconUser,
 		},
 		{
 			type: 'text',
 			name: 'displayname',
 			placeholder: 'Display Name',
+			icon: IconUser,
 		},
 	],
 	loginForm: [

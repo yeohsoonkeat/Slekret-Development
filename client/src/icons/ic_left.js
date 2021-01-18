@@ -1,4 +1,4 @@
-const IconAnnotation = (props) => {
+const IconLeft = (props) => {
 	const { filled, strokeWidth, className } = props;
 
 	if (filled) {
@@ -11,7 +11,7 @@ const IconAnnotation = (props) => {
 			>
 				<path
 					fillRule="evenodd"
-					d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
+					d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
 					clipRule="evenodd"
 				/>
 			</svg>
@@ -29,11 +29,11 @@ const IconAnnotation = (props) => {
 			<path
 				strokeLinecap="round"
 				strokeLinejoin="round"
-				strokeWidth={strokeWidth || 2}
-				d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+				strokeWidth={strokeWidth}
+				d="M15 19l-7-7 7-7"
 			/>
 		</svg>
 	);
 };
 
-export default IconAnnotation;
+export default IconLeft;

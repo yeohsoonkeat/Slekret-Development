@@ -125,7 +125,7 @@ const NavigationBar = () => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={`${authState.user?.profileImg}`}
+                        src={`${authState.user?.avatar_src}`}
                         alt=""
                       />
                     </button>
