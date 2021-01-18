@@ -8,7 +8,7 @@ export default function Input({
 }) {
 	return (
 		<div
-			className={`ring-1 ring-opacity-10 ${
+			className={`ring-1 ring-opacity-40 ${
 				isError ? 'ring-red-500' : 'ring-blue-500'
 			}  rounded mt-5 flex items-center p-1 text-sm`}
 		>
