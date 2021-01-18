@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ButtonAuth from './components/ButtonAuth';
 import ButtonSocial from './components/ButtonSocial';
@@ -12,8 +11,6 @@ import content from './constant';
 import LayoutForm from './Layout/LayoutForm';
 import signUpSchema from './schema/signUpSchema';
 import ErrorMessage from './components/ErrorMessage';
-import IconEye from '../../icons/ic_eye';
-import IconPassword from '../../icons/ic_password';
 import InputPassword from './components/InputPassword';
 import AlertError from './components/AlertError';
 import ApiService from '../../service/api';
@@ -32,7 +29,10 @@ export default function SignUp() {
 
 	const onSubmit = async (data) => {
 		setLoading(true);
-		const res = await api.register('/auth/register', data);
+		const res = await api.register('/auth/register', data).catch((err) => {
+			history.push('/error/500');
+		});
+
 		setMessage(res?.data?.message);
 		setLoading(false);
 		if (res?.data?.emailSent) {
@@ -63,8 +63,6 @@ export default function SignUp() {
 							);
 						})}
 						<InputPassword
-							firstIcon={IconPassword}
-							lastIcon={IconEye}
 							name="password"
 							placeholder="password"
 							isError={errors.password?.message}
@@ -72,8 +70,6 @@ export default function SignUp() {
 						/>
 						<ErrorMessage message={errors.password?.message} />
 						<InputPassword
-							firstIcon={IconPassword}
-							lastIcon={IconEye}
 							name="confirm-password"
 							placeholder="confirm password"
 							refForm={register}

@@ -15,7 +15,7 @@ import Home from './pages/home';
 import Forum from './pages/forum';
 import Blog from './pages/blog';
 import DefaultLayout from './layout/default';
-
+import ErrorPage from './pages/error';
 const App = () => {
 	const [token, setToken] = useState();
 	const [authState, authDispatch] = useAuthProvider();
@@ -51,7 +51,7 @@ const App = () => {
 				<Switch>
 					<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
 					<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
-
+					<Route path={routes.error} component={ErrorPage} />
 					<DefaultLayout>
 						<Route path={routes.home} exact component={Home} />
 						<ProtectedRoute

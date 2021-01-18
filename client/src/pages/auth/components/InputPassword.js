@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import IconEyeOff from '../../../icons/ic_eye_off';
+import IconPassword from '../../../icons/ic_password';
+import IconEye from '../../../icons/ic_eye';
 
-export default function InputPassword({
-	firstIcon: IconPassword,
-	lastIcon: IconEye,
-	isError,
-	name,
-	placeholder,
-	refForm,
-}) {
+export default function InputPassword({ isError, name, placeholder, refForm }) {
 	const [showPassword, setShowPassword] = useState(false);
 
 	return (

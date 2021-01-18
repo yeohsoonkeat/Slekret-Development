@@ -6,7 +6,7 @@ class ApiService {
 	}
 
 	async postRequest(url, data) {
-		return await axios.post(url, data, {
+		const res = await axios.post(url, data, {
 			withCredentials: true,
 			headers: {
 				Accept: 'application/json',
@@ -14,6 +14,7 @@ class ApiService {
 				'Access-Control-Allow-Credentials': true,
 			},
 		});
+		return res;
 	}
 }
 export default ApiService;

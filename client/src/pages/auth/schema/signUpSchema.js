@@ -26,7 +26,8 @@ const signUpSchema = yup.object().shape({
 		.matches(
 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{6,}$/g,
 			'Password should contains atleast one uppercase, one lowercase and one number'
-		),
+		)
+		.oneOf([yup.ref('password')], 'Password must match'),
 });
 
 export default signUpSchema;

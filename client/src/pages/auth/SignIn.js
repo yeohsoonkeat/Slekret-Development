@@ -1,11 +1,11 @@
 import React from 'react';
 import IconEmail from '../../icons/ic_email';
-import IconPassword from '../../icons/ic_password';
 import ButtonAuth from './components/ButtonAuth';
 import ButtonSocial from './components/ButtonSocial';
 import Container from './components/Container';
 import Footer from './components/Footer';
 import Input from './components/Input';
+import InputPassword from './components/InputPassword';
 import Title from './components/Title';
 import LayoutForm from './Layout/LayoutForm';
 export default function SignIn() {
@@ -20,12 +20,8 @@ export default function SignIn() {
 						type="text"
 						name="email"
 					/>
-					<Input
-						placeholder="Password"
-						icon={IconPassword}
-						type="password"
-						name="password"
-					/>
+					<InputPassword placeholder="Password" />
+
 					<ButtonAuth value={'Sign In'} />
 
 					<p className="text-center mt-5 text-sm">or sign in with</p>

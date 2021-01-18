@@ -13,35 +13,39 @@ const hashPassword = require('../utils/hashPassword');
 const userService = new UserService();
 
 class AuthController {
-	async register(req, res) {
-		const error = validationResult(req);
-		if (error.errors.length > 0) {
-			return res.json({
-				message: 'Unable to create user',
+	async register(req, res, next) {
+		try {
+			const error = validationResult(req);
+			if (error.errors.length > 0) {
+				return res.json({
+					message: 'Unable to create user',
+				});
+			}
+
+			const user = req.body;
+
+			if (await isUserEmailExist(user.email)) {
+				return res.json({
+					message: 'Email is alredy exist',
+				});
+			}
+
+			if (await isUserUsernameExist(user.username)) {
+				return res.json({
+					message: 'Username is already exist',
+				});
+			}
+
+			await sendEmail(user, '/verify-user').catch(() => {
+				return res.json({ message: 'Can not send message', emailSent: false });
 			});
-		}
 
-		const user = req.body;
-
-		if (await isUserEmailExist(user.email)) {
 			return res.json({
-				message: 'Email is alredy exist',
+				emailSent: true,
 			});
+		} catch (err) {
+			next(err);
 		}
-
-		if (await isUserUsernameExist(user.username)) {
-			return res.json({
-				message: 'Username is already exist',
-			});
-		}
-
-		await sendEmail(user, '/verify-user').catch(() => {
-			return res.json({ message: 'Can not send message', emailSent: false });
-		});
-
-		return res.json({
-			emailSent: true,
-		});
 	}
 
 	async verifyUser(req, res) {
@@ -98,7 +102,6 @@ class AuthController {
 				user.password,
 				hashedPassword
 			);
-			console.log(userObj);
 
 			if (!isPasswordCorrect) {
 				console.log('hello');
