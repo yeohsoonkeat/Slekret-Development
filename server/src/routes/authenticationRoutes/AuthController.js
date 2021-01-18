@@ -148,8 +148,8 @@ module.exports = {
 	//POST user logout
 
 	userLogout: async (req, res) => {
+		res.session.destroy();
 		req.logout();
-		req.session.destroy();
 		res.json({
 			auth: false,
 		});

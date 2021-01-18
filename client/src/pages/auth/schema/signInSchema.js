@@ -1,12 +1,7 @@
 import * as yup from 'yup';
 
-const signIn = yup.object().shape({
-	email: yup
-		.string()
-		.required()
-		.trim()
-		.max(25)
-		.matches(/^\w+$/g, 'Allow only characters and numbers'),
+const signInSchema = yup.object().shape({
+	email: yup.string().required().trim().email(),
 	password: yup
 		.string()
 		.required()
@@ -18,4 +13,4 @@ const signIn = yup.object().shape({
 		),
 });
 
-export default signIn;
+export default signInSchema;

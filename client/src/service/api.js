@@ -4,6 +4,9 @@ class ApiService {
 	async register(path, data) {
 		return await this.postRequest(config.backendUrl + path, data);
 	}
+	async login(path, data) {
+		return await this.postRequest(config.backendUrl + path, data);
+	}
 
 	async postRequest(url, data) {
 		const res = await axios.post(url, data, {
@@ -14,6 +17,7 @@ class ApiService {
 				'Access-Control-Allow-Credentials': true,
 			},
 		});
+
 		return res;
 	}
 }

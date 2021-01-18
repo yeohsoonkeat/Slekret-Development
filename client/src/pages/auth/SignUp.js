@@ -15,6 +15,7 @@ import InputPassword from './components/InputPassword';
 import AlertError from './components/AlertError';
 import ApiService from '../../service/api';
 import { useHistory } from 'react-router-dom';
+import LoadingForm from './components/LoadingForm';
 
 const api = new ApiService();
 
@@ -42,7 +43,7 @@ export default function SignUp() {
 
 	return (
 		<LayoutForm>
-			{message && <AlertError message={message} />}
+			<AlertError message={message} />
 			<Container>
 				<div className="p-5">
 					<Title value={'Sign Up'} />
@@ -86,13 +87,13 @@ export default function SignUp() {
 						value={'github'}
 						imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}
 					/>
-					<Footer content={'Already have an account?'} path="/auth/signin" />
+					<Footer
+						content={'Already have an account?'}
+						path="/auth/signin"
+						text="Sign in"
+					/>
 				</div>
-				{loading && (
-					<div className="absolute top-0 left-0 w-full h-full animate-pulse bg-blue-50 flex items-center justify-center">
-						<h1>Loading..</h1>
-					</div>
-				)}
+				<LoadingForm loading={loading} />
 			</Container>
 		</LayoutForm>
 	);

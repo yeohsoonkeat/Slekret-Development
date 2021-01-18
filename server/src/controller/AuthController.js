@@ -8,7 +8,6 @@ const appConfig = require('../config/app.config');
 const setUserSession = require('../utils/setUserSession');
 const UserService = require('../service/UserService');
 const comparePassword = require('../utils/comparePassword');
-const hashPassword = require('../utils/hashPassword');
 
 const userService = new UserService();
 
@@ -81,31 +80,30 @@ class AuthController {
 		}
 	}
 
-	async login(req, res) {
+	async login(req, res, next) {
 		const error = validationResult(req);
 		if (error.errors.length > 0) {
 			return res.json({
 				message: 'Unable to login',
+				auth: false,
 			});
 		}
 		const user = req.body;
-		const hashedPassword = await hashPassword(user.password);
 
 		try {
 			const result = await userService.getUserByEmail(user.email);
 			if (result.length === 0) {
-				return res.json({ message: 'Unable to login' });
+				return res.json({ message: 'Unable to login', auth: false });
 			}
 			const userObj = result[0];
 
 			const isPasswordCorrect = await comparePassword(
 				user.password,
-				hashedPassword
+				userObj.password
 			);
 
 			if (!isPasswordCorrect) {
-				console.log('hello');
-				return res.json({ message: 'Unable to login' });
+				return res.json({ message: 'Unable to login', auth: false });
 			}
 
 			const userSession = {
@@ -113,21 +111,20 @@ class AuthController {
 				username: userObj.username,
 				avatar_src: userObj.avatar_src,
 			};
-
 			setUserSession(userSession, req);
+
 			return res.json({
 				auth: true,
 				user: userSession,
 			});
 		} catch (error) {
-			console.log(error);
-			return res.status(500).json({ message: 'Server Internal Error' });
+			next(error);
 		}
 	}
 
 	async logout(req, res) {
 		req.logout();
-		req.sessoin.destroy();
+		req.session.destroy();
 		res.json({ auth: false });
 	}
 

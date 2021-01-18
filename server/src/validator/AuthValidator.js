@@ -32,7 +32,7 @@ class AuthValidator {
 			check('password')
 				.not()
 				.isEmpty()
-				.isLength({ min: 6 }),
+				.isLength({ min: 6, max: 25 }),
 		];
 	}
 }

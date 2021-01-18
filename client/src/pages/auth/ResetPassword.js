@@ -1,7 +1,7 @@
 export default function ResetPassword() {
-    return (
-        <div>
-            
-        </div>
-    )
+	return (
+		<div>
+			<h1>Hello</h1>
+		</div>
+	);
 }
