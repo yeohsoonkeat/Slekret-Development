@@ -7,11 +7,11 @@ const colors = ['pink', 'blue', 'green', 'yellow', 'indigo'];
 const QuestionCard = (props) => {
   const { item, current_url } = props;
 
-  const { id, title,content, created_at, slekret_user, forum_tags, forum_question_votes_aggregate, forum_replies_aggregate } = item
+  const { id, title,content, created_at, slekret_user, forum_tags, forum_question_votes_aggregate, forum_question_answers_aggregate } = item
   const { avatar_src, displayname, username } = slekret_user
   const posted_date = new Date(created_at)
-  const votes = forum_question_votes_aggregate.aggregate.count
-  const replies = forum_replies_aggregate.aggregate.count
+  const votes = forum_question_votes_aggregate.aggregate.sum.vote
+  const answers = forum_question_answers_aggregate.aggregate.count
   const tagRandomIndexes = random_numbers(forum_tags.length);
   
   return (
@@ -80,7 +80,7 @@ const QuestionCard = (props) => {
 
           <div className="flex items-center text-gray-500">
             <IconComment className="w-6 h-6" />
-            <span className="mx-1">{replies}</span>
+            <span className="mx-1">{answers}</span>
             <span className="hidden md:inline-block">answers</span>
           </div>
         </div>
