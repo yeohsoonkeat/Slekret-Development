@@ -7,11 +7,10 @@ import Container from './components/Container';
 import Footer from './components/Footer';
 import Input from './components/Input';
 import Title from './components/Title';
-import Layout from './Layout';
 
 export default function SignIn() {
 	return (
-		<Layout>
+		
 			<Container>
 				<Title value={'Sign In'} />
 				<Input placeholder="Email" icon={IconEmail} type="text" name="email" />
@@ -32,6 +31,6 @@ export default function SignIn() {
 
 				<Footer content={'Already have an account?'} path="/auth/signup" />
 			</Container>
-		</Layout>
+	
 	);
 }

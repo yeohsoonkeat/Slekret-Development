@@ -6,11 +6,9 @@ import Footer from './components/Footer';
 import Input from './components/Input';
 import Title from './components/Title';
 import content from './constant';
-import Layout from './Layout';
 
 export default function SignUp() {
 	return (
-		<Layout>
 			<Container>
 				<Title value={'Sign Up'} />
 				{content.signupForm.map((input, index) => {
@@ -33,6 +31,5 @@ export default function SignUp() {
 				/>
 				<Footer content={'Already have an account?'} path="/auth/signin" />
 			</Container>
-		</Layout>
 	);
 }

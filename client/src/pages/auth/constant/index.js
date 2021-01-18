@@ -52,11 +52,14 @@ const content = {
 			type: 'text',
 			name: 'username',
 			placeholder: 'username',
+			icon: IconUser,
+
 		},
 		{
 			type: 'text',
 			name: 'displayname',
 			placeholder: 'Display Name',
+			icon: IconUser,
 		},
 	],
 	forgetPasswordForm: [
