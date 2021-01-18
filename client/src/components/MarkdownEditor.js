@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Editor from 'rich-markdown-editor';
 import IconComment from '../icons/ic_comment';
 import IconHappy from '../icons/ic_happy';
@@ -6,8 +5,6 @@ import IconPhotograph from '../icons/ic_photograph';
 import light from './MarkdownEditorTheme';
 
 const MarkdownEditor = ({ hasTitle, placeholder }) => {
-  const [justStarted, setJustStarted] = useState();
-
   return (
     <div className="bg-white px-10 pt-4 pb-24 rounded-lg">
       {hasTitle && (
@@ -32,7 +29,7 @@ const MarkdownEditor = ({ hasTitle, placeholder }) => {
           />
         </div>
       )}
-      <Editor placeholder="Write your explaination here..." theme={light} />
+      <Editor placeholder={placeholder} theme={light} />
     </div>
   );
 };

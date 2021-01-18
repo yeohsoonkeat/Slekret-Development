@@ -1,92 +1,96 @@
-import { gql, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import gfm from 'remark-gfm';
 import MarkdownEditor from '../../../components/MarkdownEditor';
 import IconArrowNarrowDown from '../../../icons/ic_arrow_narrow_down';
 import IconArrowNarrowUp from '../../../icons/ic_arrow_narrow_up';
 import IconInfo from '../../../icons/ic_info';
 import Answer from '../components/Answer';
-// import AnswerEditor from '../components/AnswerEditor';
+import UserAvatar from '../components/UserAvatar';
+import formatDistance from 'date-fns/formatDistance';
+import numeral from 'numeral';
+import { FieldsOnCorrectTypeRule } from 'graphql';
 
-const actionUpVoted = 'up_voted';
-const actionDownVoted = 'down_voted';
+const initial_question = {
+  title: '',
+  content: '',
+  voteAction: 0, // can only be -1, 0 and 1
+  votes: 0,
+  published_date: new Date(),
+  author: {
+    username: '',
+    display_name: 'Unknown',
+    isFollowing: false,
+    avatar: '',
+  },
+};
+const initial_answer = {
+  isAccepted: false,
+  published_date: new Date(),
+  voteAction: 0, // can only be -1, 0 and 1
+  votes: 0,
+  content: '',
+  author: {
+    username: '',
+    display_name: 'Unknown',
+    avatar: '',
+  },
+};
+const initial_reply = {
+  published_date: new Date(),
+  reply_to_user: {
+    username: '',
+    display_name: '',
+  },
+  reply_to_id: '',
+  content: '',
+  author: {
+    username: '',
+    display_name: 'Unknown',
+    avatar: '',
+  },
+};
 
-const QuestionDetail = (props) => {
-  // forum qusetion
-  const publish_date = '4 days ago';
-  const question_vote_action = 'hello';
-  const question_votes = 4;
+const actionUpVoted = 1;
+const actionDownVoted = -1;
+const QuestionDetail = () => {
+  const question = initial_question;
+  const answers = [initial_answer];
+  const replies = [initial_reply].filter((reply) => reply !== initial_reply);
 
-  // forum replies
-  const answers = [
-    {
-      votes: '200',
-      avatar:
-        'https://images.unsplash.com/photo-1608833970687-99bc4f54898d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
-      display_name: 'John Doe',
-      username: 'john_doe',
-      publish_date: 'a day ago',
-      best_answer: true,
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo eligendi rerum magni id aut modi quaerat dolore asperiores laudantium soluta distinctio quia quos sapiente officiis, cumque repudiandae repellat. Distinctio, blanditiis? Ipsa maiores assumenda laudantium perferendis ducimus, officia fugit! Dolores porro animi ad deleniti, libero dicta vero, excepturi sint veniam assumenda saepe doloremque eligendi culpa, at beatae quis perferendis commodi ut. Culpa porro a est consequatur dolorum explicabo assumenda consequuntur mollitia animi. Error quaerat esse perferendis eveniet sed, illum, at consequatur tenetur maxime, nobis ex dolor laborum id? Ipsa, aliquam placeat.',
-    }
-  ];
-  const {id} = useParams()
   const [questionVoteAction, setQuestionVoteAction] = useState(
-    question_vote_action
+    question.voteAction
   );
-  // const [questionVotes, setQuestionVotes] = useState(question_votes);
+  const [following, setFollowing] = useState(question.author.isFollowing);
 
-  const followed = true;
-  const [following, setFollowing] = useState(followed);
-  const { loading, error, data } = useQuery(GET_QUESTION_DETAIL, {
-    variables: {question_id: id}
-  });
-  
-  if (loading) {
-
-    return <h1>Loading</h1>;
-  }
-  if (error) {
-    console.log(error);
-    return <h1>error</h1>;
-  }
-
-  const { title, content, created_at, slekret_user, forum_tags, forum_question_votes_aggregate, forum_replies_aggregate, forum_replies } = data.forum_questions[0]
-  const { avatar_src, displayname, username } = slekret_user
-  const posted_date = new Date(created_at)
-  const votes = forum_question_votes_aggregate.aggregate.count
-  const replies = forum_replies_aggregate.aggregate.count
-  const child_replies = forum_replies.filter(x => x.reply_to_reply_id !==null)
-  const mom_replies = forum_replies.filter(x => x.reply_to_reply_id === null)
   return (
     <div>
-      <p className="text-2xl font-bold text-gray-800">{title}</p>
+      <p className="text-2xl font-bold text-gray-800">{question.title}</p>
 
       {/* User Info */}
       <div className="mt-4 flex items-center justify-between">
-        <Link to={`/@${username}`}>
+        <Link to={`/@${question.author.username}`}>
           <div className="flex items-center">
-            <div
-              className="w-12 h-12 rounded-full bg-cover"
-              style={{ backgroundImage: `url(${avatar_src})` }}
-            />
+            <UserAvatar src={question.author.avatar} />
 
             <div className="ml-2">
               <p className="text-base font-bold tracking-normal text-gray-800">
-                {displayname}
+                {question.author.display_name}
               </p>
               <p className="text-xs font-medium text-gray-400">
-                {posted_date.toDateString()}
+                {formatDistance(question.published_date, new Date(), {
+                  addSuffix: true,
+                })}
               </p>
             </div>
           </div>
         </Link>
         <div
-          className={`px-6 py-2 text-white text-sm font-medium rounded cursor-pointer select-none ${
-            following ? 'bg-gray-500' : 'bg-blue-600 hover:bg-blue-500'
+          className={`px-6 py-2 text-sm font-medium rounded cursor-pointer select-none ${
+            following
+              ? 'bg-gray-500 text-white hover:bg-gray-800'
+              : 'border border-blue-600 text-blue-600 hover:bg-blue-200'
           }`}
           onClick={() => setFollowing(!following)}
         >
@@ -95,7 +99,7 @@ const QuestionDetail = (props) => {
       </div>
 
       <div className="py-4">
-        <ReactMarkdown plugins={[gfm]}>{content}</ReactMarkdown>
+        <ReactMarkdown plugins={[gfm]}>{question.content}</ReactMarkdown>
       </div>
 
       <div className="flex justify-between">
@@ -128,7 +132,10 @@ const QuestionDetail = (props) => {
           >
             <IconArrowNarrowDown className="w-6 h-6" />
           </div>
-          <span className="ml-2">{votes} votes</span>
+          <span className="ml-2">
+            {numeral(question.votes).format('0.[00]a')} vote
+            {question.votes > 1 && 's'}
+          </span>
         </div>
 
         <div className="flex items-center text-gray-600 hover:cursor-pointer hover:font-medium hover:text-gray-800">
@@ -139,62 +146,34 @@ const QuestionDetail = (props) => {
 
       {/* Answers */}
       <div className="mt-4">
-        {/* <AnswerEditor /> */}
         <MarkdownEditor placeholder="Write your answer here..." />
+        <div className="mt-2 flex justify-end">
+          <button
+            className="px-6 py-2 rounded-md text-sm border bg-blue-600 text-white"
+            onClick={() => {
+              console.log('answer');
+            }}
+          >
+            Answer
+          </button>
+        </div>
       </div>
       <div className="mt-12 mb-4 pb-4 border-b font-medium">
-        {replies} Replies
+        {answers.length} Answer{answers.length > 1 && 's'}
       </div>
-      <div className="flex flex-col space-y-6">
-        {mom_replies.map((reply, index) => {
-          return <Answer key={index} reply={reply} replyLength={forum_replies.length} replies={child_replies} />
-        })}
-      </div>
+      {answers && answers.length > 0 ? (
+        <div className="flex flex-col space-y-6">
+          {answers.map((answer, index) => {
+            return <Answer key={index} answer={answer} replies={replies} />;
+          })}
+        </div>
+      ) : (
+        <div className="w-full h-40 bg-gray-400 flex justify-center items-center text-white">
+          No Answer Yet
+        </div>
+      )}
     </div>
   );
 };
 
 export default QuestionDetail;
-
-const GET_QUESTION_DETAIL =  gql`
-query m($question_id: uuid) {
-  forum_questions(where: {id: {_eq: $question_id}}) {
-    id
-    title
-    content
-    created_at
-    forum_tags {
-      tag {
-        tag_name
-      }
-    }
-    slekret_user {
-      username
-      displayname
-      avatar_src
-    }
-    forum_replies_aggregate {
-      aggregate {
-        count
-      }
-    }
-    forum_question_votes_aggregate {
-      aggregate {
-        count
-      }
-    }
-    forum_replies {
-      content
-      reply_to_reply_id
-      id
-      slekret_user {
-        avatar_src
-        displayname
-        username
-      }
-      created_at
-    }
-  }
-}
-
-`
