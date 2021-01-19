@@ -10,7 +10,7 @@ const authValidator = new AuthValidator();
 const authController = new AuthController();
 
 const anHour = 60 * 60 * 1000;
-const canRequest = 5;
+const canRequest = 7;
 const increaseOneSecond = 1000;
 
 auth
