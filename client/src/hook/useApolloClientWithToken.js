@@ -36,8 +36,8 @@ export default function useApolloClientWithToken(token, authDispatch) {
 				}
 			});
 		}
-		if (networkError && networkError.statusCode === 401)
-			console.log('hello world');
+		if (networkError && networkError.statusCode === 401) {
+		}
 	});
 
 	const authMiddleware = new ApolloLink((operation, forward) => {

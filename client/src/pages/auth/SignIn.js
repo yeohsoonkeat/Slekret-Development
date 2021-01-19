@@ -17,6 +17,7 @@ import signInSchema from './schema/signInSchema';
 import ApiService from '../../service/api';
 import AlertError from './components/AlertError';
 import config from '../../config';
+import Divider from './components/Divider';
 const api = new ApiService();
 
 export default function SignIn() {
@@ -78,11 +79,7 @@ export default function SignIn() {
 					>
 						Forgot Password?
 					</Link>
-					<div className="flex justify-center items-center  mt-5">
-						<p className="flex-1 border-2 h-0" />
-						<p className="text-center text-sm  mr-2 ml-2">or</p>
-						<p className="flex-1 border-2 h-1" />
-					</div>
+					<Divider />
 					<div onClick={handleAuthGithub}>
 						<ButtonSocial
 							imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}

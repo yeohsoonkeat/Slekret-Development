@@ -7,7 +7,7 @@ import Container from './components/Container';
 import Footer from './components/Footer';
 import Input from './components/Input';
 import Title from './components/Title';
-import content from './constant';
+import content from './constant/form';
 import LayoutForm from './Layout/LayoutForm';
 import signUpSchema from './schema/signUpSchema';
 import ErrorMessage from './components/ErrorMessage';
@@ -17,6 +17,7 @@ import ApiService from '../../service/api';
 import { useHistory, useLocation } from 'react-router-dom';
 import LoadingForm from './components/LoadingForm';
 import config from '../../config';
+import Divider from './components/Divider';
 
 const api = new ApiService();
 
@@ -95,11 +96,10 @@ export default function SignUp() {
 						<ButtonAuth value={'Sign Up'} />
 						<ErrorMessage message="" />
 					</form>
-
-					<p className="text-center mt-5 text-sm">or sign up with</p>
+					<Divider />
 					<div onClick={handleAuthGithub}>
 						<ButtonSocial
-							value={'github'}
+							title={'github'}
 							imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}
 						/>
 					</div>

@@ -13,7 +13,6 @@ export default function index() {
 			<Route exact path="/auth/setupusername" component={SetUpUsername} />
 			<Route exact path="/auth/reset-password" component={ResetPassword} />
 			<Route exact path="/auth/verify-email" component={VerifyEmail} />
-
 			<Redirect from="/auth*" to="/auth/signin" />
 		</Switch>
 	);

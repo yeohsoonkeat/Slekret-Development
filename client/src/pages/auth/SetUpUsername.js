@@ -7,7 +7,7 @@ import ErrorMessage from './components/ErrorMessage';
 import Input from './components/Input';
 import LoadingForm from './components/LoadingForm';
 import Title from './components/Title';
-import constant from './constant';
+import constant from './constant/form';
 import LayoutForm from './Layout/LayoutForm';
 import ApiService from '../../service/api';
 import { useHistory } from 'react-router-dom';
@@ -26,10 +26,8 @@ export default function SetUpUsername() {
 		const res = await api
 			.setUpUsername('/auth/setup-username', data)
 			.catch((er) => {
-				console.log(er);
 				history.push('/error/500');
 			});
-		console.log(res);
 		if (!res?.data?.auth) {
 			setLoading(false);
 			setMessage(res.data.message);

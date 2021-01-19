@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import IconLeft from '../../icons/ic_left';
 import ApiService from '../../service/api';
+import staticContent from './constant/verifyEmail';
 
 const api = new ApiService();
 
@@ -32,25 +33,22 @@ export default function VerifyEmail() {
 
 	return (
 		<div className="h-screen flex flex-col items-center justify-center">
-			<h1 className="text-sm text-gray-500">Thank you for registering</h1>
+			<h1 className="text-sm text-gray-500">{staticContent.greeting}</h1>
 			<img
 				src={process.env.PUBLIC_URL + '/assets/mail.svg'}
 				alt=""
 				className="w-96 mt-5 mb-5"
 			/>
 
-			<h1 className="text-3xl text-center">Verify your email address</h1>
-			<p className="text-gray-500 mt-5 text-center">
-				Please click on the link that has been send to your email account to
-				verify your email.
-			</p>
+			<h1 className="text-3xl text-center">{staticContent.title}</h1>
+			<p className="text-gray-500 mt-5 text-center">{staticContent.desc}</p>
 			<div className="flex flex-col-reverse md:flex-row items-center mt-5">
 				<Link
 					to={location.state.prevPath}
 					className=" mt-5 md:mt-0 flex px-10 py-3"
 				>
 					<IconLeft className="w-6 h-6" filled />
-					back to register
+					{staticContent.buttonBackText}
 				</Link>
 
 				{emailSent ? (
