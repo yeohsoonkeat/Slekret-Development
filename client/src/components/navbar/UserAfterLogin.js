@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useAuthProvider from '../../hook/useAuthProvider';
 import ApiService from '../../service/api';
 
 const api = new ApiService();
 
-export default function UserAfterLogin({ userImg, username }) {
+export default function UserAfterLogin({ username, avatarSrc, authDispatch }) {
 	const [openDropDown, setOpenDropDown] = useState(false);
-	const authDispatch = useAuthProvider()[1];
 
 	const handleLogout = async () => {
 		setOpenDropDown(false);
@@ -17,8 +15,6 @@ export default function UserAfterLogin({ userImg, username }) {
 			window.open('/error/500');
 		});
 	};
-
-	const avatarSrc = window.localStorage.getItem('avatarSrc') || userImg;
 
 	return (
 		<div className="relative">

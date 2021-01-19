@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import IconUser from '../../icons/ic_user';
 
-export default function UserBeforLogin() {
+function UserBeforLogin() {
 	return (
 		<Link
 			to="/auth/signin"
@@ -14,3 +14,5 @@ export default function UserBeforLogin() {
 		</Link>
 	);
 }
+
+export default UserBeforLogin;

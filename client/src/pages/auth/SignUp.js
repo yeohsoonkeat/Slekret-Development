@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import ButtonAuth from './components/ButtonAuth';
 import ButtonSocial from './components/ButtonSocial';
 import Container from './components/Container';
-import Footer from './components/Footer';
+import FormFooter from './components/FormFooter';
 import Input from './components/Input';
 import Title from './components/Title';
 import content from './constant/form';
@@ -104,7 +104,7 @@ export default function SignUp() {
 						/>
 					</div>
 
-					<Footer
+					<FormFooter
 						content={'Already have an account?'}
 						path="/auth/signin"
 						text="Sign in"

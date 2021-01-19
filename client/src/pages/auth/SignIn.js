@@ -7,7 +7,7 @@ import ButtonAuth from './components/ButtonAuth';
 import ButtonSocial from './components/ButtonSocial';
 import Container from './components/Container';
 import ErrorMessage from './components/ErrorMessage';
-import Footer from './components/Footer';
+import FormFooter from './components/FormFooter';
 import Input from './components/Input';
 import InputPassword from './components/InputPassword';
 import LoadingForm from './components/LoadingForm';
@@ -87,7 +87,7 @@ export default function SignIn() {
 						/>
 					</div>
 
-					<Footer
+					<FormFooter
 						text={'Sign Up'}
 						content={'Already have an account?'}
 						path="/auth/signup"
