@@ -6,7 +6,6 @@ import UserInfo from './UserInfo';
 
 const ItemCard = ({ item }) => {
   const {
-    id,
     title,
     content,
     article_cover,

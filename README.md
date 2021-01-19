@@ -1,7 +1,9 @@
-docker-compose down --volumes  
-docker exec -i slekret-development_postgres_1 psql -U postgres -d postgres < ./path_file.sql
-docker exec -i container_name pg_dump -U postgres db_name > path_file.sql
+docker-compose down --volumes
 
-[ ] login with github
-[ ] store img,id,
-[ ] send token,img,id back to front-end
+# Generate dump data file to database
+
+docker exec -i slekret-development_postgres_1 psql -U postgres -d postgres < ./path_file.sql
+
+# Generate dump data from database to file path_file.sql
+
+docker exec -i container_name pg_dump -U postgres db_name > path_file.sql
