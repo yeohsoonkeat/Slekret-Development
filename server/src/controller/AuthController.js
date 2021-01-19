@@ -39,7 +39,7 @@ class AuthController {
 			}
 
 			await sendEmail(user, '/verify-user').catch(() => {
-				return res.json({ message: 'Can not send message', emailSent: false });
+				return res.json({ message: 'Can not send email', emailSent: false });
 			});
 
 			return res.json({

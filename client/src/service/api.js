@@ -15,6 +15,10 @@ class ApiService {
 		return this.postRequest(config.backendUrl + path, data);
 	}
 
+	async logout(path) {
+		return this.postRequest(config.backendUrl + path, {});
+	}
+
 	async postRequest(url, data) {
 		const res = await axios.post(url, data, {
 			withCredentials: true,
