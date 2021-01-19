@@ -4,35 +4,34 @@ import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
 export default function ProfilePage() {
-  let { username } = useParams();
-  username = username.replace(/^@/, '');
-  const { loading, error, data } = useQuery(GET_USER_DETAIL, {
-    variables: { username },
-  });
+	let { username } = useParams();
+	username = username.replace(/^@/, '');
+	const { loading, error, data } = useQuery(GET_USER_DETAIL, {
+		variables: { username },
+	});
 
-  if (loading) {
-    return <h1>Loading</h1>;
-  }
-  if (error) {
-    console.log(error);
-    return <h1>error</h1>;
-  }
-  const user = data.slekret_users[0];
+	if (loading) {
+		return <h1>Loading</h1>;
+	}
+	if (error) {
+		console.log(error);
+		return <h1>error</h1>;
+	}
+	const user = data.slekret_users[0];
 
-  return (
-    <ProfileCard user={user}>
-      <ProfileFollow user={user} />
-    </ProfileCard>
-  );
+	return (
+		<ProfileCard user={user}>
+			<ProfileFollow user={user} />
+		</ProfileCard>
+	);
 }
 const GET_USER_DETAIL = gql`
-  query MyQuery($username: String) {
-    slekret_users(where: { username: { _eq: $username } }) {
-      avatar_src
-      description
-      displayname
-      username
-      last_login
-    }
-  }
+	query MyQuery($username: String) {
+		slekret_users(where: { username: { _eq: $username } }) {
+			avatar_src
+			description
+			displayname
+			username
+		}
+	}
 `;
