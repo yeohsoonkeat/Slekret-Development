@@ -53,6 +53,7 @@ const initial_reply = {
   },
 };
 
+
 const actionUpVoted = 1;
 const actionDownVoted = -1;
 const QuestionDetail = () => {
@@ -117,11 +118,11 @@ const QuestionDetail = () => {
           </span>
         </div>
 
-        <div className="flex items-center text-gray-600 hover:cursor-pointer hover:font-medium hover:text-gray-800">
-          <IconInfo className="w-6 h-6" />
-          <p className="ml-1 text-sm">Report</p>
-        </div>
-      </div>
+				<div className="flex items-center text-gray-600 hover:cursor-pointer hover:font-medium hover:text-gray-800">
+					<IconInfo className="w-6 h-6" />
+					<p className="ml-1 text-sm">Report</p>
+				</div>
+			</div>
 
       {/* Answers */}
       <div className="mt-4">
@@ -156,3 +157,4 @@ const QuestionDetail = () => {
 };
 
 export default QuestionDetail;
+
