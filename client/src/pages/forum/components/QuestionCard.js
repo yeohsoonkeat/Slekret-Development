@@ -1,19 +1,30 @@
+import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
-import IconComment from '../../../icons/ic_comment';
-import IconThumbUp from '../../../icons/ic_thumb_up';
+import routes from '../../../constant/routes';
 import random_numbers from '../utils/random_numbers';
+
+// TODO: Change colors
 const colors = ['pink', 'blue', 'green', 'yellow', 'indigo'];
 
 const QuestionCard = (props) => {
   const { item, current_url } = props;
 
-  const { id, title,content, created_at, slekret_user, forum_tags, forum_question_votes_aggregate, forum_question_answers_aggregate } = item
-  const { avatar_src, displayname, username } = slekret_user
-  const posted_date = new Date(created_at)
-  const votes = forum_question_votes_aggregate.aggregate.sum.vote
-  const answers = forum_question_answers_aggregate.aggregate.count
+  const {
+    id,
+    title,
+    content,
+    created_at,
+    slekret_user,
+    forum_tags,
+    forum_question_votes_aggregate,
+    forum_question_answers_aggregate,
+  } = item;
+  const { avatar_src, displayname, username } = slekret_user;
+  const posted_date = new Date(created_at);
+  const votes = forum_question_votes_aggregate.aggregate.sum.vote;
+  const answers = forum_question_answers_aggregate.aggregate.count;
   const tagRandomIndexes = random_numbers(forum_tags.length);
-  
+
   return (
     <div className="bg-white shadow-sm rounded-lg px-6 py-4">
       <div className="flex-1 border-b">
@@ -30,14 +41,15 @@ const QuestionCard = (props) => {
             const randomColor = colors[tagRandomIndexes[index] % colors.length];
 
             return (
-              <span
+              <Link
+                to={`${routes.tag}/${tag.tag.tag_name.toLowerCase()}`}
                 key={index}
                 className={`${
                   index !== 0 && 'ml-2'
                 } px-2 py-1 select-none rounded-md text-xs uppercase font-medium tracking-wider bg-${randomColor}-200 text-${randomColor}-700`}
               >
                 {tag.tag.tag_name}
-              </span>
+              </Link>
             );
           })}
         </div>
@@ -56,32 +68,43 @@ const QuestionCard = (props) => {
       </div>
 
       <div className="mt-2 flex items-center justify-between">
-        <Link to={`@${username}`} className="flex items-center">
-          <div
-            className="w-10 h-10 rounded-full bg-blue-500 bg-cover"
-            style={{ backgroundImage: `url(${avatar_src})` }}
-          />
+        <div className="flex items-center">
+          <Link to={`@${username}`}>
+            <div
+              className="w-10 h-10 rounded-full bg-blue-500 bg-cover"
+              style={{ backgroundImage: `url(${avatar_src})` }}
+            />
+          </Link>
           <div className="text-gray-500 ml-3 text-sm font-medium select-none">
             <span className="hidden md:inline-block mr-1">Posted by</span>
-            <span className="text-blue-500 hover:text-blue-800 font-medium">
+            <Link
+              to={`@${username}`}
+              className="text-blue-500 hover:text-blue-800 font-medium"
+            >
               {displayname}
-            </span>
+            </Link>
             <span className="mx-3 hidden md:inline-block">&middot;</span>
-            <span className="text-xs block md:inline-block">{posted_date.toDateString()}</span>
+            <span className="text-xs block md:inline-block">
+              {formatDistance(posted_date, new Date(), {
+                addSuffix: true,
+              })}
+            </span>
           </div>
-        </Link>
+        </div>
 
-        <div className="text-sm font-medium select-none flex items-center space-x-6 md:space-x-10">
+        <div className="text-sm font-medium select-none flex items-center space-x-6">
           <div className="flex items-center text-gray-500">
-            <IconThumbUp className="w-6 h-6"/>
             <span className="mx-1">{votes}</span>
-            <span className="hidden md:inline-block">votes</span>
+            <span className="hidden md:inline-block">
+              vote{votes > 1 && 's'}
+            </span>
           </div>
 
           <div className="flex items-center text-gray-500">
-            <IconComment className="w-6 h-6" />
             <span className="mx-1">{answers}</span>
-            <span className="hidden md:inline-block">answers</span>
+            <span className="hidden md:inline-block">
+              answer{answers > 1 && 's'}
+            </span>
           </div>
         </div>
       </div>

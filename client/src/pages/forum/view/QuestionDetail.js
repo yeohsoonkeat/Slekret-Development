@@ -1,121 +1,148 @@
-import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
 import gfm from 'remark-gfm';
 import MarkdownEditor from '../../../components/MarkdownEditor';
-import IconArrowNarrowDown from '../../../icons/ic_arrow_narrow_down';
-import IconArrowNarrowUp from '../../../icons/ic_arrow_narrow_up';
 import IconInfo from '../../../icons/ic_info';
 import Answer from '../components/Answer';
-import UserAvatar from '../components/UserAvatar';
-import formatDistance from 'date-fns/formatDistance';
-import numeral from 'numeral';
-import { FieldsOnCorrectTypeRule } from 'graphql';
 import UserProfile from '../components/UserProfile';
+import { gql, useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
+import useAuthProvider from '../../../hook/useAuthProvider';
+import VoteAction from '../components/VoteAction';
 
-const initial_question = {
-  title: '',
-  content: '',
-  voteAction: 0, // can only be -1, 0 and 1
-  votes: 0,
-  published_date: new Date(),
-  author: {
-    username: '',
-    display_name: 'Unknown',
-    isFollowing: false,
-    avatar: '',
-  },
-};
-const initial_answer = {
-  isAccepted: false,
-  published_date: new Date(),
-  voteAction: 0, // can only be -1, 0 and 1
-  votes: 0,
-  content: '',
-  author: {
-    username: '',
-    display_name: 'Unknown',
-    avatar: '',
-  },
-};
-const initial_reply = {
-  published_date: new Date(),
-  reply_to_user: {
-    username: '',
-    display_name: '',
-  },
-  reply_to_id: '',
-  content: '',
-  author: {
-    username: '',
-    display_name: 'Unknown',
-    avatar: '',
-  },
-};
-
-const actionUpVoted = 1;
-const actionDownVoted = -1;
 const QuestionDetail = () => {
-  const question = initial_question;
-  const answers = [initial_answer];
-  const replies = [initial_reply];
+  const { id } = useParams();
+  const authState = useAuthProvider()[0];
 
-  const [questionVoteAction, setQuestionVoteAction] = useState(
-    question.voteAction
-  );
+  const { loading, error, data } = useQuery(GET_ALL_FORUM_QUESTIONS, {
+    variables: {
+      id,
+      current_user_id: authState.user.id,
+    },
+  });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error.</div>;
+  }
+
+  const dbQuestion = data.forum_questions[0];
+  const {
+    title,
+    content,
+    created_at: published_date,
+    forum_question_votes: current_user_question_vote_action,
+    forum_question_votes_aggregate: question_votes,
+    slekret_user,
+    forum_question_answers_aggregate: total_answers,
+    forum_question_answers: question_answers,
+  } = dbQuestion;
+  const {
+    id: user_id,
+    username,
+    displayname: display_name,
+    avatar_src: avatar,
+    slekretUserFollowingsByUserIdTwo: followings,
+  } = slekret_user;
+
+  const question = {
+    title,
+    content,
+    published_date,
+    voteAction: current_user_question_vote_action[0]?.vote || 0,
+    votes: question_votes.aggregate.sum.vote,
+    author: {
+      id: user_id,
+      username,
+      display_name,
+      avatar,
+      is_following: followings.length > 0,
+    },
+  };
+
+  // Answers
+  const answers = question_answers.map((answer) => {
+    const {
+      content,
+      created_at: published_date,
+      forum_question_answer_votes_aggregate: answer_votes,
+      forum_question_answer_votes: current_user_answer_vote_action,
+      slekret_user,
+      forum_answer_replies: answer_replies,
+    } = answer;
+    const {
+      username,
+      displayname: display_name,
+      avatar_src: avatar,
+    } = slekret_user;
+
+    // Replies
+    const replies = answer_replies.map((reply) => {
+      const {
+        content,
+        created_at: published_date,
+        slekret_user,
+        slekretUserByReplyingToUserId: origin,
+      } = reply;
+      const {
+        username,
+        displayname: display_name,
+        avatar_src: avatar,
+      } = slekret_user;
+
+      return {
+        content,
+        published_date,
+        author: { username, display_name, avatar },
+        reply_to_user: origin
+          ? {
+              username: origin.username,
+              display_name: origin.displayname,
+              avatar: origin.avatar,
+            }
+          : null,
+        reply_to_id: '',
+      };
+    });
+
+    return {
+      isAccepted: false,
+      content,
+      published_date,
+      voteAction: current_user_answer_vote_action[0]?.vote,
+      votes: answer_votes.aggregate.sum.vote,
+      author: { username, display_name, avatar },
+      replies,
+    };
+  });
 
   return (
     <div>
       <p className="text-2xl font-bold text-gray-800">{question.title}</p>
 
       {/* User Info */}
-      <UserProfile
-        username={question.author.username}
-        avatar={question.author.avatar}
-        display_name={question.author.display_name}
-        published_date={question.published_date}
-        is_following={question.author.is_following}
-      />
+      {question.author && (
+        <UserProfile
+          user_id={question.author.id}
+          username={question.author.username}
+          avatar={question.author.avatar}
+          display_name={question.author.display_name}
+          published_date={question.published_date}
+          is_following={question.author.is_following}
+        />
+      )}
 
       <div className="py-4">
         <ReactMarkdown plugins={[gfm]}>{question.content}</ReactMarkdown>
       </div>
 
       <div className="flex justify-between">
-        <div className="flex items-center select-none">
-          <div
-            className={`mr-2 p-2 border hover:bg-blue-300 ${
-              questionVoteAction === actionUpVoted
-                ? 'bg-blue-500 text-white'
-                : 'text-gray-600'
-            }`}
-            onClick={() => {
-              setQuestionVoteAction(
-                questionVoteAction === actionUpVoted ? '' : actionUpVoted
-              );
-            }}
-          >
-            <IconArrowNarrowUp className="w-6 h-6" />
-          </div>
-          <div
-            className={`mr-2 p-2 border hover:bg-pink-300 ${
-              questionVoteAction === actionDownVoted
-                ? 'bg-pink-500 text-white'
-                : 'text-gray-600'
-            }`}
-            onClick={() => {
-              setQuestionVoteAction(
-                questionVoteAction === actionDownVoted ? '' : actionDownVoted
-              );
-            }}
-          >
-            <IconArrowNarrowDown className="w-6 h-6" />
-          </div>
-          <span className="ml-2">
-            {numeral(question.votes).format('0.[00]a')} vote
-            {question.votes > 1 && 's'}
-          </span>
-        </div>
+        <VoteAction
+          previousAction={question.voteAction}
+          votes={question.votes}
+        />
 
         <div className="flex items-center text-gray-600 hover:cursor-pointer hover:font-medium hover:text-gray-800">
           <IconInfo className="w-6 h-6" />
@@ -138,12 +165,13 @@ const QuestionDetail = () => {
         </div>
       </div>
       <div className="mt-12 mb-4 pb-4 border-b font-medium">
-        {answers.length} Answer{answers.length > 1 && 's'}
+        {total_answers.aggregate.count} Answer
+        {total_answers.aggregate.count > 1 && 's'}
       </div>
       {answers && answers.length > 0 ? (
         <div className="flex flex-col space-y-6">
           {answers.map((answer, index) => {
-            return <Answer key={index} answer={answer} replies={replies} />;
+            return <Answer key={index} answer={answer} />;
           })}
         </div>
       ) : (
@@ -156,3 +184,79 @@ const QuestionDetail = () => {
 };
 
 export default QuestionDetail;
+
+const GET_ALL_FORUM_QUESTIONS = gql`
+  query MyQuery($current_user_id: uuid = "", $id: uuid = "") {
+    forum_questions(where: { id: { _eq: $id } }) {
+      content
+      created_at
+      title
+      slekret_user {
+        id
+        avatar_src
+        displayname
+        username
+        slekretUserFollowingsByUserIdTwo(
+          where: { user_id_one: { _eq: $current_user_id } }
+        ) {
+          id
+        }
+      }
+      forum_question_votes_aggregate {
+        aggregate {
+          sum {
+            vote
+          }
+        }
+      }
+      forum_question_votes(where: { user_id: { _eq: $current_user_id } }) {
+        vote
+      }
+      forum_question_answers_aggregate {
+        aggregate {
+          count
+        }
+      }
+      forum_question_answers {
+        content
+        created_at
+        slekret_user {
+          username
+          displayname
+          avatar_src
+        }
+        forum_question_answer_votes_aggregate {
+          aggregate {
+            sum {
+              vote
+            }
+          }
+        }
+        forum_question_answer_votes(
+          where: { user_id: { _eq: $current_user_id } }
+        ) {
+          vote
+        }
+        forum_answer_replies_aggregate {
+          aggregate {
+            count
+          }
+        }
+        forum_answer_replies(order_by: { created_at: asc }) {
+          content
+          created_at
+          slekret_user {
+            username
+            displayname
+            avatar_src
+          }
+          slekretUserByReplyingToUserId {
+            displayname
+            username
+            avatar_src
+          }
+        }
+      }
+    }
+  }
+`;

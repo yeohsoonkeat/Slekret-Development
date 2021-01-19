@@ -13,8 +13,8 @@ import MarkdownEditor from '../../../components/MarkdownEditor';
 
 const actionUpVoted = 1;
 const actionDownVoted = -1;
-const Answer = ({ answer, replies }) => {
-  const { author } = answer;
+const Answer = ({ answer }) => {
+  const { author = {}, replies = [] } = answer;
 
   const [action, setAction] = useState(answer.voteAction);
   const [showReplyEditor, setShowReplyEditor] = useState(false);
@@ -22,7 +22,7 @@ const Answer = ({ answer, replies }) => {
   return (
     <div className="p-4 bg-white rounded-lg shadow-sm">
       <div className="flex relative">
-        {replies && replies.length > 0 && (
+        {replies.length > 0 && (
           <div className="w-12 border-l-2 border-b-2 h-full absolute top-6 left-6 rounded-bl-lg" />
         )}
 
@@ -88,11 +88,7 @@ const Answer = ({ answer, replies }) => {
 
           <div className="py-3">
             <ReactMarkdown plugins={[remarkGfm]}>
-              {/* {answer.content} */}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-              voluptate culpa accusantium dolor minima quod laudantium, enim
-              numquam harum voluptates quisquam dolorem omnis laborum quis
-              molestiae sapiente assumenda rerum error.
+              {answer.content}
             </ReactMarkdown>
             <div className="mt-2">
               {!showReplyEditor ? (
@@ -138,18 +134,17 @@ const Answer = ({ answer, replies }) => {
       </div>
 
       <div className="pl-16">
-        {replies &&
-          replies.slice(0, 2).map((reply, index) => {
-            return (
-              <Reply
-                key={index}
-                hasNext={index < replies.length - 1}
-                reply={reply}
-              />
-            );
-          })}
+        {replies.slice(0, 2).map((reply, index) => {
+          return (
+            <Reply
+              key={index}
+              hasNext={index < replies.length - 1}
+              reply={reply}
+            />
+          );
+        })}
 
-        {replies && replies.length > 2 && (
+        {replies.length > 2 && (
           <div className="group w-full hover:bg-gray-100 px-6 py-3 flex items-center select-none">
             <div className="flex flex-col space-y-1">
               <div className="rounded-full w-1 h-1 bg-gray-300 group-hover:bg-gray-600"></div>

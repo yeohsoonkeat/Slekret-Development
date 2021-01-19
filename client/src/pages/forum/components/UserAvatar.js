@@ -13,7 +13,7 @@ const UserAvatar = ({ src, className = 'w-12 h-12' }) => {
 
   return (
     <div
-      className={`${className} rounded-full bg-cover bg-center`}
+      className={`${className} rounded-full bg-white bg-cover bg-center`}
       style={{ backgroundImage: `url(${src})` }}
     />
   );
