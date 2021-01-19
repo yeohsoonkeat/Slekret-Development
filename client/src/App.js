@@ -35,6 +35,8 @@ const App = () => {
 				const { auth, token, user } = res?.data;
 				setToken(token);
 				window.localStorage.setItem('auth', auth);
+				window.localStorage.setItem('avatarSrc', user.avatar_src);
+
 				authDispatch({
 					type: 'UPDATE_AUTH',
 					payload: { auth, user },
