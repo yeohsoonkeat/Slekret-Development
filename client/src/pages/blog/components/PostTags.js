@@ -22,7 +22,7 @@ const PostTags = ({ tags, extendedParentClassName }) => {
               <span
                 className={`hover:font-medium hover:text-${randomColor}-600 hover:tracking-wider transition-all`}
               >
-                {tag}
+                {tag.tag_name}
               </span>
             </span>
           );

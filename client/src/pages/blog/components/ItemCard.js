@@ -6,20 +6,20 @@ import UserInfo from './UserInfo';
 
 const ItemCard = ({ item }) => {
   const {
-    image,
-    tags,
+    id,
     title,
-    description,
-    avatar,
-    username,
-    display_name,
-    published_date,
-    is_liked,
-    likes,
-    read_duration,
+    content,
+    article_cover,
+    created_at,
+    slekret_user,
+    blog_article_likes_aggregate,
+    blog_article_tags,
   } = item;
+  const { avatar_src, displayname, username } = slekret_user;
+  const posted_date = new Date(created_at);
+  const likes = blog_article_likes_aggregate.aggregate.count;
 
-  const [isLiked, setIsLiked] = useState(is_liked);
+  const [isLiked, setIsLiked] = useState(false);
 
   return (
     <div className="w-full">
@@ -27,7 +27,7 @@ const ItemCard = ({ item }) => {
         <div className="w-full relative" style={{ paddingTop: '75%' }}>
           <div
             className="absolute inset-0 bg-red-500 bg-cover bg-no-repeat"
-            style={{ backgroundImage: `url(${image})` }}
+            style={{ backgroundImage: `url(${article_cover})` }}
           />
         </div>
         <div
@@ -43,12 +43,12 @@ const ItemCard = ({ item }) => {
             </div>
             <div className="flex items-center text-white">
               <IconBook className="w-6 h-6" />
-              <p className="font-medium">{read_duration}</p>
+              <p className="font-medium">5 m</p>
             </div>
           </div>
         </div>
       </div>
-      <PostTags tags={tags} extendedParentClassName="mt-3" />
+      <PostTags tags={blog_article_tags} extendedParentClassName="mt-3" />
       <p className="my-2 text-2xl text-gray-600 font-semibold leading-6">
         {title}
       </p>
@@ -62,10 +62,10 @@ const ItemCard = ({ item }) => {
         }}
         className="text-gray-500 tracking-wide"
       >
-        {description}
+        {content}
       </p>
 
-      <UserInfo user={{ avatar, display_name, username, published_date }} />
+      <UserInfo user={{ avatar_src, displayname, username, posted_date }} />
     </div>
   );
 };
