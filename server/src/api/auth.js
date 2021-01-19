@@ -39,6 +39,7 @@ auth
 	.post(
 		speedLimiter(anHour, canRequest, increaseOneSecond),
 		limiter(anHour, canRequest),
+		authValidator.resetPassword(),
 		authController.resetPassword
 	);
 
@@ -49,6 +50,7 @@ auth
 	.post(
 		speedLimiter(anHour, canRequest, increaseOneSecond),
 		limiter(anHour, canRequest),
+		authValidator.setupUsername(),
 		authController.setUsername
 	);
 auth.route('/github').get(passport.authenticate('github'));

@@ -52,6 +52,17 @@ class AuthValidator {
 				.isEmpty(),
 		];
 	}
+
+	setupUsername() {
+		return [
+			check('username')
+				.not()
+				.isEmpty(),
+			check('displayname')
+				.not()
+				.isEmpty(),
+		];
+	}
 }
 
 module.exports = AuthValidator;

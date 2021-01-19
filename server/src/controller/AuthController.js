@@ -56,7 +56,7 @@ class AuthController {
 		const user = jwtUtils.verifyToken(token, process.env.TOKEN_LINK_VERIFY);
 
 		if (!user) {
-			return res.redirect(appConfig.clientURl + '/auth/expired');
+			return res.redirect(appConfig.clientURl + '/error/token-expired');
 		}
 
 		try {
