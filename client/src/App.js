@@ -17,33 +17,33 @@ import Blog from './pages/blog';
 import DefaultLayout from './layout/default';
 import ErrorPage from './pages/error';
 const App = () => {
-	const [token, setToken] = useState();
-	const [authState, authDispatch] = useAuthProvider();
-	const { apolloClient } = useApolloClientWithToken(token, authDispatch);
-	const { auth } = authState;
-	useEffect(() => {
-		axios
-			.get(config.backendUrl + '/token', {
-				withCredentials: true,
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Credentials': true,
-				},
-			})
-			.then((res) => {
-				const { auth, token, user } = res?.data;
-				setToken(token);
-				window.localStorage.setItem('auth', auth);
-				authDispatch({
-					type: 'UPDATE_AUTH',
-					payload: { auth, user },
-				});
-			})
-			.catch((err) => {
-				window.localStorage.setItem('auth', 'false');
-			});
-	}, [authDispatch]);
+  const [token, setToken] = useState();
+  const [authState, authDispatch] = useAuthProvider();
+  const { apolloClient } = useApolloClientWithToken(token, authDispatch);
+  const { auth } = authState;
+  useEffect(() => {
+    axios
+      .get(config.backendUrl + '/token', {
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+        },
+      })
+      .then((res) => {
+        const { auth, token, user } = res?.data;
+        setToken(token);
+        window.localStorage.setItem('auth', auth);
+        authDispatch({
+          type: 'UPDATE_AUTH',
+          payload: { auth, user },
+        });
+      })
+      .catch((err) => {
+        window.localStorage.setItem('auth', 'false');
+      });
+  }, [authDispatch]);
 
 	return (
 		<ApolloProvider client={apolloClient}>

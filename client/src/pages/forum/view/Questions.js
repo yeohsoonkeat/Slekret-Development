@@ -54,14 +54,16 @@ query m {
       displayname
       avatar_src
     }
-    forum_replies_aggregate {
+    forum_question_answers_aggregate {
       aggregate {
         count
       }
     }
     forum_question_votes_aggregate {
       aggregate {
-        count
+        sum {
+          vote
+        }
       }
     }
   }
@@ -70,3 +72,5 @@ query m {
 
 
 export default Questions;
+
+
