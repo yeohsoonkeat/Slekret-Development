@@ -158,17 +158,17 @@ module.exports = {
 	// handle github authCallBack
 
 	authGithubCallback: async (req, res) => {
-		const { email, profileImg } = req.user;
+		const { email, avatar_src } = req.user;
 		const { data } = await getUserByEmail({ email });
 		const userIsNull = data.slekret_users.length === 0;
 
 		if (!userIsNull) {
 			const { id, username } = data.slekret_users[0];
-			setUserSession({ id, username }, profileImg, req);
+			setUserSession({ id, username }, avatar_src, req);
 			return res.redirect(appConfig.clientURl);
 		}
 
-		res.redirect(appConfig.clientURl + '/auth/usernameanddisplayname');
+		res.redirect(appConfig.clientURl + '/auth/setupusername');
 	},
 
 	// ------------ //

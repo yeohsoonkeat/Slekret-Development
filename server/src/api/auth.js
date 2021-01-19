@@ -35,13 +35,14 @@ auth
 auth.route('/logout').post(authController.logout);
 
 auth
-	.route('/forget-password')
+	.route('/reset-password')
 	.post(
 		speedLimiter(anHour, canRequest, increaseOneSecond),
 		limiter(anHour, canRequest),
-		authController.forgetPassword
+		authController.resetPassword
 	);
-auth.route('/verifyPassword').post(authController.verifyPassword);
+
+auth.route('/verify-password').get(authController.verifyUserResetPassword);
 
 auth
 	.route('/set-username')

@@ -14,13 +14,14 @@ import ErrorMessage from './components/ErrorMessage';
 import InputPassword from './components/InputPassword';
 import AlertError from './components/AlertError';
 import ApiService from '../../service/api';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import LoadingForm from './components/LoadingForm';
 
 const api = new ApiService();
 
 export default function SignUp() {
 	const history = useHistory();
+	const location = useLocation();
 	const [message, setMessage] = useState('');
 	const [loading, setLoading] = useState(false);
 
@@ -37,7 +38,14 @@ export default function SignUp() {
 		setMessage(res?.data?.message);
 		setLoading(false);
 		if (res?.data?.emailSent) {
-			history.push({ pathname: '/auth/verify-email', state: data });
+			history.push({
+				pathname: '/auth/verify-email',
+				state: {
+					user: data,
+					verifyPath: '/auth/register',
+					prevPath: location.pathname,
+				},
+			});
 		}
 	};
 

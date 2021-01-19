@@ -10,7 +10,7 @@ export default function index() {
 		<Switch>
 			<Route exact path="/auth/signin" component={SignIn} />
 			<Route exact path="/auth/signup" component={SignUp} />
-			<Route exact path="/auth/username" component={SetUpUsername} />
+			<Route exact path="/auth/setupusername" component={SetUpUsername} />
 			<Route exact path="/auth/reset-password" component={ResetPassword} />
 			<Route exact path="/auth/verify-email" component={VerifyEmail} />
 

@@ -58,7 +58,7 @@ const content = {
 			type: 'text',
 			name: 'username',
 			placeholder: 'username',
-			icon: IconUser,
+			icon: IconEmail,
 		},
 		{
 			type: 'text',

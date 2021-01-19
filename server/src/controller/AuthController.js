@@ -8,6 +8,9 @@ const appConfig = require('../config/app.config');
 const setUserSession = require('../utils/setUserSession');
 const UserService = require('../service/UserService');
 const comparePassword = require('../utils/comparePassword');
+const hashPassword = require('../utils/hashPassword');
+const updateUserPassword = require('../db/updateUserPassword');
+const getUserByEmail = require('../db/getUserByEmail');
 
 const userService = new UserService();
 
@@ -111,6 +114,7 @@ class AuthController {
 				username: userObj.username,
 				avatar_src: userObj.avatar_src,
 			};
+
 			setUserSession(userSession, req);
 
 			return res.json({
@@ -128,9 +132,61 @@ class AuthController {
 		res.json({ auth: false });
 	}
 
-	async forgetPassword() {}
-	async verifyPassword() {}
+	async resetPassword(req, res, next) {
+		try {
+			// email,password,comfirm password
+			const { email } = req.body;
+
+			if (!(await isUserEmailExist(email))) {
+				return res.json({ message: 'Email is not exist', emailSent: false });
+			}
+
+			await sendEmail(req.body, '/verify-password');
+			return res.json({ emailSent: true });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	async verifyUserResetPassword(req, res, next) {
+		try {
+			const token = req.query.token;
+			const user = jwtUtils.verifyToken(token, process.env.TOKEN_LINK_VERIFY);
+
+			if (!user) {
+				return res.redirect(appConfig.clientURl + '/auth/expired');
+			}
+
+			const { email, password } = user;
+			const newPassword = await hashPassword(password);
+
+			const { data } = await updateUserPassword({ email, newPassword });
+
+			if (data.update_slekret_users.affected_rows) {
+				return res.redirect(appConfig.clientURl + '/auth/login');
+			}
+		} catch (err) {
+			next(err);
+		}
+	}
 	async setUsername() {}
-	async githubCallBack() {}
+
+	async githubCallBack(req, res, next) {
+		try {
+			const { email, avatar_src } = req.user;
+			const { data } = await getUserByEmail({ email });
+
+			const userIsNull = data.slekret_users.length === 0;
+
+			if (!userIsNull) {
+				const { id, username } = data.slekret_users[0];
+				setUserSession({ id, username, avatar_src }, req);
+				return res.redirect(appConfig.clientURl);
+			}
+			res.redirect(appConfig.clientURl + '/auth/setupusername');
+		} catch (err) {
+			next(err);
+		}
+	}
 }
 module.exports = AuthController;

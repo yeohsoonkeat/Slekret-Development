@@ -12,7 +12,7 @@ passport.use(
 		},
 		function(accessToken, refreshToken, profile, cb) {
 			const user = {
-				profileImg: profile.photos[0].value,
+				avatar_src: profile.photos[0].value,
 				email: profile.emails[0].value,
 			};
 			cb(null, user);

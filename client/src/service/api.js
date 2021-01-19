@@ -8,6 +8,10 @@ class ApiService {
 		return await this.postRequest(config.backendUrl + path, data);
 	}
 
+	async resetPassword(path, data) {
+		return this.postRequest(config.backendUrl + path, data);
+	}
+
 	async postRequest(url, data) {
 		const res = await axios.post(url, data, {
 			withCredentials: true,

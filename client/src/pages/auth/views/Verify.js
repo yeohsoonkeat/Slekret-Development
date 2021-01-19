@@ -27,6 +27,7 @@ const Verify = () => {
 			})
 			.catch((err) => console.log());
 	};
+
 	return (
 		<div className="text-white w-full text-center md:text-left bg-gray-900 p-5 md:w-4/12 font-inter">
 			<h1 className="font-bold text-4xl lg:text-5xl">
