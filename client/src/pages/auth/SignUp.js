@@ -16,6 +16,7 @@ import AlertError from './components/AlertError';
 import ApiService from '../../service/api';
 import { useHistory, useLocation } from 'react-router-dom';
 import LoadingForm from './components/LoadingForm';
+import config from '../../config';
 
 const api = new ApiService();
 
@@ -47,6 +48,11 @@ export default function SignUp() {
 				},
 			});
 		}
+	};
+
+	const handleAuthGithub = () => {
+		setLoading(true);
+		window.open(config.backendUrl + '/auth/github', '_self');
 	};
 
 	return (
@@ -91,10 +97,13 @@ export default function SignUp() {
 					</form>
 
 					<p className="text-center mt-5 text-sm">or sign up with</p>
-					<ButtonSocial
-						value={'github'}
-						imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}
-					/>
+					<div onClick={handleAuthGithub}>
+						<ButtonSocial
+							value={'github'}
+							imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}
+						/>
+					</div>
+
 					<Footer
 						content={'Already have an account?'}
 						path="/auth/signin"

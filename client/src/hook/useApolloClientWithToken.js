@@ -1,36 +1,33 @@
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import {
+	ApolloClient,
+	ApolloLink,
+	HttpLink,
+	concat,
+	InMemoryCache,
+} from '@apollo/client';
 import { onError } from 'apollo-link-error';
 import axios from 'axios';
-import config from '../config';
 
 export default function useApolloClientWithToken(token, authDispatch) {
 	const httpLink = new HttpLink({
-		uri: config.hasuraGraphql,
-		headers: {
-			Authorization: `Bearer ${token ? token : config.guestToken}`,
-		},
+		uri: 'http://localhost:8080/v1/graphql',
 	});
 
 	const logoutLink = onError(({ graphQLErrors, networkError, forward }) => {
 		if (graphQLErrors) {
 			graphQLErrors.forEach(({ extensions }) => {
-				console.log(extensions);
 				if (extensions.code === 'invalid-jwt') {
 					axios
-						.post(
-							config.backendUrl + '/auth/logout',
-							{},
-							{
-								withCredentials: true,
-								headers: {
-									Accept: 'application/json',
-									'Content-Type': 'application/json',
-									'Access-Control-Allow-Credentials': true,
-								},
-							}
-						)
+						.get('http://localhost:8000/logout', {
+							withCredentials: true,
+							headers: {
+								Accept: 'application/json',
+								'Content-Type': 'application/json',
+								'Access-Control-Allow-Credentials': true,
+							},
+						})
 						.then(() => {
-							window.open('/', '_self');
+							window.open('/authentication', '_self');
 						});
 					authDispatch({
 						type: 'USER_LOGOUT',
@@ -43,17 +40,19 @@ export default function useApolloClientWithToken(token, authDispatch) {
 			console.log('hello world');
 	});
 
-	// const authMiddleware = new ApolloLink((operation, forward) => {
-	//   if (token) {
-	//     operation.setContext({
-
-	//     });
-	//   }
-	//   return forward(operation);
-	// });
+	const authMiddleware = new ApolloLink((operation, forward) => {
+		if (token) {
+			operation.setContext({
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+		}
+		return forward(operation);
+	});
 
 	const apolloClient = new ApolloClient({
-		link: logoutLink.concat(httpLink),
+		link: logoutLink.concat(concat(authMiddleware, httpLink)),
 		cache: new InMemoryCache(),
 	});
 	return { apolloClient };

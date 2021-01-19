@@ -133,6 +133,13 @@ class AuthController {
 	}
 
 	async resetPassword(req, res, next) {
+		const error = validationResult(req);
+		if (error.errors.length > 0) {
+			return res.json({
+				message: 'Unable to reset password user',
+			});
+		}
+
 		try {
 			// email,password,comfirm password
 			const { email } = req.body;
@@ -169,7 +176,42 @@ class AuthController {
 			next(err);
 		}
 	}
-	async setUsername() {}
+	async setUsername(req, res, next) {
+		try {
+			const socialSession = req.user;
+			if (!socialSession) {
+				return res.json({
+					message: 'Invalid Request',
+					auth: false,
+					invalid: true,
+				});
+			}
+			console.log(req.user);
+
+			const { email, avatar_src } = socialSession;
+			const { username, displayname } = req.body;
+
+			if (await isUserUsernameExist(username)) {
+				return res.json({
+					message: 'Username is already exist',
+					auth: false,
+				});
+			}
+
+			const result = await userService.createUser({
+				email,
+				password: '',
+				avatar_src,
+				username,
+				displayname,
+			});
+
+			setUserSession(result, req);
+			return res.json({ auth: true });
+		} catch (err) {
+			next(err);
+		}
+	}
 
 	async githubCallBack(req, res, next) {
 		try {
@@ -183,6 +225,7 @@ class AuthController {
 				setUserSession({ id, username, avatar_src }, req);
 				return res.redirect(appConfig.clientURl);
 			}
+
 			res.redirect(appConfig.clientURl + '/auth/setupusername');
 		} catch (err) {
 			next(err);

@@ -16,15 +16,13 @@ import LayoutForm from './Layout/LayoutForm';
 import signInSchema from './schema/signInSchema';
 import ApiService from '../../service/api';
 import AlertError from './components/AlertError';
-import useAuthProvider from '../../hook/useAuthProvider';
+import config from '../../config';
 const api = new ApiService();
 
 export default function SignIn() {
 	const history = useHistory();
 	const [loading, setLoading] = useState(false);
 	const [message, setMessage] = useState('');
-
-	const authDispatch = useAuthProvider()[1];
 
 	const { register, errors, handleSubmit } = useForm({
 		resolver: yupResolver(signInSchema),
@@ -40,13 +38,13 @@ export default function SignIn() {
 			setLoading(false);
 			setMessage(res.data.message);
 		} else {
-			history.push('/');
-			authDispatch({
-				type: 'UPDATE_AUTH',
-				payload: { auth: true, user: res.data.user },
-			});
 			window.localStorage.setItem('auth', 'true');
+			window.open('/', '_self');
 		}
+	};
+	const handleAuthGithub = () => {
+		setLoading(true);
+		window.open(config.backendUrl + '/auth/github', '_self');
 	};
 
 	return (
@@ -85,11 +83,12 @@ export default function SignIn() {
 						<p className="text-center text-sm  mr-2 ml-2">or</p>
 						<p className="flex-1 border-2 h-1" />
 					</div>
-
-					<ButtonSocial
-						imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}
-						title="github"
-					/>
+					<div onClick={handleAuthGithub}>
+						<ButtonSocial
+							imgSrc={process.env.PUBLIC_URL + '/assets/github.svg'}
+							title="github"
+						/>
+					</div>
 
 					<Footer
 						text={'Sign Up'}

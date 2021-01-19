@@ -35,6 +35,23 @@ class AuthValidator {
 				.isLength({ min: 6, max: 25 }),
 		];
 	}
+
+	resetPassword() {
+		return [
+			check('email')
+				.not()
+				.isEmpty()
+				.isEmail(),
+			check('password')
+				.isLength({ min: 6 })
+				.not()
+				.isEmpty(),
+			check('confirm-password')
+				.isLength({ min: 6 })
+				.not()
+				.isEmpty(),
+		];
+	}
 }
 
 module.exports = AuthValidator;

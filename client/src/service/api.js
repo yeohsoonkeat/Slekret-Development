@@ -11,6 +11,9 @@ class ApiService {
 	async resetPassword(path, data) {
 		return this.postRequest(config.backendUrl + path, data);
 	}
+	async setUpUsername(path, data) {
+		return this.postRequest(config.backendUrl + path, data);
+	}
 
 	async postRequest(url, data) {
 		const res = await axios.post(url, data, {

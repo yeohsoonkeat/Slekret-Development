@@ -45,7 +45,7 @@ auth
 auth.route('/verify-password').get(authController.verifyUserResetPassword);
 
 auth
-	.route('/set-username')
+	.route('/setup-username')
 	.post(
 		speedLimiter(anHour, canRequest, increaseOneSecond),
 		limiter(anHour, canRequest),
