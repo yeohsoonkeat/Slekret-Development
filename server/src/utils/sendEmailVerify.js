@@ -23,14 +23,18 @@ const mailOptions = (email, link) => {
 	};
 };
 
-const sendEmail = (reqBody, path) => {
-	const link = generateVerifyLink(reqBody, path);
-	const { email } = reqBody;
+const sendEmail = (user, redirectPath) => {
+	const link = generateVerifyLink(user, redirectPath);
+	const { email } = user;
 
-	transporter.sendMail(mailOptions(email, link), function(error) {
-		if (error) {
-			throw new Error('BROKEN');
-		}
+	return new Promise(function(resolve, reject) {
+		transporter.sendMail(mailOptions(email, link), (err, info) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(info);
+			}
+		});
 	});
 };
 

@@ -1,13 +1,13 @@
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
-import MarkdownEditor from '../../../components/MarkdownEditor';
-import IconInfo from '../../../icons/ic_info';
-import Answer from '../components/Answer';
-import UserProfile from '../components/UserProfile';
-import { gql, useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
-import useAuthProvider from '../../../hook/useAuthProvider';
-import VoteAction from '../components/VoteAction';
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+import MarkdownEditor from "../../../components/MarkdownEditor";
+import IconInfo from "../../../icons/ic_info";
+import Answer from "../components/Answer";
+import UserProfile from "../components/UserProfile";
+import { gql, useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import useAuthProvider from "../../../hook/useAuthProvider";
+import VoteAction from "../components/VoteAction";
 
 const QuestionDetail = () => {
   const { id } = useParams();
@@ -103,7 +103,7 @@ const QuestionDetail = () => {
               avatar: origin.avatar,
             }
           : null,
-        reply_to_id: '',
+        reply_to_id: "",
       };
     });
 
@@ -157,7 +157,7 @@ const QuestionDetail = () => {
           <button
             className="px-6 py-2 rounded-md text-sm border bg-blue-600 text-white"
             onClick={() => {
-              console.log('answer');
+              console.log("answer");
             }}
           >
             Answer
@@ -166,7 +166,7 @@ const QuestionDetail = () => {
       </div>
       <div className="mt-12 mb-4 pb-4 border-b font-medium">
         {total_answers.aggregate.count} Answer
-        {total_answers.aggregate.count > 1 && 's'}
+        {total_answers.aggregate.count > 1 && "s"}
       </div>
       {answers && answers.length > 0 ? (
         <div className="flex flex-col space-y-6">

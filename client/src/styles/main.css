@@ -22215,6 +22215,66 @@ video {
   --tw-ring-opacity: 1;
 }
 
+.hover\:ring-opacity-0:hover{
+  --tw-ring-opacity: 0;
+}
+
+.hover\:ring-opacity-5:hover{
+  --tw-ring-opacity: 0.05;
+}
+
+.hover\:ring-opacity-10:hover{
+  --tw-ring-opacity: 0.1;
+}
+
+.hover\:ring-opacity-20:hover{
+  --tw-ring-opacity: 0.2;
+}
+
+.hover\:ring-opacity-25:hover{
+  --tw-ring-opacity: 0.25;
+}
+
+.hover\:ring-opacity-30:hover{
+  --tw-ring-opacity: 0.3;
+}
+
+.hover\:ring-opacity-40:hover{
+  --tw-ring-opacity: 0.4;
+}
+
+.hover\:ring-opacity-50:hover{
+  --tw-ring-opacity: 0.5;
+}
+
+.hover\:ring-opacity-60:hover{
+  --tw-ring-opacity: 0.6;
+}
+
+.hover\:ring-opacity-70:hover{
+  --tw-ring-opacity: 0.7;
+}
+
+.hover\:ring-opacity-75:hover{
+  --tw-ring-opacity: 0.75;
+}
+
+.hover\:ring-opacity-80:hover{
+  --tw-ring-opacity: 0.8;
+}
+
+.hover\:ring-opacity-90:hover{
+  --tw-ring-opacity: 0.9;
+}
+
+.hover\:ring-opacity-95:hover{
+  --tw-ring-opacity: 0.95;
+}
+
+.hover\:ring-opacity-100:hover{
+  --tw-ring-opacity: 1;
+}
+
 .focus\:ring-opacity-0:focus{
   --tw-ring-opacity: 0;
 }
@@ -22272,6 +22332,66 @@ video {
 }
 
 .focus\:ring-opacity-100:focus{
+  --tw-ring-opacity: 1;
+}
+
+.active\:ring-opacity-0:active{
+  --tw-ring-opacity: 0;
+}
+
+.active\:ring-opacity-5:active{
+  --tw-ring-opacity: 0.05;
+}
+
+.active\:ring-opacity-10:active{
+  --tw-ring-opacity: 0.1;
+}
+
+.active\:ring-opacity-20:active{
+  --tw-ring-opacity: 0.2;
+}
+
+.active\:ring-opacity-25:active{
+  --tw-ring-opacity: 0.25;
+}
+
+.active\:ring-opacity-30:active{
+  --tw-ring-opacity: 0.3;
+}
+
+.active\:ring-opacity-40:active{
+  --tw-ring-opacity: 0.4;
+}
+
+.active\:ring-opacity-50:active{
+  --tw-ring-opacity: 0.5;
+}
+
+.active\:ring-opacity-60:active{
+  --tw-ring-opacity: 0.6;
+}
+
+.active\:ring-opacity-70:active{
+  --tw-ring-opacity: 0.7;
+}
+
+.active\:ring-opacity-75:active{
+  --tw-ring-opacity: 0.75;
+}
+
+.active\:ring-opacity-80:active{
+  --tw-ring-opacity: 0.8;
+}
+
+.active\:ring-opacity-90:active{
+  --tw-ring-opacity: 0.9;
+}
+
+.active\:ring-opacity-95:active{
+  --tw-ring-opacity: 0.95;
+}
+
+.active\:ring-opacity-100:active{
   --tw-ring-opacity: 1;
 }
 
@@ -29252,8 +29372,22 @@ video {
   }
 }
 
+@keyframes pulse{
+  0%, 100%{
+    opacity: 0.8;
+  }
+
+  50%{
+    opacity: 0.5;
+  }
+}
+
 .animate-float{
   animation: float 3s infinite;
+}
+
+.animate-pulse{
+  animation: pulse 1.5s infinite;
 }
 
 @font-face {
@@ -50933,6 +51067,66 @@ video {
     --tw-ring-opacity: 1;
   }
 
+  .sm\:hover\:ring-opacity-0:hover{
+    --tw-ring-opacity: 0;
+  }
+
+  .sm\:hover\:ring-opacity-5:hover{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .sm\:hover\:ring-opacity-10:hover{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .sm\:hover\:ring-opacity-20:hover{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .sm\:hover\:ring-opacity-25:hover{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .sm\:hover\:ring-opacity-30:hover{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .sm\:hover\:ring-opacity-40:hover{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .sm\:hover\:ring-opacity-50:hover{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .sm\:hover\:ring-opacity-60:hover{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .sm\:hover\:ring-opacity-70:hover{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .sm\:hover\:ring-opacity-75:hover{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .sm\:hover\:ring-opacity-80:hover{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .sm\:hover\:ring-opacity-90:hover{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .sm\:hover\:ring-opacity-95:hover{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .sm\:hover\:ring-opacity-100:hover{
+    --tw-ring-opacity: 1;
+  }
+
   .sm\:focus\:ring-opacity-0:focus{
     --tw-ring-opacity: 0;
   }
@@ -50990,6 +51184,66 @@ video {
   }
 
   .sm\:focus\:ring-opacity-100:focus{
+    --tw-ring-opacity: 1;
+  }
+
+  .sm\:active\:ring-opacity-0:active{
+    --tw-ring-opacity: 0;
+  }
+
+  .sm\:active\:ring-opacity-5:active{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .sm\:active\:ring-opacity-10:active{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .sm\:active\:ring-opacity-20:active{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .sm\:active\:ring-opacity-25:active{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .sm\:active\:ring-opacity-30:active{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .sm\:active\:ring-opacity-40:active{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .sm\:active\:ring-opacity-50:active{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .sm\:active\:ring-opacity-60:active{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .sm\:active\:ring-opacity-70:active{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .sm\:active\:ring-opacity-75:active{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .sm\:active\:ring-opacity-80:active{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .sm\:active\:ring-opacity-90:active{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .sm\:active\:ring-opacity-95:active{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .sm\:active\:ring-opacity-100:active{
     --tw-ring-opacity: 1;
   }
 
@@ -57955,6 +58209,10 @@ video {
 
   .sm\:animate-float{
     animation: float 3s infinite;
+  }
+
+  .sm\:animate-pulse{
+    animation: pulse 1.5s infinite;
   }
 }
 
@@ -79623,6 +79881,66 @@ video {
     --tw-ring-opacity: 1;
   }
 
+  .md\:hover\:ring-opacity-0:hover{
+    --tw-ring-opacity: 0;
+  }
+
+  .md\:hover\:ring-opacity-5:hover{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .md\:hover\:ring-opacity-10:hover{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .md\:hover\:ring-opacity-20:hover{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .md\:hover\:ring-opacity-25:hover{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .md\:hover\:ring-opacity-30:hover{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .md\:hover\:ring-opacity-40:hover{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .md\:hover\:ring-opacity-50:hover{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .md\:hover\:ring-opacity-60:hover{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .md\:hover\:ring-opacity-70:hover{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .md\:hover\:ring-opacity-75:hover{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .md\:hover\:ring-opacity-80:hover{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .md\:hover\:ring-opacity-90:hover{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .md\:hover\:ring-opacity-95:hover{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .md\:hover\:ring-opacity-100:hover{
+    --tw-ring-opacity: 1;
+  }
+
   .md\:focus\:ring-opacity-0:focus{
     --tw-ring-opacity: 0;
   }
@@ -79680,6 +79998,66 @@ video {
   }
 
   .md\:focus\:ring-opacity-100:focus{
+    --tw-ring-opacity: 1;
+  }
+
+  .md\:active\:ring-opacity-0:active{
+    --tw-ring-opacity: 0;
+  }
+
+  .md\:active\:ring-opacity-5:active{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .md\:active\:ring-opacity-10:active{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .md\:active\:ring-opacity-20:active{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .md\:active\:ring-opacity-25:active{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .md\:active\:ring-opacity-30:active{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .md\:active\:ring-opacity-40:active{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .md\:active\:ring-opacity-50:active{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .md\:active\:ring-opacity-60:active{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .md\:active\:ring-opacity-70:active{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .md\:active\:ring-opacity-75:active{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .md\:active\:ring-opacity-80:active{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .md\:active\:ring-opacity-90:active{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .md\:active\:ring-opacity-95:active{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .md\:active\:ring-opacity-100:active{
     --tw-ring-opacity: 1;
   }
 
@@ -86645,6 +87023,10 @@ video {
 
   .md\:animate-float{
     animation: float 3s infinite;
+  }
+
+  .md\:animate-pulse{
+    animation: pulse 1.5s infinite;
   }
 }
 
@@ -108313,6 +108695,66 @@ video {
     --tw-ring-opacity: 1;
   }
 
+  .lg\:hover\:ring-opacity-0:hover{
+    --tw-ring-opacity: 0;
+  }
+
+  .lg\:hover\:ring-opacity-5:hover{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .lg\:hover\:ring-opacity-10:hover{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .lg\:hover\:ring-opacity-20:hover{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .lg\:hover\:ring-opacity-25:hover{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .lg\:hover\:ring-opacity-30:hover{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .lg\:hover\:ring-opacity-40:hover{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .lg\:hover\:ring-opacity-50:hover{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .lg\:hover\:ring-opacity-60:hover{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .lg\:hover\:ring-opacity-70:hover{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .lg\:hover\:ring-opacity-75:hover{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .lg\:hover\:ring-opacity-80:hover{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .lg\:hover\:ring-opacity-90:hover{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .lg\:hover\:ring-opacity-95:hover{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .lg\:hover\:ring-opacity-100:hover{
+    --tw-ring-opacity: 1;
+  }
+
   .lg\:focus\:ring-opacity-0:focus{
     --tw-ring-opacity: 0;
   }
@@ -108370,6 +108812,66 @@ video {
   }
 
   .lg\:focus\:ring-opacity-100:focus{
+    --tw-ring-opacity: 1;
+  }
+
+  .lg\:active\:ring-opacity-0:active{
+    --tw-ring-opacity: 0;
+  }
+
+  .lg\:active\:ring-opacity-5:active{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .lg\:active\:ring-opacity-10:active{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .lg\:active\:ring-opacity-20:active{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .lg\:active\:ring-opacity-25:active{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .lg\:active\:ring-opacity-30:active{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .lg\:active\:ring-opacity-40:active{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .lg\:active\:ring-opacity-50:active{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .lg\:active\:ring-opacity-60:active{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .lg\:active\:ring-opacity-70:active{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .lg\:active\:ring-opacity-75:active{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .lg\:active\:ring-opacity-80:active{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .lg\:active\:ring-opacity-90:active{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .lg\:active\:ring-opacity-95:active{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .lg\:active\:ring-opacity-100:active{
     --tw-ring-opacity: 1;
   }
 
@@ -115335,6 +115837,10 @@ video {
 
   .lg\:animate-float{
     animation: float 3s infinite;
+  }
+
+  .lg\:animate-pulse{
+    animation: pulse 1.5s infinite;
   }
 }
 
@@ -137003,6 +137509,66 @@ video {
     --tw-ring-opacity: 1;
   }
 
+  .xl\:hover\:ring-opacity-0:hover{
+    --tw-ring-opacity: 0;
+  }
+
+  .xl\:hover\:ring-opacity-5:hover{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .xl\:hover\:ring-opacity-10:hover{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .xl\:hover\:ring-opacity-20:hover{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .xl\:hover\:ring-opacity-25:hover{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .xl\:hover\:ring-opacity-30:hover{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .xl\:hover\:ring-opacity-40:hover{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .xl\:hover\:ring-opacity-50:hover{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .xl\:hover\:ring-opacity-60:hover{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .xl\:hover\:ring-opacity-70:hover{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .xl\:hover\:ring-opacity-75:hover{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .xl\:hover\:ring-opacity-80:hover{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .xl\:hover\:ring-opacity-90:hover{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .xl\:hover\:ring-opacity-95:hover{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .xl\:hover\:ring-opacity-100:hover{
+    --tw-ring-opacity: 1;
+  }
+
   .xl\:focus\:ring-opacity-0:focus{
     --tw-ring-opacity: 0;
   }
@@ -137060,6 +137626,66 @@ video {
   }
 
   .xl\:focus\:ring-opacity-100:focus{
+    --tw-ring-opacity: 1;
+  }
+
+  .xl\:active\:ring-opacity-0:active{
+    --tw-ring-opacity: 0;
+  }
+
+  .xl\:active\:ring-opacity-5:active{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .xl\:active\:ring-opacity-10:active{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .xl\:active\:ring-opacity-20:active{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .xl\:active\:ring-opacity-25:active{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .xl\:active\:ring-opacity-30:active{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .xl\:active\:ring-opacity-40:active{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .xl\:active\:ring-opacity-50:active{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .xl\:active\:ring-opacity-60:active{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .xl\:active\:ring-opacity-70:active{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .xl\:active\:ring-opacity-75:active{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .xl\:active\:ring-opacity-80:active{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .xl\:active\:ring-opacity-90:active{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .xl\:active\:ring-opacity-95:active{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .xl\:active\:ring-opacity-100:active{
     --tw-ring-opacity: 1;
   }
 
@@ -144025,6 +144651,10 @@ video {
 
   .xl\:animate-float{
     animation: float 3s infinite;
+  }
+
+  .xl\:animate-pulse{
+    animation: pulse 1.5s infinite;
   }
 }
 
@@ -165693,6 +166323,66 @@ video {
     --tw-ring-opacity: 1;
   }
 
+  .\32xl\:hover\:ring-opacity-0:hover{
+    --tw-ring-opacity: 0;
+  }
+
+  .\32xl\:hover\:ring-opacity-5:hover{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .\32xl\:hover\:ring-opacity-10:hover{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .\32xl\:hover\:ring-opacity-20:hover{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .\32xl\:hover\:ring-opacity-25:hover{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .\32xl\:hover\:ring-opacity-30:hover{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .\32xl\:hover\:ring-opacity-40:hover{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .\32xl\:hover\:ring-opacity-50:hover{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .\32xl\:hover\:ring-opacity-60:hover{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .\32xl\:hover\:ring-opacity-70:hover{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .\32xl\:hover\:ring-opacity-75:hover{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .\32xl\:hover\:ring-opacity-80:hover{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .\32xl\:hover\:ring-opacity-90:hover{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .\32xl\:hover\:ring-opacity-95:hover{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .\32xl\:hover\:ring-opacity-100:hover{
+    --tw-ring-opacity: 1;
+  }
+
   .\32xl\:focus\:ring-opacity-0:focus{
     --tw-ring-opacity: 0;
   }
@@ -165750,6 +166440,66 @@ video {
   }
 
   .\32xl\:focus\:ring-opacity-100:focus{
+    --tw-ring-opacity: 1;
+  }
+
+  .\32xl\:active\:ring-opacity-0:active{
+    --tw-ring-opacity: 0;
+  }
+
+  .\32xl\:active\:ring-opacity-5:active{
+    --tw-ring-opacity: 0.05;
+  }
+
+  .\32xl\:active\:ring-opacity-10:active{
+    --tw-ring-opacity: 0.1;
+  }
+
+  .\32xl\:active\:ring-opacity-20:active{
+    --tw-ring-opacity: 0.2;
+  }
+
+  .\32xl\:active\:ring-opacity-25:active{
+    --tw-ring-opacity: 0.25;
+  }
+
+  .\32xl\:active\:ring-opacity-30:active{
+    --tw-ring-opacity: 0.3;
+  }
+
+  .\32xl\:active\:ring-opacity-40:active{
+    --tw-ring-opacity: 0.4;
+  }
+
+  .\32xl\:active\:ring-opacity-50:active{
+    --tw-ring-opacity: 0.5;
+  }
+
+  .\32xl\:active\:ring-opacity-60:active{
+    --tw-ring-opacity: 0.6;
+  }
+
+  .\32xl\:active\:ring-opacity-70:active{
+    --tw-ring-opacity: 0.7;
+  }
+
+  .\32xl\:active\:ring-opacity-75:active{
+    --tw-ring-opacity: 0.75;
+  }
+
+  .\32xl\:active\:ring-opacity-80:active{
+    --tw-ring-opacity: 0.8;
+  }
+
+  .\32xl\:active\:ring-opacity-90:active{
+    --tw-ring-opacity: 0.9;
+  }
+
+  .\32xl\:active\:ring-opacity-95:active{
+    --tw-ring-opacity: 0.95;
+  }
+
+  .\32xl\:active\:ring-opacity-100:active{
     --tw-ring-opacity: 1;
   }
 
@@ -172715,5 +173465,9 @@ video {
 
   .\32xl\:animate-float{
     animation: float 3s infinite;
+  }
+
+  .\32xl\:animate-pulse{
+    animation: pulse 1.5s infinite;
   }
 }
