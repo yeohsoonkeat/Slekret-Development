@@ -9,14 +9,14 @@ export default function User() {
 		authState.auth || window.localStorage.getItem('auth') === 'true';
 
 	const username = authState.user.username;
-	const userImg =
+	const avatarSrc =
 		authState.user.avatar_src || window.localStorage.getItem('avatarSrc');
 	return (
 		<div>
 			{isAuth ? (
 				<UserAfterLogin
 					username={username}
-					userImg={userImg}
+					avatarSrc={avatarSrc}
 					authDispatch={authDispatch}
 				/>
 			) : (
