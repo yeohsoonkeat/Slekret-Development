@@ -4,6 +4,7 @@ import IconHeart from '../../../icons/ic_heart';
 import PostTags from './PostTags';
 import UserInfo from './UserInfo';
 
+
 const ItemCard = ({ item }) => {
   const {
     title,
@@ -13,13 +14,12 @@ const ItemCard = ({ item }) => {
     slekret_user,
     blog_article_likes_aggregate,
     blog_article_tags,
+    blog_article_likes
   } = item;
   const { avatar_src, displayname, username } = slekret_user;
-  const posted_date = new Date(created_at);
   const likes = blog_article_likes_aggregate.aggregate.count;
-
-  const [isLiked, setIsLiked] = useState(false);
-
+  console.log(blog_article_likes)
+  const [isLiked, setIsLiked] = useState(blog_article_likes[0] ? blog_article_likes[0].is_liked: false );
   return (
     <div className="w-full">
       <div className="group w-full relative">
@@ -64,7 +64,7 @@ const ItemCard = ({ item }) => {
         {content}
       </p>
 
-      <UserInfo user={{ avatar_src, displayname, username, posted_date }} />
+      <UserInfo user={{ avatar_src, displayname, username, created_at }} />
     </div>
   );
 };

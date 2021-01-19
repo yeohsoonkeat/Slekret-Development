@@ -2,9 +2,12 @@ import ItemCard from '../components/ItemCard';
 import PostTags from '../components/PostTags';
 import UserInfo from '../components/UserInfo';
 import { gql, useQuery } from '@apollo/client';
+import useAuth from '../../../hook/useAuthProvider'
 
 const BlogHome = () => {
-  const { loading, error, data } = useQuery(GET_FORUM_QUESTION);
+  const [auth] = useAuth()
+  console.log(auth);
+  const { loading, error, data } = useQuery(GET_FORUM_QUESTION, {variables: { user_id: auth.user.id}});
 
   if (loading) {
     return <h1>Loading</h1>;
@@ -89,29 +92,33 @@ const BlogHome = () => {
 };
 
 const GET_FORUM_QUESTION = gql`
-  query MyQuery {
-    blog_articles {
-      article_cover
-      content
-      created_at
-      is_globally_pinned
-      id
-      title
-      slekret_user {
-        avatar_src
-        displayname
-        username
-      }
-      blog_article_likes_aggregate {
-        aggregate {
-          count
-        }
-      }
-      blog_article_tags {
-        tag_name
+query MyQuery($user_id: uuid) {
+  blog_articles {
+    article_cover
+    content
+    created_at
+    is_globally_pinned
+    id
+    title
+    slekret_user {
+      avatar_src
+      displayname
+      username
+    }
+    blog_article_likes_aggregate(where: {is_liked: {_eq: true}}) {
+      aggregate {
+        count
       }
     }
+    blog_article_likes(where: {user_id: {_eq: $user_id}}) {
+      is_liked
+    }
+    blog_article_tags {
+      tag_name
+    }
   }
+}
+
 `;
 
 export default BlogHome;
