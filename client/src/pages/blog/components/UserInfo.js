@@ -1,9 +1,11 @@
 import IconBookmark from '../../../icons/ic_bookmark';
 import IconShare from '../../../icons/ic_share';
 
+
 const UserInfo = ({ user }) => {
-  const { avatar_src, displayname, username, created_at } = user;
+  const { avatar_src, displayname, username, created_at, blog_reading_list_entries } = user;
   const published_date = new Date(created_at);
+  const is_in_reading_list = blog_reading_list_entries? blog_reading_list_entries.length >0: false
   return (
     <div className="mt-2 border-t pt-2 flex justify-between items-center">
       <div className="flex items-center">
@@ -30,8 +32,8 @@ const UserInfo = ({ user }) => {
         <div className="mr-2 p-2 border rounded-full text-gray-600 hover:bg-gray-200">
           <IconShare className="w-5 h-5" />
         </div>
-        <div className="p-2 border rounded-full text-gray-600 hover:bg-gray-200">
-          <IconBookmark className="w-5 h-5" />
+        <div className={`p-2 border rounded-full text-gray-600 hover:bg-gray-200 ${is_in_reading_list?" text-yellow-400": ""}`}>
+          <IconBookmark className="w-5 h-5" filled={is_in_reading_list}/>
         </div>
       </div>
     </div>

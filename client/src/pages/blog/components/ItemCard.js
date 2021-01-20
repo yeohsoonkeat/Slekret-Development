@@ -17,7 +17,8 @@ const ItemCard = ({ item }) => {
     slekret_user,
     blog_article_likes_aggregate,
     blog_article_tags,
-    blog_article_likes
+    blog_article_likes,
+    blog_reading_list_entries
   } = item;
   const { avatar_src, displayname, username } = slekret_user;
   const [likes, setLikes] = useState(blog_article_likes_aggregate.aggregate.count)
@@ -75,7 +76,7 @@ const ItemCard = ({ item }) => {
         {content}
       </p>
 
-      <UserInfo user={{ avatar_src, displayname, username, created_at }} />
+      <UserInfo user={{ avatar_src, displayname, username, created_at, blog_reading_list_entries }} />
     </div>
   );
 };

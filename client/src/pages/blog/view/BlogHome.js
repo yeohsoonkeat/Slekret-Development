@@ -30,7 +30,7 @@ const BlogHome = () => {
     article_cover,
     slekret_user,
     blog_article_tags,
-    created_at,
+    created_at
   } = globally_pinned_articles[0];
   const { avatar_src, displayname, username } = slekret_user;
   return (
@@ -99,6 +99,12 @@ query MyQuery($user_id: uuid) {
     is_globally_pinned
     id
     title
+    blog_reading_list_entries {
+      slekret_user_reading_list {
+        id
+        rl_title
+      }
+    }
     slekret_user {
       avatar_src
       displayname
@@ -117,6 +123,7 @@ query MyQuery($user_id: uuid) {
     }
   }
 }
+
 
 `;
 
