@@ -3,10 +3,13 @@ import IconBook from '../../../icons/ic_book';
 import IconHeart from '../../../icons/ic_heart';
 import PostTags from './PostTags';
 import UserInfo from './UserInfo';
+import { gql, useMutation } from '@apollo/client';
+
 
 
 const ItemCard = ({ item }) => {
   const {
+    id,
     title,
     content,
     article_cover,
@@ -17,9 +20,17 @@ const ItemCard = ({ item }) => {
     blog_article_likes
   } = item;
   const { avatar_src, displayname, username } = slekret_user;
-  const likes = blog_article_likes_aggregate.aggregate.count;
-  console.log(blog_article_likes)
+  const [likes, setLikes] = useState(blog_article_likes_aggregate.aggregate.count)
+  
   const [isLiked, setIsLiked] = useState(blog_article_likes[0] ? blog_article_likes[0].is_liked: false );
+  const [likeArticle] = useMutation(LIKE_ARTICLE_MUTATION, {
+    variables: {is_liked: !isLiked, blog_article_id: id},
+    onCompleted(data) {
+      let liked = data.insert_blog_article_likes_one.is_liked
+      setIsLiked(liked)
+      setLikes(liked ? likes +1 : likes -1)
+    }
+  })
   return (
     <div className="w-full">
       <div className="group w-full relative">
@@ -35,7 +46,7 @@ const ItemCard = ({ item }) => {
         >
           <div className="flex select-none">
             <div className="mr-6 flex items-center text-white">
-              <div onClick={() => setIsLiked(!isLiked)}>
+              <div onClick={likeArticle}>
                 <IconHeart className="w-6 h-6" filled={isLiked} />
               </div>
               <p className="font-medium">{likes}</p>
@@ -68,5 +79,14 @@ const ItemCard = ({ item }) => {
     </div>
   );
 };
+
+const LIKE_ARTICLE_MUTATION = gql`
+mutation MyMutation($blog_article_id: uuid, $is_liked: Boolean) {
+  insert_blog_article_likes_one(object: {is_liked: $is_liked, blog_article_id: $blog_article_id}, on_conflict: {constraint: blog_article_likes_pkey, update_columns: is_liked}) {
+    is_liked
+  }
+}
+
+`
 
 export default ItemCard;

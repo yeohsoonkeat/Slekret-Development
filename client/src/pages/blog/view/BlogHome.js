@@ -6,8 +6,7 @@ import useAuth from '../../../hook/useAuthProvider'
 
 const BlogHome = () => {
   const [auth] = useAuth()
-  console.log(auth);
-  const { loading, error, data } = useQuery(GET_FORUM_QUESTION, {variables: { user_id: auth.user.id}});
+  const { loading, error, data } = useQuery(GET_BLOG_ARTICLES, {variables: { user_id: auth.user.id}});
 
   if (loading) {
     return <h1>Loading</h1>;
@@ -91,7 +90,7 @@ const BlogHome = () => {
   );
 };
 
-const GET_FORUM_QUESTION = gql`
+const GET_BLOG_ARTICLES = gql`
 query MyQuery($user_id: uuid) {
   blog_articles {
     article_cover
