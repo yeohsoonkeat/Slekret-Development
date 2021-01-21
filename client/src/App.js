@@ -63,7 +63,7 @@ const App = () => {
 							component={Profile}
 						/>
 						<Route exact path={routes.forum} component={Forum} />
-						<Route exact path={routes.blog} component={Blog} />
+						<Route  path={routes.blog} component={Blog} />
 					</DefaultLayout>
 				</Switch>
 			</BrowserRouter>

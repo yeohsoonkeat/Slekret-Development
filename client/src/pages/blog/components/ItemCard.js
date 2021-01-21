@@ -4,6 +4,7 @@ import IconHeart from '../../../icons/ic_heart';
 import PostTags from './PostTags';
 import UserInfo from './UserInfo';
 import { gql, useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
 
 
 
@@ -60,9 +61,9 @@ const ItemCard = ({ item }) => {
         </div>
       </div>
       <PostTags tags={blog_article_tags} extendedParentClassName="mt-3" />
-      <p className="my-2 text-2xl text-gray-600 font-semibold leading-6">
+      <Link to={`blog/${id}`} className="my-2 text-2xl text-gray-600 font-semibold leading-6">
         {title}
-      </p>
+      </Link>
       <p
         style={{
           overflow: 'hidden',
