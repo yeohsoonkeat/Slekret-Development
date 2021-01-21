@@ -45,4 +45,6 @@ app.use(
 // router
 app.use('/api/v1', api);
 
+app.use('/static', express.static('/api/assets/'));
+
 module.exports = app;

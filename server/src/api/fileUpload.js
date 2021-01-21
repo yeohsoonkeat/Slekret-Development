@@ -15,10 +15,11 @@ router.post('/file-upload', (req, res) => {
 		}
 
 		const oldPath = files.image.path;
+		console.log(__dirname, '===');
 
 		const fileName = Date.now() + '.' + files.image.type.split('/')[1];
-		const newPath = path.join(__dirname, 'assets') + '/' + fileName;
-
+		const newPath = path.join(__dirname, '/assets/') + fileName;
+		console.log(newPath);
 		const rawData = fs.readFileSync(oldPath);
 
 		fs.writeFile(newPath, rawData, function(err) {

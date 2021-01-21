@@ -31,7 +31,7 @@ export default function NewQuestion() {
 	}
 
 	if (data && !loading) {
-		window.open("/questions","_self")
+		window.open('/questions', '_self');
 	}
 
 	return (

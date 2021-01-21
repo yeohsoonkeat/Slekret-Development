@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Menlo';
-  src: local('Menlo'), url(../fonts/Menlo-Regular.woff) format('woff');
+	font-family: 'Menlo';
+	src: local('Menlo'), url(../fonts/Menlo-Regular.woff) format('woff');
 }
 
 @font-face {
-  font-family: 'Monaco';
-  src: local('Monaco'), url(../fonts/Monaco.woff) format('woff');
+	font-family: 'Monaco';
+	src: local('Monaco'), url(../fonts/Monaco.woff) format('woff');
 }
