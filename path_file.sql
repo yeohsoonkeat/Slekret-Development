@@ -1392,6 +1392,50 @@ COPY hdb_catalog.hdb_function (function_schema, function_name, configuration, is
 --
 
 COPY hdb_catalog.hdb_permission (table_schema, table_name, role_name, perm_type, perm_def, comment, is_system_defined) FROM stdin;
+public	slekret_users	user	select	{"filter": {}, "columns": ["about", "avatar_src", "created_at", "displayname", "email", "id", "is_hiding_present", "last_seen", "updated_at", "username"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_types	user	select	{"filter": {}, "columns": ["user_id", "type", "updated_at"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_user_reading_lists	user	select	{"filter": {}, "columns": ["id", "rl_title", "rl_description", "rl_cover", "user_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_friendships	user	select	{"filter": {}, "columns": ["user_id_one", "user_id_two", "status", "last_action_user_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_followings	user	select	{"filter": {}, "columns": ["id", "follower_user_id", "following_user_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_tags	user	select	{"filter": {}, "columns": ["tag_name", "tag_description"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_tags	user	select	{"filter": {}, "columns": ["tag_name", "forum_question_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_reading_list_entries	user	select	{"filter": {}, "columns": ["forum_question_id", "user_reading_list_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_questions	user	select	{"filter": {}, "columns": ["id", "title", "content", "user_id", "created_at", "updated_at", "status"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_question_votes	user	select	{"filter": {}, "columns": ["forum_question_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_question_answers	user	select	{"filter": {}, "columns": ["id", "forum_question_id", "user_id", "content", "status", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_question_answer_votes	user	select	{"filter": {}, "columns": ["forum_question_answer_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_answer_reply_likes	user	select	{"filter": {}, "columns": ["forum_answer_reply_id", "user_id", "is_liked", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_answer_replies	user	select	{"filter": {}, "columns": ["id", "forum_question_answer_id", "user_id", "content", "replying_to_user_id", "status", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_reading_list_entries	user	select	{"filter": {}, "columns": ["blog_article_id", "user_reading_list_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_comment_comments	user	select	{"filter": {}, "columns": ["id", "blog_article_comment_id", "user_id", "content", "replying_to_user_id", "status", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_comment_comment_likes	user	select	{"filter": {}, "columns": ["blog_comment_comment_id", "user_id", "is_liked", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_articles	user	select	{"filter": {}, "columns": ["id", "title", "content", "user_id", "is_globally_pinned", "status", "article_cover", "updated_at", "created_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_tags	user	select	{"filter": {}, "columns": ["tag_name", "blog_article_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_likes	user	select	{"filter": {}, "columns": ["user_id", "blog_article_id", "is_liked", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_comments	user	select	{"filter": {}, "columns": ["id", "blog_article_id", "user_id", "content", "status", "updated_at", "created_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_comment_likes	user	select	{"filter": {}, "columns": ["user_id", "blog_article_comment_id", "is_liked", "updated_at", "created_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_users	guest	select	{"filter": {}, "columns": ["about", "avatar_src", "created_at", "displayname", "email", "id", "is_hiding_present", "last_seen", "updated_at", "username"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_types	guest	select	{"filter": {}, "columns": ["user_id", "type", "updated_at"], "computed_fields": [], "allow_aggregations": false}	\N	f
+public	slekret_tags	guest	select	{"filter": {}, "columns": ["tag_name", "tag_description"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_articles	guest	select	{"filter": {}, "columns": ["id", "title", "content", "user_id", "is_globally_pinned", "status", "article_cover", "updated_at", "created_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_tags	guest	select	{"filter": {}, "columns": ["tag_name", "blog_article_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_likes	guest	select	{"filter": {}, "columns": ["user_id", "blog_article_id", "is_liked", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_comments	guest	select	{"filter": {}, "columns": ["id", "blog_article_id", "user_id", "content", "status", "updated_at", "created_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_article_comment_likes	guest	select	{"filter": {}, "columns": ["user_id", "blog_article_comment_id", "is_liked", "updated_at", "created_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_comment_comments	guest	select	{"filter": {}, "columns": ["id", "blog_article_comment_id", "user_id", "content", "replying_to_user_id", "status", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_comment_comment_likes	guest	select	{"filter": {}, "columns": ["blog_comment_comment_id", "user_id", "is_liked", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_reading_lists	guest	select	{"filter": {}, "columns": ["id", "rl_title", "rl_description", "rl_cover", "user_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	blog_reading_list_entries	guest	select	{"filter": {}, "columns": ["blog_article_id", "user_reading_list_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_questions	guest	select	{"filter": {}, "columns": ["id", "title", "content", "user_id", "created_at", "updated_at", "status"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_question_votes	guest	select	{"filter": {}, "columns": ["forum_question_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_question_answers	guest	select	{"filter": {}, "columns": ["id", "forum_question_id", "user_id", "content", "status", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_question_answer_votes	guest	select	{"filter": {}, "columns": ["forum_question_answer_id", "user_id", "vote", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_answer_replies	guest	select	{"filter": {}, "columns": ["id", "forum_question_answer_id", "user_id", "content", "replying_to_user_id", "status", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_answer_reply_likes	guest	select	{"filter": {}, "columns": ["forum_answer_reply_id", "user_id", "is_liked", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_reading_list_entries	guest	select	{"filter": {}, "columns": ["forum_question_id", "user_reading_list_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	forum_tags	guest	select	{"filter": {}, "columns": ["tag_name", "forum_question_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_followings	guest	select	{"filter": {}, "columns": ["id", "follower_user_id", "following_user_id"], "computed_fields": [], "allow_aggregations": true}	\N	f
+public	slekret_user_friendships	guest	select	{"filter": {}, "columns": ["user_id_one", "user_id_two", "status", "last_action_user_id", "created_at", "updated_at"], "computed_fields": [], "allow_aggregations": true}	\N	f
 \.
 
 
@@ -1539,7 +1583,7 @@ COPY hdb_catalog.hdb_scheduled_events (id, webhook_conf, scheduled_time, retry_c
 --
 
 COPY hdb_catalog.hdb_schema_update_event (instance_id, occurred_at, invalidations) FROM stdin;
-bad35b58-e372-47a9-9a3d-f011a7e9823f	2021-01-21 10:15:20.735954+00	{"metadata":false,"remote_schemas":[]}
+a20a82de-d0ee-4622-b1e9-5858f5495b2b	2021-01-22 02:31:08.540523+00	{"metadata":false,"remote_schemas":[]}
 \.
 
 
@@ -1610,7 +1654,7 @@ public	slekret_user_friendships	{"custom_root_fields": {}, "custom_column_names"
 --
 
 COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, console_state) FROM stdin;
-c1ab58c1-2d7b-4f88-b972-1ec8132d51c7	40	2021-01-21 08:29:21.958995+00	{}	{"console_notifications": {"admin": {"date": "2021-01-21T10:01:15.241Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
+c1ab58c1-2d7b-4f88-b972-1ec8132d51c7	40	2021-01-21 08:29:21.958995+00	{}	{"console_notifications": {"admin": {"date": "2021-01-22T02:22:11.435Z", "read": "default", "showBadge": false}}, "telemetryNotificationShown": true}
 \.
 
 

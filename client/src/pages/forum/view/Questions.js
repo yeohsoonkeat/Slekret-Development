@@ -44,7 +44,7 @@ query m {
     content
     created_at
     forum_tags {
-      tag {
+      slekret_tag {
         tag_name
       }
     }
