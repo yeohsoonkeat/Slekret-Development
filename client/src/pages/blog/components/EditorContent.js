@@ -10,6 +10,7 @@ export default function EditorContent({ updateContent, content, onKeyBind }) {
 				value={content}
 				placeholder="You content go here as markdown...."
 				onKeyDown={onKeyBind}
+				id="editor-content"
 			/>
 		</>
 	);

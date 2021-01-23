@@ -1,34 +1,31 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const appConfig = require('../config/app.config');
-
+const upload = require('../config/fileUpload.config');
 const router = express.Router();
-const form = require('../config/fileUpload.config');
 
 router.post('/file-upload', (req, res) => {
-	const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
-
-	form.parse(req, function(err, fields, files) {
-		if (fileTypes.indexOf(files.image.type) === -1) {
-			return res.json({ message: 'File not support' });
-		}
-
-		const oldPath = files.image.path;
-		console.log(__dirname, '===');
-
-		const fileName = Date.now() + '.' + files.image.type.split('/')[1];
-		const newPath = path.join(__dirname, '/assets/') + fileName;
-		console.log(newPath);
-		const rawData = fs.readFileSync(oldPath);
-
-		fs.writeFile(newPath, rawData, function(err) {
-			if (err) res.json(err);
-
-			return res.json({
-				file_link: appConfig.backendUrl + '/static/' + fileName,
+	console.log(req.body);
+	upload(req, res, (err) => {
+		if (err) {
+			res.json({
+				message: err.message,
+				fail: true,
 			});
-		});
+		} else {
+			if (!req.file) {
+				res.json({
+					message: 'Error No file selected',
+					fail: true,
+				});
+			} else {
+				console.log(req);
+				res.json({
+					message: 'file uploaded',
+					path: appConfig.backendUrl + '/static/' + req.file.filename,
+					fail: false,
+				});
+			}
+		}
 	});
 });
 

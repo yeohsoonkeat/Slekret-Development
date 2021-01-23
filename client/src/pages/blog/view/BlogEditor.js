@@ -7,8 +7,10 @@ import EditorPreview from '../components/EditorPreview';
 import EditorTitle from '../components/EditorTitle';
 
 export default function BlogEditor() {
-	var contentInLocalStorage = JSON.parse(localStorage.getItem('editorContent'));
-
+	const contentInLocalStorage = JSON.parse(
+		localStorage.getItem('editorContent')
+	);
+	const [errorMessage, setErrorMessage] = useState();
 	const [content, setContent] = useState('' || contentInLocalStorage?.content);
 	const [showPreview, setShowPreview] = useState(false);
 	const [tags, setTag] = useState('' || contentInLocalStorage?.tags);
@@ -70,7 +72,18 @@ export default function BlogEditor() {
 			<EditorMeunBar
 				showPreview={showPreview}
 				setShowPreview={setShowPreview}
+				setErrorMessage={setErrorMessage}
+				setContent={setContent}
 			/>
+			{errorMessage && (
+				<div
+					className="w-full mb-5 relative py-3 pl-4 pr-10 leading-normal text-red-700 bg-red-100"
+					role="alert"
+				>
+					<p>{errorMessage}</p>
+				</div>
+			)}
+
 			<EditorImageCover imgSrc={'https://source.unsplash.com/random'} />
 
 			{!showPreview && (

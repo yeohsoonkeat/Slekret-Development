@@ -9,7 +9,7 @@ const signInSchema = yup.object().shape({
 		.max(25)
 		.matches(
 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{6,}$/g,
-			'Password should contains atleast one uppercase, one lowercase and one number'
+			'Invalid password'
 		),
 });
 

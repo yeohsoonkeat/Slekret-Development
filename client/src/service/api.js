@@ -19,6 +19,10 @@ class ApiService {
 		return this.postRequest(config.backendUrl + path, {});
 	}
 
+	async fileUpload(path, data) {
+		return this.postRequestFileUpload(config.backendUrl + path, data);
+	}
+
 	async postRequest(url, data) {
 		const res = await axios.post(url, data, {
 			withCredentials: true,
@@ -29,6 +33,18 @@ class ApiService {
 			},
 		});
 
+		return res;
+	}
+
+	async postRequestFileUpload(url, data) {
+		const res = await axios.post(url, data, {
+			withCredentials: true,
+			headers: {
+				Accept: 'multipart/form-data',
+				'content-type': 'multipart/form-data',
+				'Access-Control-Allow-Credentials': true,
+			},
+		});
 		return res;
 	}
 }

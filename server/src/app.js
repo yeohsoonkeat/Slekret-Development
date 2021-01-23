@@ -45,6 +45,8 @@ app.use(
 // router
 app.use('/api/v1', api);
 
-app.use('/static', express.static('/api/assets/'));
+app.use(function(err, req, res) {
+	res.status(500).send('Something broke!');
+});
 
 module.exports = app;
