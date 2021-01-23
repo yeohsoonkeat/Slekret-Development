@@ -10,11 +10,14 @@ export default function BlogEditor() {
 	const contentInLocalStorage = JSON.parse(
 		localStorage.getItem('editorContent')
 	);
+	const [showPreview, setShowPreview] = useState(false);
 	const [errorMessage, setErrorMessage] = useState();
 	const [content, setContent] = useState('' || contentInLocalStorage?.content);
-	const [showPreview, setShowPreview] = useState(false);
 	const [tags, setTag] = useState('' || contentInLocalStorage?.tags);
 	const [title, setTitle] = useState('' || contentInLocalStorage?.title);
+	const [imgSrcCover, setImgSrcCover] = useState(
+		'' || contentInLocalStorage?.imgSrcCover
+	);
 
 	useEffect(() => {
 		window.document.addEventListener(
@@ -84,7 +87,12 @@ export default function BlogEditor() {
 				</div>
 			)}
 
-			<EditorImageCover imgSrc={'https://source.unsplash.com/random'} />
+			<EditorImageCover
+				setImgSrcCover={setImgSrcCover}
+				imgSrcCover={imgSrcCover}
+				setErrorMessage={setErrorMessage}
+				showPreview={showPreview}
+			/>
 
 			{!showPreview && (
 				<EditorTitle handleOnChangeTitle={handleOnChangeTitle} title={title} />

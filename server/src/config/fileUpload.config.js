@@ -24,7 +24,7 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({
 	storage: storage,
-	limits: { fileSize: 4 * 1024 * 1024, files: 1 },
+	limits: { fileSize: 3 * 1024 * 1024, files: 1 },
 	fileFilter: fileFilter,
 }).single('image');
 

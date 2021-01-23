@@ -54,7 +54,10 @@ const EditorPreview = ({ content, tags, title }) => {
 			<div className="flex flex-wrap p-5">
 				{tags &&
 					tags.split(',').map((tag) => {
-						return <span className="mr-5">#{tag}</span>;
+						if (tag) {
+							return <span className="mr-5">#{tag}</span>;
+						}
+						return '';
 					})}
 			</div>
 

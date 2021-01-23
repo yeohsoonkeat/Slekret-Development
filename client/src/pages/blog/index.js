@@ -12,7 +12,7 @@ const Blog = (props) => {
 			<NavigationBar />
 			<Switch>
 				<Route exact path={current_url} component={BlogHome} />
-				<Route exact path="/blog/editor" component={BlogEditor} />
+				<Route exact path={current_url + '/editor'} component={BlogEditor} />
 			</Switch>
 		</div>
 	);

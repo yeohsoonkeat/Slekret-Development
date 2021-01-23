@@ -22,6 +22,9 @@ class ApiService {
 	async fileUpload(path, data) {
 		return this.postRequestFileUpload(config.backendUrl + path, data);
 	}
+	async removeFile(path, data) {
+		return this.postRequest(config.backendUrl + path, data);
+	}
 
 	async postRequest(url, data) {
 		const res = await axios.post(url, data, {

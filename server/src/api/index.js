@@ -7,7 +7,7 @@ const api = express.Router();
 
 api.use('/auth', require('./auth'));
 api.get('/token', isUserAuthenticated, require('./getToken'));
-api.use('/file', require('./fileUpload'));
+api.use('/file', isUserAuthenticated, require('./fileUpload'));
 
 api.use('/static', express.static(path.join(__dirname, '../assets')));
 

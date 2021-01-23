@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const appConfig = require('../config/app.config');
 const upload = require('../config/fileUpload.config');
 const router = express.Router();
@@ -18,7 +20,6 @@ router.post('/file-upload', (req, res) => {
 					fail: true,
 				});
 			} else {
-				console.log(req);
 				res.json({
 					message: 'file uploaded',
 					path: appConfig.backendUrl + '/static/' + req.file.filename,
@@ -26,6 +27,23 @@ router.post('/file-upload', (req, res) => {
 				});
 			}
 		}
+	});
+});
+
+router.post('/remove-file', (req, res) => {
+	const { filename } = req.body;
+	fs.unlink(path.join(__dirname, '../assets/' + filename), function(err) {
+		if (err) {
+			return res.json({
+				message: 'Can not remove file',
+				fail: true,
+				err,
+			});
+		}
+		return res.json({
+			message: 'File removed',
+			fail: false,
+		});
 	});
 });
 
