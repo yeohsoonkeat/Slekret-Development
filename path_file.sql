@@ -2910,6 +2910,17 @@ ALTER TABLE ONLY public.slekret_user_reading_lists
 
 --
 -- Name: slekret_user_types slekret_user_types_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+<<<<<<< HEAD
+=======
+--
+
+ALTER TABLE ONLY public.slekret_user_types
+    ADD CONSTRAINT slekret_user_types_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- PostgreSQL database dump complete
+>>>>>>> 7b6319f01ddaf45775c642a98115798aec73fbc3
 --
 
 ALTER TABLE ONLY public.slekret_user_types

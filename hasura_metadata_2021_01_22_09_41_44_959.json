@@ -1,0 +1,1551 @@
+{
+  "version": 2,
+  "tables": [
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_article_comment_likes"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_article_comment",
+          "using": {
+            "foreign_key_constraint_on": "blog_article_comment_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "user_id",
+              "blog_article_comment_id",
+              "is_liked",
+              "updated_at",
+              "created_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "user_id",
+              "blog_article_comment_id",
+              "is_liked",
+              "updated_at",
+              "created_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_article_comments"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_article",
+          "using": {
+            "foreign_key_constraint_on": "blog_article_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "blog_article_comment_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_article_comment_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_comment_likes"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_comment_comments",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_article_comment_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_comment_comments"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "blog_article_id",
+              "user_id",
+              "content",
+              "status",
+              "updated_at",
+              "created_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "blog_article_id",
+              "user_id",
+              "content",
+              "status",
+              "updated_at",
+              "created_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_article_likes"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_article",
+          "using": {
+            "foreign_key_constraint_on": "blog_article_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "user_id",
+              "blog_article_id",
+              "is_liked",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "user_id",
+              "blog_article_id",
+              "is_liked",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_article_tags"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_article",
+          "using": {
+            "foreign_key_constraint_on": "blog_article_id"
+          }
+        },
+        {
+          "name": "slekret_tag",
+          "using": {
+            "foreign_key_constraint_on": "tag_name"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "tag_name",
+              "blog_article_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "tag_name",
+              "blog_article_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_articles"
+      },
+      "object_relationships": [
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "blog_article_comments",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_article_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_comments"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_article_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_article_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_likes"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_article_tags",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_article_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_tags"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_reading_list_entries",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_article_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_reading_list_entries"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "title",
+              "content",
+              "user_id",
+              "is_globally_pinned",
+              "status",
+              "article_cover",
+              "updated_at",
+              "created_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "title",
+              "content",
+              "user_id",
+              "is_globally_pinned",
+              "status",
+              "article_cover",
+              "updated_at",
+              "created_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_comment_comment_likes"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_comment_comment",
+          "using": {
+            "foreign_key_constraint_on": "blog_comment_comment_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "blog_comment_comment_id",
+              "user_id",
+              "is_liked",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "blog_comment_comment_id",
+              "user_id",
+              "is_liked",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_comment_comments"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_article_comment",
+          "using": {
+            "foreign_key_constraint_on": "blog_article_comment_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        },
+        {
+          "name": "slekretUserByReplyingToUserId",
+          "using": {
+            "foreign_key_constraint_on": "replying_to_user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "blog_comment_comment_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "blog_comment_comment_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_comment_comment_likes"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "blog_article_comment_id",
+              "user_id",
+              "content",
+              "replying_to_user_id",
+              "status",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "blog_article_comment_id",
+              "user_id",
+              "content",
+              "replying_to_user_id",
+              "status",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "blog_reading_list_entries"
+      },
+      "object_relationships": [
+        {
+          "name": "blog_article",
+          "using": {
+            "foreign_key_constraint_on": "blog_article_id"
+          }
+        },
+        {
+          "name": "slekret_user_reading_list",
+          "using": {
+            "foreign_key_constraint_on": "user_reading_list_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "blog_article_id",
+              "user_reading_list_id",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "blog_article_id",
+              "user_reading_list_id",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_answer_replies"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_question_answer",
+          "using": {
+            "foreign_key_constraint_on": "forum_question_answer_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        },
+        {
+          "name": "slekretUserByReplyingToUserId",
+          "using": {
+            "foreign_key_constraint_on": "replying_to_user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "forum_answer_reply_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_answer_reply_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_answer_reply_likes"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "forum_question_answer_id",
+              "user_id",
+              "content",
+              "replying_to_user_id",
+              "status",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "forum_question_answer_id",
+              "user_id",
+              "content",
+              "replying_to_user_id",
+              "status",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_answer_reply_likes"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_answer_reply",
+          "using": {
+            "foreign_key_constraint_on": "forum_answer_reply_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "forum_answer_reply_id",
+              "user_id",
+              "is_liked",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "forum_answer_reply_id",
+              "user_id",
+              "is_liked",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_question_answer_votes"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_question_answer",
+          "using": {
+            "foreign_key_constraint_on": "forum_question_answer_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "forum_question_answer_id",
+              "user_id",
+              "vote",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "forum_question_answer_id",
+              "user_id",
+              "vote",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_question_answers"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_question",
+          "using": {
+            "foreign_key_constraint_on": "forum_question_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "forum_answer_replies",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_question_answer_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_answer_replies"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_question_answer_votes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_question_answer_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_question_answer_votes"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "forum_question_id",
+              "user_id",
+              "content",
+              "status",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "forum_question_id",
+              "user_id",
+              "content",
+              "status",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_question_votes"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_question",
+          "using": {
+            "foreign_key_constraint_on": "forum_question_id"
+          }
+        },
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "forum_question_id",
+              "user_id",
+              "vote",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "forum_question_id",
+              "user_id",
+              "vote",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_questions"
+      },
+      "object_relationships": [
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "forum_question_answers",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_question_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_question_answers"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_question_votes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_question_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_question_votes"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_reading_list_entries",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_question_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_reading_list_entries"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_tags",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "forum_question_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_tags"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "title",
+              "content",
+              "user_id",
+              "created_at",
+              "updated_at",
+              "status"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "title",
+              "content",
+              "user_id",
+              "created_at",
+              "updated_at",
+              "status"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_reading_list_entries"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_question",
+          "using": {
+            "foreign_key_constraint_on": "forum_question_id"
+          }
+        },
+        {
+          "name": "slekret_user_reading_list",
+          "using": {
+            "foreign_key_constraint_on": "user_reading_list_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "forum_question_id",
+              "user_reading_list_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "forum_question_id",
+              "user_reading_list_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "forum_tags"
+      },
+      "object_relationships": [
+        {
+          "name": "forum_question",
+          "using": {
+            "foreign_key_constraint_on": "forum_question_id"
+          }
+        },
+        {
+          "name": "slekret_tag",
+          "using": {
+            "foreign_key_constraint_on": "tag_name"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "tag_name",
+              "forum_question_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "tag_name",
+              "forum_question_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "slekret_tags"
+      },
+      "array_relationships": [
+        {
+          "name": "blog_article_tags",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "tag_name",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_tags"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_tags",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "tag_name",
+              "table": {
+                "schema": "public",
+                "name": "forum_tags"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "tag_name",
+              "tag_description"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "tag_name",
+              "tag_description"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "slekret_user_followings"
+      },
+      "object_relationships": [
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "following_user_id"
+          }
+        },
+        {
+          "name": "slekretUserByFollowerUserId",
+          "using": {
+            "foreign_key_constraint_on": "follower_user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "follower_user_id",
+              "following_user_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "follower_user_id",
+              "following_user_id"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "slekret_user_friendships"
+      },
+      "object_relationships": [
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id_two"
+          }
+        },
+        {
+          "name": "slekretUserByUserIdOne",
+          "using": {
+            "foreign_key_constraint_on": "user_id_one"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "user_id_one",
+              "user_id_two",
+              "status",
+              "last_action_user_id",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "user_id_one",
+              "user_id_two",
+              "status",
+              "last_action_user_id",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "slekret_user_reading_lists"
+      },
+      "object_relationships": [
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "array_relationships": [
+        {
+          "name": "blog_reading_list_entries",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_reading_list_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_reading_list_entries"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_reading_list_entries",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_reading_list_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_reading_list_entries"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "id",
+              "rl_title",
+              "rl_description",
+              "rl_cover",
+              "user_id",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "id",
+              "rl_title",
+              "rl_description",
+              "rl_cover",
+              "user_id",
+              "created_at",
+              "updated_at"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "slekret_user_types"
+      },
+      "object_relationships": [
+        {
+          "name": "slekret_user",
+          "using": {
+            "foreign_key_constraint_on": "user_id"
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "user_id",
+              "type",
+              "updated_at"
+            ],
+            "filter": {}
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "user_id",
+              "type",
+              "updated_at"
+            ],
+            "filter": {}
+          }
+        }
+      ]
+    },
+    {
+      "table": {
+        "schema": "public",
+        "name": "slekret_users"
+      },
+      "array_relationships": [
+        {
+          "name": "blog_article_comment_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_comment_likes"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_article_comments",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_comments"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_article_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_article_likes"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_articles",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_articles"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_comment_comment_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_comment_comment_likes"
+              }
+            }
+          }
+        },
+        {
+          "name": "blog_comment_comments",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_comment_comments"
+              }
+            }
+          }
+        },
+        {
+          "name": "blogCommentCommentsByReplyingToUserId",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "replying_to_user_id",
+              "table": {
+                "schema": "public",
+                "name": "blog_comment_comments"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_answer_replies",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_answer_replies"
+              }
+            }
+          }
+        },
+        {
+          "name": "forumAnswerRepliesByReplyingToUserId",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "replying_to_user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_answer_replies"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_answer_reply_likes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_answer_reply_likes"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_question_answers",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_question_answers"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_question_answer_votes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_question_answer_votes"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_questions",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_questions"
+              }
+            }
+          }
+        },
+        {
+          "name": "forum_question_votes",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "forum_question_votes"
+              }
+            }
+          }
+        },
+        {
+          "name": "slekret_user_followings",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "follower_user_id",
+              "table": {
+                "schema": "public",
+                "name": "slekret_user_followings"
+              }
+            }
+          }
+        },
+        {
+          "name": "slekretUserFollowingsByFollowingUserId",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "following_user_id",
+              "table": {
+                "schema": "public",
+                "name": "slekret_user_followings"
+              }
+            }
+          }
+        },
+        {
+          "name": "slekret_user_friendships",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id_one",
+              "table": {
+                "schema": "public",
+                "name": "slekret_user_friendships"
+              }
+            }
+          }
+        },
+        {
+          "name": "slekretUserFriendshipsByUserIdTwo",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id_two",
+              "table": {
+                "schema": "public",
+                "name": "slekret_user_friendships"
+              }
+            }
+          }
+        },
+        {
+          "name": "slekret_user_reading_lists",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "slekret_user_reading_lists"
+              }
+            }
+          }
+        },
+        {
+          "name": "slekret_user_types",
+          "using": {
+            "foreign_key_constraint_on": {
+              "column": "user_id",
+              "table": {
+                "schema": "public",
+                "name": "slekret_user_types"
+              }
+            }
+          }
+        }
+      ],
+      "select_permissions": [
+        {
+          "role": "guest",
+          "permission": {
+            "columns": [
+              "about",
+              "avatar_src",
+              "created_at",
+              "displayname",
+              "email",
+              "id",
+              "is_hiding_present",
+              "last_seen",
+              "updated_at",
+              "username"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        },
+        {
+          "role": "user",
+          "permission": {
+            "columns": [
+              "about",
+              "avatar_src",
+              "created_at",
+              "displayname",
+              "email",
+              "id",
+              "is_hiding_present",
+              "last_seen",
+              "updated_at",
+              "username"
+            ],
+            "filter": {},
+            "allow_aggregations": true
+          }
+        }
+      ]
+    }
+  ]
+}

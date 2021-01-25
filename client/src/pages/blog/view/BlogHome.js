@@ -6,8 +6,7 @@ import useAuth from '../../../hook/useAuthProvider';
 
 const BlogHome = () => {
 	const [auth] = useAuth();
-	console.log(auth);
-	const { loading, error, data } = useQuery(GET_FORUM_QUESTION, {
+	const { loading, error, data } = useQuery(GET_BLOG_ARTICLES, {
 		variables: { user_id: auth.user.id },
 	});
 
@@ -15,7 +14,6 @@ const BlogHome = () => {
 		return <h1>Loading</h1>;
 	}
 	if (error) {
-		console.log(error);
 		return <h1>error</h1>;
 	}
 	const globally_pinned_articles = [];
@@ -93,7 +91,7 @@ const BlogHome = () => {
 	);
 };
 
-const GET_FORUM_QUESTION = gql`
+const GET_BLOG_ARTICLES = gql`
 	query MyQuery($user_id: uuid) {
 		blog_articles {
 			article_cover
@@ -102,10 +100,24 @@ const GET_FORUM_QUESTION = gql`
 			is_globally_pinned
 			id
 			title
+			blog_reading_list_entries(
+				where: {
+					slekret_user_reading_list: { slekret_user: { id: { _eq: $user_id } } }
+				}
+			) {
+				slekret_user_reading_list {
+					id
+					rl_title
+				}
+			}
 			slekret_user {
 				avatar_src
 				displayname
 				username
+				slekret_user_reading_lists {
+					rl_title
+					id
+				}
 			}
 			blog_article_likes_aggregate(where: { is_liked: { _eq: true } }) {
 				aggregate {

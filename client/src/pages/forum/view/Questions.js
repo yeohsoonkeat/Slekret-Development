@@ -14,7 +14,6 @@ const Questions = (props) => {
     return <h1>Loading</h1>;
   }
   if (error) {
-    console.log(error);
     return <h1>error</h1>;
   }
   return (
@@ -45,7 +44,7 @@ query m {
     content
     created_at
     forum_tags {
-      tag {
+      slekret_tag {
         tag_name
       }
     }
