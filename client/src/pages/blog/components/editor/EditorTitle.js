@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import useEditorStateProvider from '../hook/useEditorStateProvider';
+import React from 'react';
+import useEditorStateProvider from '../../hook/useEditorStateProvider';
 
 function EditorTitle() {
 	const [editorState, editorDispatch] = useEditorStateProvider();
@@ -12,7 +12,7 @@ function EditorTitle() {
 		});
 		window.localStorage.setItem(
 			'blogEditor',
-			JSON.stringify({ ...editorState.blog })
+			JSON.stringify({ ...editorState.blog, title: e.target.value })
 		);
 	};
 

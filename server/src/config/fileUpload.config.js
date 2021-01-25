@@ -19,12 +19,12 @@ const fileFilter = (req, file, cb) => {
 	if (mimetype && extname) {
 		return cb(null, true);
 	} else {
-		cb('Error: File not support');
+		cb('Error: File not support', false);
 	}
 };
 const upload = multer({
 	storage: storage,
-	limits: { fileSize: 3 * 1024 * 1024, files: 1 },
+	limits: { fileSize: 2 * 1024 * 1024, files: 1 },
 	fileFilter: fileFilter,
 }).single('image');
 

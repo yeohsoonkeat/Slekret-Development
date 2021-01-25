@@ -1,18 +1,17 @@
 import React from 'react';
-import IconEdit from '../../../icons/ic_edit';
-import IconEye from '../../../icons/ic_eye';
-import IconImage from '../../../icons/ic_image';
-import ApiService from '../../../service/api';
+import IconEdit from '../../../../icons/ic_edit';
+import IconEye from '../../../../icons/ic_eye';
+import IconImage from '../../../../icons/ic_image';
+import ApiService from '../../../../service/api';
+import useEditorStateProvider from '../../hook/useEditorStateProvider';
 import EditorMenu from './EditorMenu';
 
 const api = new ApiService();
 
-export default function EditorMeunBar({
-	showPreview,
-	setShowPreview,
-	setErrorMessage,
-	setContent,
-}) {
+export default function EditorMeunBar({ setErrorMessage, setContent }) {
+	const [editorState, editorDispatch] = useEditorStateProvider();
+	const showPreview = editorState.showPreview;
+
 	const handleFileUpload = async (e) => {
 		const formData = new FormData();
 		formData.append('image', e.target.files[0]);
@@ -23,15 +22,24 @@ export default function EditorMeunBar({
 			});
 
 		if (res?.data?.fail) {
-			setErrorMessage(res.data.message);
+			editorDispatch({ type: 'SET_ERROR_MESSAGE', payload: res.data.message });
 		} else {
-			console.log();
 			const image = `\n ![](${res.data.path})`;
-			setContent((content) => content + image);
+			const content = editorState.blog.content + image;
+
+			editorDispatch({ type: 'SET_BLOG_CONTENT', payload: content });
+			window.localStorage.setItem(
+				'blogEditor',
+				JSON.stringify({ ...editorState.blog, content })
+			);
 			window.document
 				.getElementById('editor-content')
 				.scrollIntoView({ behavior: 'smooth' });
 		}
+	};
+
+	const setShowPreview = () => {
+		editorDispatch({ type: 'TOGGLE_SHOW_PREVIEW' });
 	};
 
 	return (
@@ -49,14 +57,12 @@ export default function EditorMeunBar({
 			</div>
 			{showPreview ? (
 				<EditorMenu
-					showPreview={showPreview}
 					setShowPreview={setShowPreview}
 					text="Edit"
 					icon={IconEdit}
 				/>
 			) : (
 				<EditorMenu
-					showPreview={showPreview}
 					setShowPreview={setShowPreview}
 					text="Preview"
 					icon={IconEye}

@@ -4,7 +4,9 @@ const initialState = {
 	errorMessage: '',
 	blog: {
 		title: blogLocalStorage?.title || '',
+		tags: blogLocalStorage?.tags || '',
 		content: blogLocalStorage?.content || '',
+		articleCover: blogLocalStorage?.articleCover || '',
 	},
 };
 
@@ -13,7 +15,7 @@ const reducer = (state, { type, payload }) => {
 		case 'SET_ERROR_MESSAGE':
 			return {
 				...state,
-				errorMessage: payload.message,
+				errorMessage: payload,
 			};
 		case 'TOGGLE_SHOW_PREVIEW':
 			return {
@@ -26,6 +28,32 @@ const reducer = (state, { type, payload }) => {
 				blog: {
 					...state.blog,
 					title: payload,
+				},
+			};
+		case 'SET_TAGS':
+			return {
+				...state,
+				blog: {
+					...state.blog,
+					tags: payload,
+				},
+			};
+
+		case 'SET_BLOG_CONTENT':
+			return {
+				...state,
+				blog: {
+					...state.blog,
+					content: payload,
+				},
+			};
+		case 'SET_BLOG_ARTICLE_COVER':
+			return {
+				...state,
+				errorMessage: '',
+				blog: {
+					...state.blog,
+					articleCover: payload,
 				},
 			};
 		default:

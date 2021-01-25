@@ -1,14 +1,14 @@
 import React from 'react';
-import ApiService from '../../../service/api';
+import ApiService from '../../../../service/api';
+import useEditorStateProvider from '../../hook/useEditorStateProvider';
 
 const api = new ApiService();
 
-export default function EditorImageCover({
-	imgSrcCover,
-	setErrorMessage,
-	setImgSrcCover,
-	showPreview,
-}) {
+export default function EditorImageCover() {
+	const [editorState, editorDispatch] = useEditorStateProvider();
+	const articleCover = editorState.blog.articleCover;
+	const showPreview = editorState.showPreview;
+
 	const handleFileUpload = async (e) => {
 		const formData = new FormData();
 		formData.append('image', e.target.files[0]);
@@ -17,27 +17,24 @@ export default function EditorImageCover({
 			.catch((e) => {
 				window.open('/error/500', '_self');
 			});
+		console.log(res);
 
 		if (res?.data?.fail) {
-			setErrorMessage(res.data.message);
+			editorDispatch({ type: 'SET_ERROR_MESSAGE', payload: res.data.message });
 		} else {
-			setErrorMessage('');
-			setImgSrcCover(res.data.path);
-			const contentInLocalStorage = JSON.parse(
-				localStorage.getItem('editorContent')
-			);
+			editorDispatch({
+				type: 'SET_BLOG_ARTICLE_COVER',
+				payload: res.data.path,
+			});
 			window.localStorage.setItem(
-				'editorContent',
-				JSON.stringify({
-					...contentInLocalStorage,
-					imgSrcCover: res.data.path,
-				})
+				'blogEditor',
+				JSON.stringify({ ...editorState.blog, articleCover: res.data.path })
 			);
 		}
 	};
 
 	const removeImageCover = async () => {
-		const filename = imgSrcCover.replace(/^(.*[\\/])/, '');
+		const filename = articleCover.replace(/^(.*[\\/])/, '');
 		const res = await api
 			.removeFile('/file/remove-file', {
 				filename,
@@ -46,26 +43,26 @@ export default function EditorImageCover({
 				return window.open('/error/500', '_self');
 			});
 		if (res?.data?.fail) {
-			setErrorMessage(res.data.message);
+			editorDispatch({ type: 'SET_ERROR_MESSAGE', payload: res.data.message });
 		} else {
-			setImgSrcCover('');
-			const contentInLocalStorage = JSON.parse(
-				localStorage.getItem('editorContent')
-			);
-			delete contentInLocalStorage.imgSrcCover;
+			editorDispatch({
+				type: 'SET_BLOG_ARTICLE_COVER',
+				payload: '',
+			});
+			delete editorState.blog.articleCover;
 			window.localStorage.setItem(
-				'editorContent',
-				JSON.stringify(contentInLocalStorage)
+				'blogEditor',
+				JSON.stringify({ ...editorState.blog })
 			);
 		}
 	};
 
 	return (
 		<div className="w-full h-80 border-2 flex items-center justify-center cursor-pointer hover:tracking-wide transition-all relative">
-			{imgSrcCover ? (
+			{articleCover ? (
 				<>
 					<img
-						src={imgSrcCover}
+						src={articleCover}
 						alt=""
 						className="w-full h-full object-cover object-center"
 					/>
@@ -87,6 +84,7 @@ export default function EditorImageCover({
 						type="file"
 						name="image"
 						onChange={handleFileUpload}
+						accept=".jpg, .png, .jpeg, .gif"
 					/>
 				</div>
 			)}

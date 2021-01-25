@@ -6,7 +6,6 @@ const upload = require('../config/fileUpload.config');
 const router = express.Router();
 
 router.post('/file-upload', (req, res) => {
-	console.log(req.body);
 	upload(req, res, (err) => {
 		if (err) {
 			res.json({
