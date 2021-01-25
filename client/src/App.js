@@ -53,6 +53,7 @@ const App = () => {
 				<Switch>
 					<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
 					<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+					<Route path={routes.blog} component={Blog} />
 
 					<DefaultLayout>
 						<Route path={routes.error} component={ErrorPage} />
@@ -62,8 +63,7 @@ const App = () => {
 							path={routes.profile}
 							component={Profile}
 						/>
-						<Route exact path={routes.forum} component={Forum} />
-						<Route  path={routes.blog} component={Blog} />
+						<Route path={routes.forum} component={Forum} />
 					</DefaultLayout>
 				</Switch>
 			</BrowserRouter>

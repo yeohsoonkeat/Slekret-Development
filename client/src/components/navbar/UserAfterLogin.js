@@ -25,7 +25,7 @@ export default function UserAfterLogin({ username, avatarSrc, authDispatch }) {
 				onClick={() => setOpenDropDown(!openDropDown)}
 			/>
 			{openDropDown && (
-				<div className="absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 mt-2">
+				<div className="absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-40 mt-2">
 					<div
 						className="py-1"
 						role="menu"

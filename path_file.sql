@@ -2920,3 +2920,10 @@ ALTER TABLE ONLY public.slekret_user_types
 -- PostgreSQL database dump complete
 --
 
+ALTER TABLE ONLY public.slekret_user_types
+    ADD CONSTRAINT slekret_user_types_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.slekret_users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- PostgreSQL database dump complete
+--
