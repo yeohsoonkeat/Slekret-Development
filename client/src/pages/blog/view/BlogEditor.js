@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import EditorContent from '../components/EditorContent';
 import EditorImageCover from '../components/EditorImageCover';
 import EditorInputTags from '../components/EditorInputTags';
@@ -19,38 +19,12 @@ export default function BlogEditor() {
 		'' || contentInLocalStorage?.imgSrcCover
 	);
 
-	useEffect(() => {
-		window.document.addEventListener(
-			'keydown',
-			function (e) {
-				if (
-					e.key === 'e' &&
-					(navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)
-				) {
-					e.preventDefault();
-					setShowPreview(false);
-				}
-			},
-			false
-		);
-	}, []);
-
 	const updateContent = (e) => {
 		setContent(e.target.value);
 		window.localStorage.setItem(
 			'editorContent',
 			JSON.stringify({ content: e.target.value, title, tags })
 		);
-	};
-
-	const handleKeyBind = (e) => {
-		if (
-			e.keyCode === 83 &&
-			(navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)
-		) {
-			e.preventDefault();
-			setShowPreview(true);
-		}
 	};
 
 	const handleTag = (e) => {
@@ -72,7 +46,7 @@ export default function BlogEditor() {
 
 	return (
 		<div className="max-w-6xl min-h-screen mx-auto p-5">
-			<EditorMeunBar
+			{/* <EditorMeunBar
 				showPreview={showPreview}
 				setShowPreview={setShowPreview}
 				setErrorMessage={setErrorMessage}
@@ -92,22 +66,16 @@ export default function BlogEditor() {
 				imgSrcCover={imgSrcCover}
 				setErrorMessage={setErrorMessage}
 				showPreview={showPreview}
-			/>
+			/> */}
 
-			{!showPreview && (
-				<EditorTitle handleOnChangeTitle={handleOnChangeTitle} title={title} />
-			)}
+			<EditorTitle />
 
 			{!showPreview && <EditorInputTags handleTag={handleTag} tags={tags} />}
 
 			{showPreview ? (
 				<EditorPreview content={content} tags={tags || ''} title={title} />
 			) : (
-				<EditorContent
-					onKeyBind={handleKeyBind}
-					updateContent={updateContent}
-					content={content}
-				/>
+				<EditorContent updateContent={updateContent} content={content} />
 			)}
 
 			<hr />

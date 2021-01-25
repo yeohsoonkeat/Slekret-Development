@@ -25,6 +25,7 @@ export default function EditorMeunBar({
 		if (res?.data?.fail) {
 			setErrorMessage(res.data.message);
 		} else {
+			console.log();
 			const image = `\n ![](${res.data.path})`;
 			setContent((content) => content + image);
 			window.document

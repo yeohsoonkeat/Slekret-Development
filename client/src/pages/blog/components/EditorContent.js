@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function EditorContent({ updateContent, content, onKeyBind }) {
+export default function EditorContent({ updateContent, content }) {
 	return (
 		<>
 			<textarea
@@ -9,7 +9,6 @@ export default function EditorContent({ updateContent, content, onKeyBind }) {
 				onChange={updateContent}
 				value={content}
 				placeholder="You content go here as markdown...."
-				onKeyDown={onKeyBind}
 				id="editor-content"
 			/>
 		</>

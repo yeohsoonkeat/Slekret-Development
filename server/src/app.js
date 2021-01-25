@@ -2,7 +2,6 @@
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
-const csrf = require('csurf');
 const helmet = require('helmet');
 const passport = require('passport');
 const sessions = require('express-session');
@@ -40,21 +39,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-var whitelist = [appConfig.clientURl];
-var corsOptions = {
-	origin: function(origin, callback) {
-		console.log(origin);
-		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true);
-		} else {
-			callback(new Error('Not allowed by CORS'));
-		}
-	},
-	methods: 'GET,POST,PUT,DELETE,HEAD,PATCH',
-	credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(
+	cors({
+		origin: appConfig.clientURl,
+		methods: 'GET,POST,PUT,DELETE,HEAD,PATCH',
+		credentials: true,
+	})
+);
 
 // router
 app.use('/api/v1', api);
