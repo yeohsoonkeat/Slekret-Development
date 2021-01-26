@@ -34,6 +34,7 @@ const App = () => {
 			.then((res) => {
 				const { auth, token, user } = res?.data;
 				setToken(token);
+				console.log(token);
 				window.localStorage.setItem('auth', auth);
 				window.localStorage.setItem('avatarSrc', user.avatar_src);
 

@@ -48,7 +48,7 @@ const EditorPreview = () => {
 	return (
 		<>
 			<div
-				className="overflow-y-scroll  mx-auto"
+				className="mx-auto"
 				style={{
 					minHeight: '83vh',
 					maxWidth: '800px',
@@ -57,9 +57,13 @@ const EditorPreview = () => {
 				<h1 className="font-black text-5xl p-5">{title}</h1>
 				<div className="flex flex-wrap p-5">
 					{tags &&
-						tags.split(',').map((tag) => {
+						tags.split(',').map((tag, index) => {
 							if (tag) {
-								return <span className="mr-5">#{tag}</span>;
+								return (
+									<span className="mr-5" key={index}>
+										#{tag}
+									</span>
+								);
 							}
 							return '';
 						})}
@@ -72,6 +76,7 @@ const EditorPreview = () => {
 					className="h-full p-5 break-words markdown"
 					plugins={[gfm]}
 					allowDangerousHtml
+					id="editor-content"
 				/>
 			</div>
 		</>
