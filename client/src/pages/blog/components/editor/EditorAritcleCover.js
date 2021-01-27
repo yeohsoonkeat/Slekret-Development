@@ -58,7 +58,7 @@ export default function EditorImageCover() {
 	};
 
 	return (
-		<div className="w-full h-80 border-2 flex items-center justify-center cursor-pointer hover:tracking-wide transition-all relative">
+		<div className="h-80 relative flex items-center justify-center border-2">
 			{articleCover ? (
 				<>
 					<img
@@ -77,7 +77,7 @@ export default function EditorImageCover() {
 					)}
 				</>
 			) : (
-				<div>
+				<>
 					<h1 className="cursor-pointer border-2 px-10 py-4">AddCover</h1>
 					<input
 						className="cursor-pointer w-full h-full opacity-0 absolute top-0"
@@ -86,7 +86,7 @@ export default function EditorImageCover() {
 						onChange={handleFileUpload}
 						accept=".jpg, .png, .jpeg, .gif"
 					/>
-				</div>
+				</>
 			)}
 		</div>
 	);

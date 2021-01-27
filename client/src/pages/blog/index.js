@@ -1,6 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
 import NavigationBar from '../../components/navbar';
-import Footer from '../../components/Footer';
 import EditorStateProvider from './provider/editor/editorStateProvider';
 import BlogEditor from './view/BlogEditor';
 import BlogHome from './view/BlogHome';
@@ -30,7 +29,6 @@ const Blog = (props) => {
 					</EditorStateProvider>
 				</Switch>
 			</div>
-			<Footer />
 		</div>
 	);
 };

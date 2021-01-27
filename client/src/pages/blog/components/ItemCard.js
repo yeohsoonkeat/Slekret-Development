@@ -39,9 +39,9 @@ const ItemCard = ({ item }) => {
 	const blogDetail = {
 		title,
 		content,
-		articleCover: article_cover,
+		article_cover,
 		slekret_user,
-		tags: blog_article_tags,
+		blog_article_tags,
 		created_at,
 	};
 
