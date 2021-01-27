@@ -1,4 +1,5 @@
 const config = {
+	clientUrl: 'http://localhost:3000',
 	backendUrl: 'http://localhost:8000/api/v1',
 	hasuraGraphql: 'http://localhost:8080/v1/graphql',
 	guestToken:

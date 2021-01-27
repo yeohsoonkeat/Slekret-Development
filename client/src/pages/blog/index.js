@@ -4,7 +4,7 @@ import EditorStateProvider from './provider/editor/editorStateProvider';
 import BlogEditor from './view/BlogEditor';
 import BlogHome from './view/BlogHome';
 import BlogDetail from './view/BlogDetail';
-
+import ProtectedRoutes from '../../routes/ProtectedRoutes';
 const Blog = (props) => {
 	const { match } = props;
 	const current_url = match.url;
@@ -21,9 +21,9 @@ const Blog = (props) => {
 						component={BlogDetail}
 					/>
 					<EditorStateProvider>
-						<Route
+						<ProtectedRoutes
 							exact
-							path={current_url + '/editor'}
+							path={current_url + '/new'}
 							component={BlogEditor}
 						/>
 					</EditorStateProvider>
