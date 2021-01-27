@@ -111,6 +111,7 @@ const GET_BLOG_ARTICLES = gql`
 				}
 			}
 			slekret_user {
+				id
 				avatar_src
 				displayname
 				username

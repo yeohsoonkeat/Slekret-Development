@@ -1,0 +1,8 @@
+.content-editable:empty::before {
+	content: 'Blog title';
+	color: gray;
+}
+
+.hover-dropdown:hover .dropdown {
+	display: block;
+}
