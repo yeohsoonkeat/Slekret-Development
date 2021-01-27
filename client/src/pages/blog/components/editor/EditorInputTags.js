@@ -20,7 +20,7 @@ export default function EditorInputTags() {
 	return (
 		<input
 			placeholder="tags react,node"
-			className="w-full mb-2 border-2 p-5 focus:outline-none"
+			className="w-full mb-2 border p-5 focus:outline-none"
 			onChange={handleOnChange}
 			value={tags}
 			pattern="[0-9A-Za-z, ]+"

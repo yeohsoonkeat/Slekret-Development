@@ -54,7 +54,7 @@ const EditorPreview = () => {
 					maxWidth: '800px',
 				}}
 			>
-				<h1 className="font-black text-5xl p-5">{title}</h1>
+				<h1 className="font-black text-5xl p-5 break-words">{title}</h1>
 				<div className="flex flex-wrap p-5">
 					{tags &&
 						tags.split(',').map((tag, index) => {

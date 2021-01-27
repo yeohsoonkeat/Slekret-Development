@@ -13,7 +13,7 @@ export default function EditorContent() {
 	return (
 		<>
 			<textarea
-				className="w-full focus:outline-none p-5 overflow-scroll resize-none h-screen border"
+				className="w-full focus:outline-none p-5 resize-none h-screen border mb-10"
 				autoFocus={true}
 				onChange={handleOnChange}
 				value={content}

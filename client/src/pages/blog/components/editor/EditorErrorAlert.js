@@ -8,7 +8,7 @@ export default function EditorErrorAlert() {
 		<>
 			{errorMessage ? (
 				<div
-					className="w-full mb-5 relative py-3 pl-4 pr-10 leading-normal text-red-700 bg-red-100"
+					className="w-full mb-5 relative py-3 pl-4 pr-10 leading-normal text-red-700 bg-red-100 rounded"
 					role="alert"
 				>
 					<p>{errorMessage}</p>
