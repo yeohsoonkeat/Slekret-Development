@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import BlogComments from '../components/BlogComments';
 import MarkdownPreview from '../components/MarkdownPreview';
 import PostTags from '../components/PostTags';
 
@@ -11,13 +12,11 @@ export default function BlogDetail({ location }) {
 		}
 	});
 	const { id } = useParams();
-	let blogDetail = location.state?.blogDetail;
 
 	const { loading, data, error } = useQuery(GET_BLOG_DETAIL, {
 		variables: {
 			id,
 		},
-		skip: location.state,
 	});
 
 	if (loading) {
@@ -27,9 +26,7 @@ export default function BlogDetail({ location }) {
 	if (error) {
 		return <h1>error</h1>;
 	}
-	if (data) {
-		blogDetail = data?.blog_articles[0];
-	}
+	const blogDetail = data?.blog_articles[0];
 
 	return (
 		<>
@@ -82,18 +79,12 @@ export default function BlogDetail({ location }) {
 						<MarkdownPreview content={blogDetail.content} />
 					</div>
 					<hr className="mt-10 mb-10" />
-					<div className="w-11/12 mx-auto mb-10">
-						<h1 className="text-2xl font-black mb-5">Comment</h1>
-						<textarea
-							className="h-56 w-full mx-auto resize-none p-5 border rounded shadow"
-							placeholder="leave a comment here"
-						/>
-						<div>
-							<button className="bg-blue-500 py-3 px-5 uppercase text-white font-bold rounded">
-								Add Comment
-							</button>
-						</div>
-					</div>
+					<BlogComments
+						blogId={id}
+						numberOfComments={
+							blogDetail.blog_article_comments_aggregate?.aggregate.count || 0
+						}
+					/>
 				</div>
 			</div>
 		</>
@@ -114,6 +105,11 @@ const GET_BLOG_DETAIL = gql`
 			}
 			blog_article_tags {
 				tag_name
+			}
+			blog_article_comments_aggregate {
+				aggregate {
+					count
+				}
 			}
 		}
 	}

@@ -130,6 +130,12 @@ const GET_BLOG_ARTICLES = gql`
 			blog_article_tags {
 				tag_name
 			}
+
+			blog_article_comments_aggregate {
+				aggregate {
+					count
+				}
+			}
 		}
 	}
 `;
