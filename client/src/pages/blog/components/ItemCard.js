@@ -18,6 +18,7 @@ const ItemCard = ({ item }) => {
 		blog_article_tags,
 		blog_article_likes,
 		blog_reading_list_entries,
+		blog_article_comments_aggregate,
 	} = item;
 	const { avatar_src, displayname, username } = slekret_user;
 	const [likes, setLikes] = useState(
@@ -43,6 +44,7 @@ const ItemCard = ({ item }) => {
 		slekret_user,
 		blog_article_tags,
 		created_at,
+		blog_article_comments_aggregate,
 	};
 
 	return (
