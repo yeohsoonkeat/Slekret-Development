@@ -1,21 +1,23 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import config from './config';
 import routes from './constant/routes';
-import ProtectedRoute from './routes/ProtectedRoutes';
-import PublicRoutes from './routes/PublicRoutes';
 import useAuthProvider from './hook/useAuthProvider';
 import useApolloClientWithToken from './hook/useApolloClientWithToken';
-import Admin from './pages/admin';
-import Auth from './pages/auth';
-import Profile from './pages/profile';
-import Home from './pages/home';
-import Forum from './pages/forum';
-import Blog from './pages/blog';
-import DefaultLayout from './layout/default';
-import ErrorPage from './pages/error';
+
+const Admin = lazy(() => import('./pages/admin'));
+const Auth = lazy(() => import('./pages/auth'));
+const Profile = lazy(() => import('./pages/profile'));
+const Home = lazy(() => import('./pages/home'));
+const Forum = lazy(() => import('./pages/forum'));
+const Blog = lazy(() => import('./pages/blog'));
+const ErrorPage = lazy(() => import('./pages/error'));
+const DefaultLayout = lazy(() => import('./layout/default'));
+const ProtectedRoute = lazy(() => import('./routes/ProtectedRoutes'));
+const PublicRoutes = lazy(() => import('./routes/PublicRoutes'));
+
 const App = () => {
 	const [token, setToken] = useState();
 	const [authState, authDispatch] = useAuthProvider();
@@ -51,22 +53,24 @@ const App = () => {
 	return (
 		<ApolloProvider client={apolloClient}>
 			<BrowserRouter>
-				<Switch>
-					<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
-					<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
-					<Route path={routes.blog} component={Blog} />
+				<Suspense fallback={<div>Loading...</div>}>
+					<Switch>
+						<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
+						<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+						<Route path={routes.blog} component={Blog} />
 
-					<DefaultLayout>
-						<Route path={routes.error} component={ErrorPage} />
-						<Route exact path={routes.home} component={Home} />
-						<ProtectedRoute
-							auth={auth}
-							path={routes.profile}
-							component={Profile}
-						/>
-						<Route path={routes.forum} component={Forum} />
-					</DefaultLayout>
-				</Switch>
+						<DefaultLayout>
+							<Route path={routes.error} component={ErrorPage} />
+							<Route exact path={routes.home} component={Home} />
+							<ProtectedRoute
+								auth={auth}
+								path={routes.profile}
+								component={Profile}
+							/>
+							<Route path={routes.forum} component={Forum} />
+						</DefaultLayout>
+					</Switch>
+				</Suspense>
 			</BrowserRouter>
 		</ApolloProvider>
 	);
