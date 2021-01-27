@@ -1,9 +1,10 @@
-import React from 'react';
+import '../styles/blogStyle.css';
+import BlogCommentMenu from './BlogCommentMenu';
 
 export default function BlogComment({ comment }) {
 	return (
 		<>
-			<div className="border p-5 rounded mt-5">
+			<div className="border p-5 rounded mt-5 relative">
 				<div className="mt-5 flex items-center mb-5 ">
 					<img
 						src={comment.slekret_user.avatar_src}
@@ -28,6 +29,8 @@ export default function BlogComment({ comment }) {
 					</div>
 				</div>
 				<p className="ml-16 text-xl"> {comment.content}</p>
+
+				<BlogCommentMenu userId={comment.slekret_user.id} />
 			</div>
 		</>
 	);

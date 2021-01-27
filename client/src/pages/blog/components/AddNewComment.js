@@ -15,6 +15,7 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 					content: commentContent,
 					created_at: new Date(),
 					slekret_user: {
+						id: authState.user.id,
 						username: authState.user.username,
 						avatar_src: authState.user.avatar_src,
 						displayname: authState.user.username,

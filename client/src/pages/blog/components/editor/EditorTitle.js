@@ -1,4 +1,4 @@
-import '../../styles/contentEditorable.css';
+import '../../styles/blogStyle.css';
 import useEditorStateProvider from '../../hook/useEditorStateProvider';
 import { useEffect } from 'react';
 

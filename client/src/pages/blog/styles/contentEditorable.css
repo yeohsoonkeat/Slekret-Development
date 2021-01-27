@@ -1,9 +1,0 @@
-.content-editable:empty::before {
-	content: 'Blog title';
-	color: gray;
-}
-
-.editor-content:empty::before {
-	content: 'Your content go here as markdown....';
-	color: gray;
-}
