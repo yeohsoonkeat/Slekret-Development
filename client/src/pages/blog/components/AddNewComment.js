@@ -1,8 +1,10 @@
 import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
+import ModalRequireAuth from '../../../components/ModalRequireAuth';
 import useAuthProvider from '../../../hook/useAuthProvider';
 
 const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
+	const [showModal, setShowModal] = useState(false);
 	const [commentContent, setCommentContent] = useState('');
 	const [authState] = useAuthProvider();
 
@@ -30,8 +32,17 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 	};
 
 	const handleOnClick = () => {
+		if (!authState.auth) {
+			return setShowModal(true);
+		}
 		if (commentContent.trim()) {
 			addNewComent({ variables: { blogId, content: commentContent } });
+		}
+	};
+	const handleOnfucus = () => {
+		if (!authState.auth) {
+			window.document.getElementById('comment-editor').blur();
+			setShowModal(true);
 		}
 	};
 
@@ -43,6 +54,8 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 					placeholder="leave a comment here"
 					onChange={handleOnChange}
 					value={commentContent}
+					onFocus={handleOnfucus}
+					id="comment-editor"
 				/>
 				<div>
 					<button
@@ -54,6 +67,7 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 					</button>
 				</div>
 			</div>
+			{showModal && <ModalRequireAuth setShowModal={setShowModal} />}
 		</>
 	);
 };

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import AnimatedIconHamburgerMenu from '../../animated_icons/ai_hamburger_menu';
+import config from '../../config';
 import routes from '../../constant/routes';
 import ListMenuOnMobile from './ListMenuOnMobile';
 import ListMenuOnWeb from './ListMenuOnWeb';
@@ -12,6 +14,11 @@ const navbarCategories = [
 ];
 
 export default function NavigationBar() {
+	const isBlogUrl = window.location.href.match(config.clientUrl + '/blog');
+	const isForumUrl = window.location.href.match(
+		config.clientUrl + '/questions'
+	);
+
 	const [openNavBar, setOpenNavBar] = useState(false);
 
 	return (
@@ -31,7 +38,25 @@ export default function NavigationBar() {
 						openNavBar={openNavBar}
 					/>
 				</div>
-				<User />
+				<div className="flex items-center">
+					{isBlogUrl && (
+						<Link
+							to="/blog/new"
+							className="bg-blue-500  text-white rounded px-2 mr-5 py-2"
+						>
+							Write Post
+						</Link>
+					)}
+					{isForumUrl && (
+						<Link
+							to="/forum/new"
+							className="bg-blue-500  text-white rounded px-2 mr-5 py-2"
+						>
+							Ask question
+						</Link>
+					)}
+					<User />
+				</div>
 			</div>
 
 			<ListMenuOnMobile
