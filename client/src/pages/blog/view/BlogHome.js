@@ -25,51 +25,58 @@ const BlogHome = () => {
 			local_articles.push(x);
 		}
 	});
-	const {
-		title,
-		content,
-		article_cover,
-		slekret_user,
-		blog_article_tags,
-		created_at,
-	} = globally_pinned_articles[0];
-	const { avatar_src, displayname, username } = slekret_user;
 	return (
 		<div className="flex-1 flex flex-col py-8">
-			<div className="w-full relative">
-				<div className="relative" style={{ paddingTop: '40%' }}>
-					<div
-						className="absolute inset-0 bg-no-repeat bg-cover"
-						style={{ backgroundImage: `url(${article_cover})` }}
-					/>
-				</div>
-
-				{/* Featured Post */}
-				<div className="hidden lg:block absolute left-24 top-1/2 transform -translate-y-1/2 bg-white w-1/2 px-6 py-4">
-					<PostTags tags={blog_article_tags} />
-					<p className="text-xl font-semibold text-gray-800">{title}</p>
-					<p
-						style={{
-							overflow: 'hidden',
-							whiteSpace: 'normal',
-							display: '-webkit-box',
-							WebkitLineClamp: '3',
-							WebkitBoxOrient: 'vertical',
-						}}
-						className="text-gray-500 tracking-wide text-sm"
-					>
-						{content}
-					</p>
-					<UserInfo
-						user={{
-							avatar_src,
-							displayname,
-							username,
-							created_at,
-						}}
-					/>
-				</div>
-			</div>
+			{
+				globally_pinned_articles.map((globally_pinned_article, index) => {
+					const {
+						title,
+						content,
+						article_cover,
+						slekret_user,
+						blog_article_tags,
+						created_at,
+					} = globally_pinned_article;
+					const { avatar_src, displayname, username } = slekret_user;
+					return (
+						<div className="w-full relative">
+						<div className="relative" style={{ paddingTop: '40%' }}>
+							<div
+								className="absolute inset-0 bg-no-repeat bg-cover"
+								style={{ backgroundImage: `url(${article_cover})` }}
+							/>
+						</div>
+		
+						{/* Featured Post */}
+						<div className="hidden lg:block absolute left-24 top-1/2 transform -translate-y-1/2 bg-white w-1/2 px-6 py-4">
+							<PostTags tags={blog_article_tags} />
+							<p className="text-xl font-semibold text-gray-800">{title}</p>
+							<p
+								style={{
+									overflow: 'hidden',
+									whiteSpace: 'normal',
+									display: '-webkit-box',
+									WebkitLineClamp: '3',
+									WebkitBoxOrient: 'vertical',
+								}}
+								className="text-gray-500 tracking-wide text-sm"
+							>
+								{content}
+							</p>
+							<UserInfo
+								user={{
+									avatar_src,
+									displayname,
+									username,
+									created_at,
+								}}
+							/>
+						</div>
+					</div>
+		
+					)
+				})
+			}
 
 			<div
 				className="mt-10 grid gap-x-8 gap-y-12"
