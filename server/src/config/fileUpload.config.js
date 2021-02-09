@@ -1,5 +1,31 @@
-const formidable = require('formidable');
+const multer = require('multer');
+const path = require('path');
 
-const form = formidable({ keepExtensions: true });
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, path.join(__dirname, '../assets'));
+	},
+	filename: (req, file, cb) => {
+		cb(null, Date.now() + path.extname(file.originalname));
+	},
+});
+const fileFilter = (req, file, cb) => {
+	const fileTypes = /jpeg|jpg|png|gif/;
 
-module.exports = form;
+	const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+	const mimetype = fileTypes.test(file.mimetype);
+
+	if (mimetype && extname) {
+		return cb(null, true);
+	} else {
+		cb('Error: File not support', false);
+	}
+};
+const upload = multer({
+	storage: storage,
+	limits: { fileSize: 2 * 1024 * 1024, files: 1 },
+	fileFilter: fileFilter,
+}).single('image');
+
+module.exports = upload;

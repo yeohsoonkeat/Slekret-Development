@@ -1,3 +1,4 @@
+import { gql, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import IconEdit from '../../../icons/ic_edit';
 import IconPlus from '../../../icons/ic_plus';
@@ -5,7 +6,6 @@ import IconPreview from '../../../icons/ic_preview';
 import QuestionEditor from '../components/QuestionEditor';
 import QuestionPreview from '../components/QuestionPreview';
 import generateListOfTagObject from '../utils/generateListOfTagObject';
-import { gql, useMutation } from '@apollo/client';
 
 export default function NewQuestion() {
   const [title, setTitle] = useState('');

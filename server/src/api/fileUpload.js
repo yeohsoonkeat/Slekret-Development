@@ -2,31 +2,46 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const appConfig = require('../config/app.config');
-
+const upload = require('../config/fileUpload.config');
 const router = express.Router();
-const form = require('../config/fileUpload.config');
 
 router.post('/file-upload', (req, res) => {
-	const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
-
-	form.parse(req, function(err, fields, files) {
-		if (fileTypes.indexOf(files.image.type) === -1) {
-			return res.json({ message: 'File not support' });
-		}
-
-		const oldPath = files.image.path;
-
-		const fileName = Date.now() + '.' + files.image.type.split('/')[1];
-		const newPath = path.join(__dirname, 'assets') + '/' + fileName;
-
-		const rawData = fs.readFileSync(oldPath);
-
-		fs.writeFile(newPath, rawData, function(err) {
-			if (err) res.json(err);
-
-			return res.json({
-				file_link: appConfig.backendUrl + '/static/' + fileName,
+	upload(req, res, (err) => {
+		if (err) {
+			res.json({
+				message: err.message,
+				fail: true,
 			});
+		} else {
+			if (!req.file) {
+				res.json({
+					message: 'Error No file selected',
+					fail: true,
+				});
+			} else {
+				res.json({
+					message: 'file uploaded',
+					path: appConfig.backendUrl + '/static/' + req.file.filename,
+					fail: false,
+				});
+			}
+		}
+	});
+});
+
+router.post('/remove-file', (req, res) => {
+	const { filename } = req.body;
+	fs.unlink(path.join(__dirname, '../assets/' + filename), function(err) {
+		if (err) {
+			return res.json({
+				message: 'Can not remove file',
+				fail: true,
+				err,
+			});
+		}
+		return res.json({
+			message: 'File removed',
+			fail: false,
 		});
 	});
 });

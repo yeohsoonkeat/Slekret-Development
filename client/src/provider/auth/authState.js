@@ -1,6 +1,8 @@
 const initialState = {
 	auth: false,
-	user: {},
+	user: {
+		id:"a7800855-e5f0-45ad-834d-ccc24cbefff0"
+		},
 };
 
 const reducer = (state, { type, payload }) => {
@@ -11,9 +13,7 @@ const reducer = (state, { type, payload }) => {
 				user: payload.user,
 			};
 		case 'USER_LOGOUT':
-			return {
-				initialState,
-			};
+			return initialState;
 		default:
 			return state;
 	}

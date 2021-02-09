@@ -1,17 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./styles/main.css";
-import App from "./App";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import AuthProvder from "./provider/auth/authProvider";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './styles/main.css';
+import './styles/editor.css';
+
+import App from './App';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import AuthProvder from './provider/auth/authProvider';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <AuthProvder>
-      <App />
-    </AuthProvder>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<AuthProvder>
+			<App />
+		</AuthProvder>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

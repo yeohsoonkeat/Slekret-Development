@@ -1,6 +1,6 @@
 const tagObject = (tagName) => {
 	return {
-		tag: {
+		slekret_tag: {
 			data: { tag_name: tagName },
 			on_conflict: {
 				constraint: 'tags_pkey',

@@ -1,0 +1,4 @@
+.content-editable:empty::before {
+	content: 'Blog title';
+	color: gray;
+}
