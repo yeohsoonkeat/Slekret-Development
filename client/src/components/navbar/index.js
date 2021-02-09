@@ -49,7 +49,7 @@ export default function NavigationBar() {
 					)}
 					{isForumUrl && (
 						<Link
-							to="/forum/new"
+							to="/questions/new-question"
 							className="bg-blue-500  text-white rounded px-2 mr-5 py-2"
 						>
 							Ask question
