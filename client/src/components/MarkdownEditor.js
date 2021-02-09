@@ -29,7 +29,13 @@ const MarkdownEditor = ({ hasTitle, placeholder }) => {
           />
         </div>
       )}
-      <Editor placeholder={placeholder} theme={light} />
+      <Editor
+        placeholder={placeholder}
+        theme={light}
+        onChange={(value) => {
+          console.log(value());
+        }}
+      />
     </div>
   );
 };

@@ -1,31 +1,29 @@
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
-import MarkdownEditor from "../../../components/MarkdownEditor";
-import IconInfo from "../../../icons/ic_info";
-import Answer from "../components/Answer";
-import UserProfile from "../components/UserProfile";
-import { gql, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
-import useAuthProvider from "../../../hook/useAuthProvider";
-import VoteAction from "../components/VoteAction";
+import { gql, useQuery } from '@apollo/client';
+import ReactMarkdown from 'react-markdown';
+import { useParams } from 'react-router-dom';
+import gfm from 'remark-gfm';
+import useAuthProvider from '../../../hook/useAuthProvider';
+import Answers from '../components/Answer/Answers';
+import QuestionOwner from '../components/QuestionOwner';
+import QuestionVote from '../components/QuestionVote';
+import ReportButton from '../components/ReportButton';
+import ErrorPage from './ErrorPage';
+import QuestionDetailSkeleton from './QuestionDetailSkeleton';
 
 const QuestionDetail = () => {
   const { id } = useParams();
-  const authState = useAuthProvider()[0];
+  const current_user_id = useAuthProvider()[0]?.user.id;
 
-  const { loading, error, data } = useQuery(GET_ALL_FORUM_QUESTIONS, {
-    variables: {
-      id,
-      current_user_id: authState.user.id,
-    },
+  const { loading, error, data } = useQuery(GET_QUESTION_DETAIL, {
+    variables: { id, current_user_id },
   });
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <QuestionDetailSkeleton />;
   }
 
   if (error) {
-    return <div>Error.</div>;
+    return <ErrorPage error={error} />;
   }
 
   const dbQuestion = data.forum_questions[0];
@@ -51,7 +49,7 @@ const QuestionDetail = () => {
     title,
     content,
     published_date,
-    voteAction: current_user_question_vote_action[0]?.vote || 0,
+    voteAction: current_user_question_vote_action[0]?.vote,
     votes: question_votes.aggregate.sum.vote,
     author: {
       id: user_id,
@@ -103,7 +101,7 @@ const QuestionDetail = () => {
               avatar: origin.avatar,
             }
           : null,
-        reply_to_id: "",
+        reply_to_id: '',
       };
     });
 
@@ -121,71 +119,26 @@ const QuestionDetail = () => {
   return (
     <div>
       <p className="text-2xl font-bold text-gray-800">{question.title}</p>
-
-      {/* User Info */}
-      {question.author && (
-        <UserProfile
-          user_id={question.author.id}
-          username={question.author.username}
-          avatar={question.author.avatar}
-          display_name={question.author.display_name}
-          published_date={question.published_date}
-          is_following={question.author.is_following}
-        />
-      )}
-
+      {question.author && <QuestionOwner question_id={id} />}
       <div className="py-4">
         <ReactMarkdown plugins={[gfm]}>{question.content}</ReactMarkdown>
       </div>
-
       <div className="flex justify-between">
-        <VoteAction
-          previousAction={question.voteAction}
-          votes={question.votes}
-        />
-
-        <div className="flex items-center text-gray-600 hover:cursor-pointer hover:font-medium hover:text-gray-800">
-          <IconInfo className="w-6 h-6" />
-          <p className="ml-1 text-sm">Report</p>
-        </div>
+        <QuestionVote question_id={id} />
+        <ReportButton />
       </div>
 
       {/* Answers */}
-      <div className="mt-4">
-        <MarkdownEditor placeholder="Write your answer here..." />
-        <div className="mt-2 flex justify-end">
-          <button
-            className="px-6 py-2 rounded-md text-sm border bg-blue-600 text-white"
-            onClick={() => {
-              console.log("answer");
-            }}
-          >
-            Answer
-          </button>
-        </div>
+      <div className="mt-12">
+        <Answers question_id={id} />
       </div>
-      <div className="mt-12 mb-4 pb-4 border-b font-medium">
-        {total_answers.aggregate.count} Answer
-        {total_answers.aggregate.count > 1 && "s"}
-      </div>
-      {answers && answers.length > 0 ? (
-        <div className="flex flex-col space-y-6">
-          {answers.map((answer, index) => {
-            return <Answer key={index} answer={answer} />;
-          })}
-        </div>
-      ) : (
-        <div className="w-full h-40 bg-gray-400 flex justify-center items-center text-white">
-          No Answer Yet
-        </div>
-      )}
     </div>
   );
 };
 
 export default QuestionDetail;
 
-const GET_ALL_FORUM_QUESTIONS = gql`
+const GET_QUESTION_DETAIL = gql`
   query MyQuery($current_user_id: uuid = "", $id: uuid = "") {
     forum_questions(where: { id: { _eq: $id } }) {
       content

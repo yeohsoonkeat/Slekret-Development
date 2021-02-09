@@ -1,22 +1,17 @@
+import formatDistance from 'date-fns/formatDistance';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
-import IconArrowNarrowDown from '../../../icons/ic_arrow_narrow_down';
-import IconArrowNarrowUp from '../../../icons/ic_arrow_narrow_up';
-import Reply from './Reply';
-import UserAvatar from './UserAvatar';
-import formatDistance from 'date-fns/formatDistance';
-import numeral from 'numeral';
-import IconReply from '../../../icons/ic_reply';
-import MarkdownEditor from '../../../components/MarkdownEditor';
+import MarkdownEditor from '../../../../components/MarkdownEditor';
+import IconReply from '../../../../icons/ic_reply';
+import Reply from '../Reply';
+import UserAvatar from '../UserAvatar';
+import AnswerVote from './AnswerVote';
 
-const actionUpVoted = 1;
-const actionDownVoted = -1;
-const Answer = ({ answer }) => {
+const AnswerCard = ({ answer }) => {
   const { author = {}, replies = [] } = answer;
 
-  const [action, setAction] = useState(answer.voteAction);
   const [showReplyEditor, setShowReplyEditor] = useState(false);
 
   return (
@@ -53,37 +48,7 @@ const Answer = ({ answer }) => {
               </p>
             </div>
 
-            <div className="flex items-center select-none">
-              <div
-                className={`mr-2 p-1 border hover:bg-blue-300 ${
-                  action === actionUpVoted
-                    ? 'bg-blue-500 text-white'
-                    : 'text-gray-600'
-                }`}
-                onClick={() => {
-                  setAction(action === actionUpVoted ? '' : actionUpVoted);
-                }}
-              >
-                <IconArrowNarrowUp className="w-5 h-5" />
-              </div>
-              <div
-                className={`mr-2 p-1 border hover:bg-pink-300 ${
-                  action === actionDownVoted
-                    ? 'bg-pink-500 text-white'
-                    : 'text-gray-600'
-                }`}
-                onClick={() => {
-                  setAction(action === actionDownVoted ? '' : actionDownVoted);
-                }}
-              >
-                <IconArrowNarrowDown className="w-5 h-5" />
-              </div>
-
-              <p className="px-4 py-1 rounded-sm text-sm bg-gray-200 text-gray-600 font-medium">
-                {numeral(answer.votes).format('0.[00]a')} vote
-                {answer.votes > 1 && 's'}
-              </p>
-            </div>
+            <AnswerVote answer_id={answer.id} />
           </div>
 
           <div className="py-3">
@@ -162,4 +127,4 @@ const Answer = ({ answer }) => {
   );
 };
 
-export default Answer;
+export default AnswerCard;

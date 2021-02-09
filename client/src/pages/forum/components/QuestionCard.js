@@ -2,6 +2,7 @@ import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
 import routes from '../../../constant/routes';
 import random_numbers from '../utils/random_numbers';
+import UserAvatar from './UserAvatar';
 
 // TODO: Change colors
 const colors = ['pink', 'blue', 'green', 'yellow', 'indigo'];
@@ -70,10 +71,7 @@ const QuestionCard = (props) => {
       <div className="mt-2 flex items-center justify-between">
         <div className="flex items-center">
           <Link to={`@${username}`}>
-            <div
-              className="w-10 h-10 rounded-full bg-blue-500 bg-cover"
-              style={{ backgroundImage: `url(${avatar_src})` }}
-            />
+            <UserAvatar src={avatar_src} className="w-10 h-10" />
           </Link>
           <div className="text-gray-500 ml-3 text-sm font-medium select-none">
             <span className="hidden md:inline-block mr-1">Posted by</span>
