@@ -1,6 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
+import useAuthProvider from '../../../hook/useAuthProvider';
 
 export default function ProfileUserInfo({ username }) {
+	const [authState] = useAuthProvider();
 	const { data, loading, error } = useQuery(GET_USER_INFO, {
 		variables: {
 			username,
@@ -23,7 +25,7 @@ export default function ProfileUserInfo({ username }) {
 					<div className="flex items-center">
 						<img
 							src={
-								user.avatar_src ||
+								user?.avatar_src ||
 								process.env.PUBLIC_URL + '/assets/default_avatar.png'
 							}
 							alt=""
@@ -32,7 +34,7 @@ export default function ProfileUserInfo({ username }) {
 						<div className="ml-5 ">
 							<div>
 								<h1 className="text-2xl font-semibold">{user.displayname}</h1>
-								<p className="text-gray-500">@{user.username}</p>
+								<p className="text-gray-500">@{user?.username}</p>
 							</div>
 							<div className="flex mt-5">
 								<p className="font-semibold">
@@ -51,9 +53,11 @@ export default function ProfileUserInfo({ username }) {
 						</div>
 					</div>
 				</div>
-				<button className="text-cente border w-full mt-5 rounded hover:tracking-wide md:w-40 h-10 hover:shadow transition-all focus:outline-none">
-					Edit profile
-				</button>
+				{authState.user.id === user.id && (
+					<button className="text-cente border w-full mt-5 rounded hover:tracking-wide md:w-40 h-10 hover:shadow transition-all focus:outline-none">
+						Edit profile
+					</button>
+				)}
 			</div>
 			<p className="mt-5 md:mt-10">{user.about}</p>
 		</div>

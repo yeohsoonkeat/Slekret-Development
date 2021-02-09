@@ -70,75 +70,66 @@ export default function ProfileSetting() {
 	};
 
 	return (
-		<div className="max-w-5xl mx-auto  min-h-screen flex py-5 border flex-col sm:flex-row">
-			<div className="border-r-2">
-				<ul>
-					<li className="bg-gray-200 border-l-2 border-gray-500	 p-3 cursor-pointer">
-						Personal Information
-					</li>
-				</ul>
-			</div>
-			<div className=" flex-1 flex  items-center flex-col p-5">
-				<AlertError message={message} />
-				<div className=" relative ">
-					<img
-						src={avatarSrc ? avatarSrc : user.avatar_src}
-						alt=""
-						className=" w-32 h-32 rounded-full object-cover object-center"
+		<div className=" flex-1 flex  items-center flex-col p-5">
+			<AlertError message={message} />
+			<div className=" relative ">
+				<img
+					src={avatarSrc ? avatarSrc : user.avatar_src}
+					alt=""
+					className=" w-32 h-32 rounded-full object-cover object-center"
+				/>
+				<div>
+					<h1 className="text-center text-blue-500 hover:tracking-wide transition-all mt-3">
+						Change image
+					</h1>
+					<input
+						className="cursor-pointer w-full h-full opacity-0 absolute top-0"
+						type="file"
+						name="image"
+						accept=".jpg, .png, .jpeg, .gif"
+						onChange={handleFileChange}
 					/>
-					<div>
-						<h1 className="text-center text-blue-500 hover:tracking-wide transition-all mt-3">
-							Change image
-						</h1>
-						<input
-							className="cursor-pointer w-full h-full opacity-0 absolute top-0"
-							type="file"
-							name="image"
-							accept=".jpg, .png, .jpeg, .gif"
-							onChange={handleFileChange}
-						/>
-					</div>
 				</div>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full">
-					<div className="flex w-full mt-5 flex-col">
-						<label className="w-4/12 mt-2 font-bold">Username</label>
-						<input
-							ref={register}
-							className=" mt-2 border outline-none w-full mx-auto p-3 rounded"
-							defaultValue={user.username}
-							name="username"
-						/>
-						<p>{errors.username?.message}</p>
-					</div>
-					<div className="flex w-full mt-5 flex-col">
-						<label className="w-4/12 mt-2 font-bold">Displayname</label>
-						<input
-							className=" mt-2 border outline-none w-full mx-auto p-3 rounded"
-							name="displayname"
-							ref={register}
-							defaultValue={user.displayname}
-						/>
-						<p className="text-red-200">{errors.displayname?.message}</p>
-					</div>
-					<div className="flex w-full mt-5 flex-col">
-						<label className="w-4/12 mt-2 font-bold">About</label>
-						<textarea
-							ref={register}
-							name="about"
-							className=" mt-2 border outline-none w-full mx-auto p-3 rounded resize-none h-36"
-							defaultValue={user.about}
-							placeholder="description about yourself"
-						/>
-						<p className="text-red-400">{errors.about?.message}</p>
-					</div>
-					<button
-						className="bg-blue-500 mt-9 text-white hover:tracking-wide transition-all w-full p-3 rounded"
-						type="submit"
-					>
-						Submit
-					</button>
-				</form>
 			</div>
+			<form onSubmit={handleSubmit(onSubmit)} className="w-full">
+				<div className="flex w-full mt-5 flex-col">
+					<label className="w-4/12 mt-2 font-bold">Username</label>
+					<input
+						ref={register}
+						className=" mt-2 border outline-none w-full mx-auto p-3 rounded"
+						defaultValue={user.username}
+						name="username"
+					/>
+					<p>{errors.username?.message}</p>
+				</div>
+				<div className="flex w-full mt-5 flex-col">
+					<label className="w-4/12 mt-2 font-bold">Displayname</label>
+					<input
+						className=" mt-2 border outline-none w-full mx-auto p-3 rounded"
+						name="displayname"
+						ref={register}
+						defaultValue={user.displayname}
+					/>
+					<p className="text-red-200">{errors.displayname?.message}</p>
+				</div>
+				<div className="flex w-full mt-5 flex-col">
+					<label className="w-4/12 mt-2 font-bold">About</label>
+					<textarea
+						ref={register}
+						name="about"
+						className=" mt-2 border outline-none w-full mx-auto p-3 rounded resize-none h-36"
+						defaultValue={user.about}
+						placeholder="description about yourself"
+					/>
+					<p className="text-red-400">{errors.about?.message}</p>
+				</div>
+				<button
+					className="bg-blue-500 mt-9 text-white hover:tracking-wide transition-all w-full p-3 rounded"
+					type="submit"
+				>
+					Submit
+				</button>
+			</form>
 		</div>
 	);
 }

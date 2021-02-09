@@ -34,14 +34,14 @@ export default function UserAfterLogin({ username, avatarSrc, authDispatch }) {
 					>
 						<Link
 							onClick={() => setOpenDropDown(false)}
-							to={`/user/${username}`}
+							to={`/user/profile/${username}`}
 							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer hover:tracking-wide transition-all"
 						>
 							Your profile
 						</Link>
 						<Link
 							onClick={() => setOpenDropDown(false)}
-							to="/user/setting"
+							to="/user/setting/"
 							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
 						>
 							Settting

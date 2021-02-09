@@ -6,7 +6,7 @@ import config from './config';
 import routes from './constant/routes';
 import useAuthProvider from './hook/useAuthProvider';
 import useApolloClientWithToken from './hook/useApolloClientWithToken';
-import Loading from './components/Loading'
+import Loading from './components/Loading';
 
 const Admin = lazy(() => import('./pages/admin'));
 const Auth = lazy(() => import('./pages/auth'));
@@ -37,7 +37,6 @@ const App = () => {
 			.then((res) => {
 				const { auth, token, user } = res?.data;
 				setToken(token);
-				console.log(token);
 				window.localStorage.setItem('auth', auth);
 				window.localStorage.setItem('avatarSrc', user.avatar_src);
 
@@ -54,7 +53,7 @@ const App = () => {
 	return (
 		<ApolloProvider client={apolloClient}>
 			<BrowserRouter>
-				<Suspense fallback={<Loading/>}>
+				<Suspense fallback={<Loading />}>
 					<Switch>
 						<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
 						<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
