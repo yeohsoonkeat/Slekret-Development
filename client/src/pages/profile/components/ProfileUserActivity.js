@@ -8,7 +8,7 @@ export default function ProfileUserActivity({ username }) {
 
 	return (
 		<div>
-			<ProfileNavigation />
+			<ProfileNavigation setShowBlog={setShowBlog} isBlog={isBlog} />
 			<ProfileUserBlogs username={username} />
 		</div>
 	);

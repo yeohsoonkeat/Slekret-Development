@@ -19,7 +19,12 @@ const UserInfo = ({ user }) => {
 			<div className="flex items-center">
 				<div
 					className="mr-2 w-12 h-12 rounded-full bg-cover"
-					style={{ backgroundImage: `url(${avatar_src})` }}
+					style={{
+						backgroundImage: `url(${
+							avatar_src ||
+							process.env.PUBLIC_URL + '/assets/default_avatar.png'
+						})`,
+					}}
 				/>
 				<div className="select-none flex flex-col items-start">
 					<Link

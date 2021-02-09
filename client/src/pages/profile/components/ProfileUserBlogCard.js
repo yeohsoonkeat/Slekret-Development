@@ -11,7 +11,10 @@ export default function ProfileUserBlogCard({ blog }) {
 						<div className="flex flex-1">
 							<div>
 								<img
-									src={blog.slekret_user.avatar_src}
+									src={
+										blog.slekret_user.avatar_src ||
+										process.env.PUBLIC_URL + '/assets/default_avatar.png'
+									}
 									alt=""
 									className="h-10 w-10 object-center object-cover rounded-full ring-1"
 								/>

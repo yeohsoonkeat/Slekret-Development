@@ -22,7 +22,10 @@ export default function ProfileUserInfo({ username }) {
 				<div>
 					<div className="flex items-center">
 						<img
-							src={user.avatar_src}
+							src={
+								user.avatar_src ||
+								process.env.PUBLIC_URL + '/assets/default_avatar.png'
+							}
 							alt=""
 							className="w-16 h-16 md:w-32 md:h-32 object-center object-cover rounded-full ring-4"
 						/>
@@ -48,9 +51,9 @@ export default function ProfileUserInfo({ username }) {
 						</div>
 					</div>
 				</div>
-				{/* <button className="text-cente border w-full mt-5 rounded hover:tracking-wide md:w-40 h-10 hover:shadow transition-all focus:outline-none">
-            Edit profile
-        </button> */}
+				<button className="text-cente border w-full mt-5 rounded hover:tracking-wide md:w-40 h-10 hover:shadow transition-all focus:outline-none">
+					Edit profile
+				</button>
 			</div>
 			<p className="mt-5 md:mt-10">{user.about}</p>
 		</div>
