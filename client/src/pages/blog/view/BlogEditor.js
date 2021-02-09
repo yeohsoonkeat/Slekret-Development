@@ -17,6 +17,8 @@ export default function BlogEditor() {
 
 	useEffect(() => {
 		if (location.pathname === '/blog/edit') {
+			window.document.getElementById('editor-title').innerText =
+				location.state?.blog.title;
 			editorDispatch({
 				type: 'EDIT_BlOG',
 				payload: location.state?.blog,
@@ -51,7 +53,8 @@ export default function BlogEditor() {
 	});
 
 	const handleUpdate = () => {
-		const { articleCover, title, content } = editorState.blog;
+		const { articleCover, title, content, tags } = editorState.blog;
+		console.log(editorState.blog);
 
 		if (!title.trim()) {
 			editorDispatch({
@@ -67,12 +70,26 @@ export default function BlogEditor() {
 			});
 			return;
 		}
+		if (!tags.split(',').join('')) {
+			editorDispatch({
+				type: 'SET_ERROR_MESSAGE',
+				payload: 'Please enter atleast one tag.',
+			});
+			return;
+		}
 		editBlog({
 			variables: {
 				blogId: location.state.blogId,
 				content,
 				title,
 				articleCover,
+				data: new Date(),
+				slekretTags: tags.split(',').map((tag) => {
+					return { tag_name: tag };
+				}),
+				blogTags: tags.split(',').map((tag) => {
+					return { tag_name: tag, blog_article_id: location.state.blogId };
+				}),
 			},
 		});
 	};
@@ -94,6 +111,14 @@ export default function BlogEditor() {
 			});
 			return;
 		}
+		if (!tags.split(',').join('')) {
+			editorDispatch({
+				type: 'SET_ERROR_MESSAGE',
+				payload: 'Please enter atleast one tag.',
+			});
+			return;
+		}
+
 		postNewArticle({
 			variables: {
 				content,
@@ -189,10 +214,34 @@ const EDIT_BLOG_ARTICLE = gql`
 		$articleCover: String
 		$content: String
 		$title: String
+		$date: timestamptz
+		$blogTags: [blog_article_tags_insert_input!]!
+		$slekretTags: [slekret_tags_insert_input!]!
 	) {
 		update_blog_articles(
 			where: { id: { _eq: $blogId } }
-			_set: { article_cover: $articleCover, content: $content, title: $title }
+			_set: {
+				article_cover: $articleCover
+				content: $content
+				title: $title
+				updated_at: $date
+			}
+		) {
+			affected_rows
+		}
+
+		insert_blog_article_tags(
+			objects: $blogTags
+			on_conflict: {
+				constraint: blog_article_tags_pkey
+				update_columns: [tag_name]
+			}
+		) {
+			affected_rows
+		}
+		insert_slekret_tags(
+			objects: $slekretTags
+			on_conflict: { constraint: slekret_tags_pkey, update_columns: [tag_name] }
 		) {
 			affected_rows
 		}
