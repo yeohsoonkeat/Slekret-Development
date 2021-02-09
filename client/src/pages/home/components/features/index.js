@@ -85,7 +85,7 @@ export default function Features() {
 					<button className=" mt-10 bg-blue-500 text-white px-20 py-5 rounded uppercase font-semibold tracking-wide hover:shadow-lg transition-all focus:outline-none flex">
 						Learn More
 						<svg
-							class="ml-2 w-6 h-6"
+							className="ml-2 w-6 h-6"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -126,7 +126,7 @@ export default function Features() {
 					<button className=" mt-10 bg-blue-500 text-white px-20 py-5 rounded uppercase font-semibold tracking-wide hover:shadow-lg transition-all focus:outline-none flex">
 						Learn More
 						<svg
-							class="ml-2 w-6 h-6"
+							className="ml-2 w-6 h-6"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
