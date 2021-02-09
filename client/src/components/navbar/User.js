@@ -6,7 +6,7 @@ import UserBeforLogin from './UserBeforLogin';
 
 export default function User() {
 	const [authState, authDispatch] = useAuthProvider();
-	const { data, loading, error } = useQuery(GET_USER_INFO, {
+	const { data, loading } = useQuery(GET_USER_INFO, {
 		variables: { id: authState.user.id },
 	});
 	if (loading) {
