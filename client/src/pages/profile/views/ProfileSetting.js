@@ -10,8 +10,11 @@ export default function ProfileSetting() {
 					</li>
 				</ul>
 			</div>
-			<div className="flex-1 flex justify-center">
+			<div className="flex-1 flex items-center flex-col">
 				<h1>hello</h1>
+				<div>
+					name <input className="border outline-none" />
+				</div>
 			</div>
 		</div>
 	);
