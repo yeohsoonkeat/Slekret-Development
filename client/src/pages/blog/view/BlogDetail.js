@@ -8,6 +8,7 @@ import PostTags from '../components/PostTags';
 
 export default function BlogDetail({ location }) {
 	const [authState] = useAuthProvider();
+
 	useEffect(() => {
 		if (location.state) {
 			window.scrollTo(0, 0);
@@ -29,6 +30,10 @@ export default function BlogDetail({ location }) {
 		return <h1>error</h1>;
 	}
 	const blogDetail = data?.blog_articles[0];
+
+	if (!blogDetail) {
+		window.open('/', '_self');
+	}
 
 	return (
 		<>
