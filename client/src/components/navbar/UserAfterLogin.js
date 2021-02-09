@@ -21,7 +21,7 @@ export default function UserAfterLogin({ username, avatarSrc, authDispatch }) {
 			<img
 				src={avatarSrc}
 				alt=""
-				className="rounded-full w-12 h-12 ring-1 cursor-pointer"
+				className="rounded-full w-12 h-12 ring-1 cursor-pointer object-cover object-center"
 				onClick={() => setOpenDropDown(!openDropDown)}
 			/>
 			{openDropDown && (
