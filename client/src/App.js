@@ -11,7 +11,7 @@ import useAuthProvider from './hook/useAuthProvider';
 const Admin = lazy(() => import('./pages/admin'));
 const Auth = lazy(() => import('./pages/auth'));
 const Profile = lazy(() => import('./pages/profile'));
-const Home = lazy(() => import('./pages/home'));
+// const Home = lazy(() => import('./pages/home'));
 const Forum = lazy(() => import('./pages/forum'));
 const Blog = lazy(() => import('./pages/blog'));
 const ErrorPage = lazy(() => import('./pages/error'));
@@ -63,7 +63,7 @@ const App = () => {
 
 						<DefaultLayout>
 							<Route path={routes.error} component={ErrorPage} />
-							<Route exact path={routes.home} component={Home} />
+							{/* <Route exact path={routes.home} component={Home} /> */}
 							<ProtectedRoute
 								auth={auth}
 								path={routes.profile}
