@@ -1,12 +1,14 @@
-import axios from 'axios';
-import { useEffect, useState, lazy, Suspense } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
+import axios from 'axios';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Loading from './components/Loading';
 import config from './config';
 import routes from './constant/routes';
-import useAuthProvider from './hook/useAuthProvider';
 import useApolloClientWithToken from './hook/useApolloClientWithToken';
 import Loading from './components/Loading';
+import useAuthProvider from './hook/useAuthProvider';
+
 
 const Admin = lazy(() => import('./pages/admin'));
 const Auth = lazy(() => import('./pages/auth'));
