@@ -9,8 +9,11 @@ export default function User() {
 		authState.auth || window.localStorage.getItem('auth') === 'true';
 
 	const username = authState.user.username;
+
 	const avatarSrc =
-		authState.user.avatar_src || window.localStorage.getItem('avatarSrc');
+		window.localStorage.getItem('avatarSrc') !== 'undefined'
+			? authState.user.avatar_src || window.localStorage.getItem('avatarSrc')
+			: process.env.PUBLIC_URL + '/assets/default_avatar.png';
 	return (
 		<div>
 			{isAuth ? (

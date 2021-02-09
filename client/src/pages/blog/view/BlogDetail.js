@@ -58,9 +58,12 @@ export default function BlogDetail({ location }) {
 						<div>
 							<div className="mt-5 flex items-center mb-10">
 								<img
-									src={blogDetail.slekret_user.avatar_src}
+									src={
+										blogDetail.slekret_user.avatar_src ||
+										process.env.PUBLIC_URL + '/assets/default_avatar.png'
+									}
 									alt={blogDetail.slekret_user.username}
-									className="rounded-full h-12 w-12"
+									className="rounded-full h-12 w-12 object-center object-cover"
 								/>
 								<div className="ml-4">
 									<Link
