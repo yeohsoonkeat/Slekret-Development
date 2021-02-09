@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProfileUserBlogCard from './ProfileUserBlogCard';
 
 export default function ProfileUserBlogs({ username }) {
@@ -11,6 +12,17 @@ export default function ProfileUserBlogs({ username }) {
 	}
 	if (error) {
 		return <h1>Error</h1>;
+	}
+
+	if (data.blog_articles.length === 0) {
+		return (
+			<div className=" h-72  items-center justify-center flex flex-col">
+				<h1>You don't have any post.</h1>
+				<Link to="/blog/new" className="text-blue-500 underline cursor-pointer">
+					Make new post
+				</Link>
+			</div>
+		);
 	}
 
 	return (
