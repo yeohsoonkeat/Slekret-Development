@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import BlogComments from '../components/BlogComments';
 import MarkdownPreview from '../components/MarkdownPreview';
@@ -22,7 +23,7 @@ export default function BlogDetail({ location }) {
 	});
 
 	if (loading) {
-		return <h1>Loading...</h1>;
+		return <Loading/>;
 	}
 
 	if (error) {

@@ -3,6 +3,7 @@ import PostTags from '../components/PostTags';
 import UserInfo from '../components/UserInfo';
 import { gql, useQuery } from '@apollo/client';
 import useAuth from '../../../hook/useAuthProvider';
+import Loading from '../../../components/Loading'
 
 const BlogHome = () => {
 	const [auth] = useAuth();
@@ -11,7 +12,7 @@ const BlogHome = () => {
 	});
 
 	if (loading) {
-		return <h1>Loading</h1>;
+		return <Loading/>;
 	}
 	if (error) {
 		return <h1>error</h1>;

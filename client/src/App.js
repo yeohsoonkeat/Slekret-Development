@@ -6,6 +6,7 @@ import config from './config';
 import routes from './constant/routes';
 import useAuthProvider from './hook/useAuthProvider';
 import useApolloClientWithToken from './hook/useApolloClientWithToken';
+import Loading from './components/Loading'
 
 const Admin = lazy(() => import('./pages/admin'));
 const Auth = lazy(() => import('./pages/auth'));
@@ -53,7 +54,7 @@ const App = () => {
 	return (
 		<ApolloProvider client={apolloClient}>
 			<BrowserRouter>
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<Loading/>}>
 					<Switch>
 						<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
 						<PublicRoutes path={routes.auth} auth={auth} component={Auth} />

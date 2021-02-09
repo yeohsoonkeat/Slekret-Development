@@ -10,6 +10,7 @@ import { gql, useMutation } from '@apollo/client';
 import generateListOfTag from '../utils/generateListOfTags';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 
 export default function BlogEditor() {
 	const [editorState, editorDispatch] = useEditorStateProvider();
@@ -130,7 +131,7 @@ export default function BlogEditor() {
 	};
 
 	if (loading) {
-		return <h1>Loading...</h1>;
+		return <Loading/>;
 	}
 	if (error) {
 		window.open('/error/500', '_self');
