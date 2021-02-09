@@ -19,7 +19,7 @@ export default function ProfileNavigation({ isBlog, setShowBlog }) {
 					onClick={() => setShowBlog(false)}
 				>
 					Questions
-				</span>{' '}
+				</span>
 			</div>
 		</div>
 	);
