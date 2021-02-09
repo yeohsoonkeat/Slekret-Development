@@ -1,2 +1,2 @@
 .env
-/src/assets/*
+server/src/assets/*
