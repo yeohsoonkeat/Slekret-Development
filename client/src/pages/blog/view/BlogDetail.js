@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import BlogComments from '../components/BlogComments';
 import MarkdownPreview from '../components/MarkdownPreview';
@@ -8,6 +9,7 @@ import PostTags from '../components/PostTags';
 
 export default function BlogDetail({ location }) {
 	const [authState] = useAuthProvider();
+
 	useEffect(() => {
 		if (location.state) {
 			window.scrollTo(0, 0);
@@ -22,13 +24,17 @@ export default function BlogDetail({ location }) {
 	});
 
 	if (loading) {
-		return <h1>Loading...</h1>;
+		return <Loading/>;
 	}
 
 	if (error) {
 		return <h1>error</h1>;
 	}
 	const blogDetail = data?.blog_articles[0];
+
+	if (!blogDetail) {
+		window.open('/', '_self');
+	}
 
 	return (
 		<>

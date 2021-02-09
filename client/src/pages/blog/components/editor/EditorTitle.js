@@ -1,12 +1,10 @@
 import '../../styles/blogStyle.css';
 import useEditorStateProvider from '../../hook/useEditorStateProvider';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function EditorTitle() {
 	const location = useLocation();
 	const [editorState, editorDispatch] = useEditorStateProvider();
-	const blogTitle = editorState.blog.title;
 
 	const handleOnInput = (e) => {
 		editorDispatch({
@@ -23,10 +21,6 @@ function EditorTitle() {
 		const text = e.clipboardData.getData('text/plain');
 		window.document.execCommand('insertText', false, text);
 	};
-
-	useEffect(() => {
-		window.document.getElementById('editor-title').innerText = blogTitle;
-	}, [blogTitle]);
 
 	return (
 		<div
