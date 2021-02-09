@@ -1,11 +1,13 @@
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import useAuthProvider from '../../../hook/useAuthProvider';
 import BlogComments from '../components/BlogComments';
 import MarkdownPreview from '../components/MarkdownPreview';
 import PostTags from '../components/PostTags';
 
 export default function BlogDetail({ location }) {
+	const [authState] = useAuthProvider();
 	useEffect(() => {
 		if (location.state) {
 			window.scrollTo(0, 0);
@@ -46,33 +48,75 @@ export default function BlogDetail({ location }) {
 							/>
 						</div>
 					)}
+
 					<div className="p-5">
 						<h1 className="font-black text-5xl">{blogDetail.title}</h1>
 						<PostTags
 							tags={blogDetail.blog_article_tags}
 							extendedParentClassName="mt-5"
 						/>
-						<div className="mt-5 flex items-center mb-10">
-							<img
-								src={blogDetail.slekret_user.avatar_src}
-								alt={blogDetail.slekret_user.username}
-								className="rounded-full h-12 w-12"
-							/>
-							<div className="ml-4">
-								<a
-									href={`@${blogDetail.slekret_user.username}}`}
-									className="font-bold hover:text-blue-800 hover:font-semibold hover:tracking-wide hover:cursor-pointer transition-all "
-								>
-									{blogDetail.slekret_user.displayname}
-								</a>
-								<div className="flex">
-									<p
-										className="py-1 text-gray-600 text-sm"
-										style={{ lineHeight: '0.75rem' }}
+						<div>
+							<div className="mt-5 flex items-center mb-10">
+								<img
+									src={blogDetail.slekret_user.avatar_src}
+									alt={blogDetail.slekret_user.username}
+									className="rounded-full h-12 w-12"
+								/>
+								<div className="ml-4">
+									<Link
+										to={`/user/${blogDetail.slekret_user.username}`}
+										className="font-bold hover:text-blue-800 hover:font-semibold hover:tracking-wide hover:cursor-pointer transition-all "
 									>
-										published on{' '}
-										{new Date(blogDetail.created_at).toDateString()}
-									</p>
+										{blogDetail.slekret_user.displayname}
+									</Link>
+									<div className="flex">
+										<p
+											className="py-1 text-gray-600 text-sm"
+											style={{ lineHeight: '0.75rem' }}
+										>
+											published on{' '}
+											{new Date(blogDetail.created_at).toDateString()}
+										</p>
+									</div>
+								</div>
+
+								<div className="ml-2">
+									{blogDetail.slekret_user.id === authState.user.id ? (
+										<div>
+											<Link
+												to={{
+													pathname: '/blog/edit',
+													state: {
+														blog: {
+															title: blogDetail.title,
+															content: blogDetail.content,
+															articleCover: blogDetail.article_cover,
+															tags: blogDetail.blog_article_tags
+																.map((tag) => tag.tag_name)
+																.join(','),
+														},
+														blogId: blogDetail.id,
+													},
+												}}
+												className="bg-gray-200 px-5 py-2 rounded mr-2"
+											>
+												Edit
+											</Link>
+											<Link
+												to={{
+													pathname: `/blog/delete_confirm/${
+														blogDetail.id
+													}/${blogDetail.title.split(' ').join('-')}`,
+													state: { username: blogDetail.slekret_user.username },
+												}}
+												className=" mr-2 bg-red-500 text-white px-5 py-2 rounded"
+											>
+												Delete
+											</Link>
+										</div>
+									) : (
+										''
+									)}
 								</div>
 							</div>
 						</div>
@@ -94,11 +138,13 @@ export default function BlogDetail({ location }) {
 const GET_BLOG_DETAIL = gql`
 	query MyQuery($id: uuid) {
 		blog_articles(where: { id: { _eq: $id } }) {
+			id
 			article_cover
 			content
 			created_at
 			title
 			slekret_user {
+				id
 				avatar_src
 				displayname
 				username

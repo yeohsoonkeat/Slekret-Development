@@ -6,6 +6,7 @@ import BlogHome from './view/BlogHome';
 import BlogDetail from './view/BlogDetail';
 import ProtectedRoutes from '../../routes/ProtectedRoutes';
 import BlogConfirmDelete from './view/BlogConfirmDelete';
+
 const Blog = (props) => {
 	const { match } = props;
 	const current_url = match.url;
