@@ -1,4 +1,10 @@
-const blogLocalStorage = JSON.parse(localStorage.getItem('blogEditor'));
+import config from '../../../../config';
+
+const isEdit = window.location.href.match(config.clientUrl + '/blog/edit');
+
+const blogLocalStorage = !isEdit
+	? JSON.parse(localStorage.getItem('/blog/new'))
+	: '';
 const initialState = {
 	showPreview: false,
 	errorMessage: '',
@@ -55,6 +61,21 @@ const reducer = (state, { type, payload }) => {
 					...state.blog,
 					articleCover: payload,
 				},
+			};
+
+		case 'REMOVE_BLOG_ARTICLE_COVER':
+			return {
+				...state,
+				errorMessage: '',
+				blog: {
+					...state.blog,
+					articleCover: '',
+				},
+			};
+		case 'EDIT_BlOG':
+			return {
+				...state,
+				blog: payload ? payload : state.blog,
 			};
 		default:
 			return state;

@@ -1,37 +1,13 @@
-import ProfileCard from '../components/profileCard';
-import ProfileFollow from '../components/profileFollow';
-import { gql, useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import ProfileUserInfo from '../components/ProfileUserInfo';
+import ProfileUserActivity from '../components/ProfileUserActivity';
 
-export default function ProfilePage() {
-	let { username } = useParams();
-	username = username.replace(/^@/, '');
-	const { loading, error, data } = useQuery(GET_USER_DETAIL, {
-		variables: { username },
-	});
-
-	if (loading) {
-		return <h1>Loading</h1>;
-	}
-	if (error) {
-		console.log(error);
-		return <h1>error</h1>;
-	}
-	const user = data.slekret_users[0];
+export default function Profile({ match }) {
+	const { username } = match.params;
 
 	return (
-		<ProfileCard user={user}>
-			<ProfileFollow user={user} />
-		</ProfileCard>
+		<div className="max-w-5xl  mx-auto mt-10 p-5">
+			<ProfileUserInfo username={username} />
+			<ProfileUserActivity username={username} />
+		</div>
 	);
 }
-const GET_USER_DETAIL = gql`
-	query MyQuery($username: String) {
-		slekret_users(where: { username: { _eq: $username } }) {
-			avatar_src
-			description
-			displayname
-			username
-		}
-	}
-`;

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/main.css';
+import './styles/editor.css';
+
 import App from './App';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import AuthProvder from './provider/auth/authProvider';

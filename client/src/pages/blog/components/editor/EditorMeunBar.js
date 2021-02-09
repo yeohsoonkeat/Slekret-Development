@@ -1,5 +1,5 @@
 import React from 'react';
-import IconAnnotation from '../../../../icons/ic_annotation';
+import { useLocation } from 'react-router-dom';
 import IconEdit from '../../../../icons/ic_edit';
 import IconEye from '../../../../icons/ic_eye';
 import IconImage from '../../../../icons/ic_image';
@@ -9,7 +9,8 @@ import EditorMenu from './EditorMenu';
 
 const api = new ApiService();
 
-export default function EditorMeunBar({ setErrorMessage, setContent }) {
+export default function EditorMeunBar() {
+	const location = useLocation();
 	const [editorState, editorDispatch] = useEditorStateProvider();
 	const showPreview = editorState.showPreview;
 
@@ -32,7 +33,7 @@ export default function EditorMeunBar({ setErrorMessage, setContent }) {
 
 			editorDispatch({ type: 'SET_BLOG_CONTENT', payload: content });
 			window.localStorage.setItem(
-				'blogEditor',
+				location.pathname,
 				JSON.stringify({ ...editorState.blog, content })
 			);
 			window.document

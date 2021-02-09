@@ -57,6 +57,7 @@ const App = () => {
 					<Switch>
 						<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
 						<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+
 						<Route path={routes.blog} component={Blog} />
 
 						<DefaultLayout>

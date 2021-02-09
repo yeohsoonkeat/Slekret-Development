@@ -99,3 +99,7 @@
 .markdown ul li {
 	list-style: circle;
 }
+
+.hover-dropdown:hover .dropdown {
+	display: block;
+}

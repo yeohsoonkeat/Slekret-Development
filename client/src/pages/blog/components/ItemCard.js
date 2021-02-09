@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import IconBook from '../../../icons/ic_book';
-import IconHeart from '../../../icons/ic_heart';
+import ReactMarkDown from 'react-markdown';
+
 import PostTags from './PostTags';
 import UserInfo from './UserInfo';
 import { gql, useMutation } from '@apollo/client';
@@ -48,54 +48,23 @@ const ItemCard = ({ item }) => {
 	};
 
 	return (
-		<div className="w-full">
-			<div className="group w-full relative">
-				<div className="w-full relative" style={{ paddingTop: '75%' }}>
-					<div
-						className="absolute inset-0 bg-red-500 bg-cover bg-no-repeat"
-						style={{ backgroundImage: `url(${article_cover})` }}
-					/>
-				</div>
-				<div
-					className="group-hover:opacity-100 opacity-0 bg-black bg-opacity-40 absolute top-0 w-full h-full flex justify-center items-center transition-opacity duration-500"
-					// style={{ boxShadow: 'inset 0 0 60px 60px rgba(0,0,0,0.25)' }}
-				>
-					<div className="flex select-none">
-						<div className="mr-6 flex items-center text-white">
-							<div onClick={likeArticle}>
-								<IconHeart className="w-6 h-6" filled={isLiked} />
-							</div>
-							<p className="font-medium">{likes}</p>
-						</div>
-						<div className="flex items-center text-white">
-							<IconBook className="w-6 h-6" />
-							<p className="font-medium">5 m</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<PostTags tags={blog_article_tags} extendedParentClassName="mt-3" />
+		<div className="w-11/12 mx-auto border-2 mt-5 p-5 rounded">
+			<PostTags tags={blog_article_tags} extendedParentClassName="mt-3 mb-5" />
 			<Link
 				to={{
 					pathname: `/blog/${id}/${title.split(' ').join('-')}`,
 					state: { blogDetail },
 				}}
-				className="my-2 text-2xl text-gray-600 font-semibold leading-6"
+				className="text-3xl font-black"
 			>
 				{title}
 			</Link>
-			<p
-				style={{
-					overflow: 'hidden',
-					whiteSpace: 'normal',
-					display: '-webkit-box',
-					WebkitLineClamp: '5',
-					WebkitBoxOrient: 'vertical',
-				}}
-				className="text-gray-500 tracking-wide"
-			>
-				{content}
-			</p>
+
+			<ReactMarkDown
+				source={content}
+				allowedTypes={['paragraph', 'text']}
+				className="text-gray-500 tracking-wide mt-5  h-24 overflow-hidden overflow-ellipsis ... "
+			/>
 
 			<UserInfo
 				user={{

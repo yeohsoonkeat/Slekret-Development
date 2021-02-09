@@ -1,19 +1,20 @@
 import '../../styles/blogStyle.css';
 import useEditorStateProvider from '../../hook/useEditorStateProvider';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function EditorTitle() {
+	const location = useLocation();
 	const [editorState, editorDispatch] = useEditorStateProvider();
 	const blogTitle = editorState.blog.title;
 
 	const handleOnInput = (e) => {
-		console.log(e.target.innerText);
 		editorDispatch({
 			type: 'SET_BLOG_TITLE',
 			payload: e.target.innerText,
 		});
 		window.localStorage.setItem(
-			'blogEditor',
+			location.pathname,
 			JSON.stringify({ ...editorState.blog, title: e.target.innerText })
 		);
 	};
@@ -25,8 +26,7 @@ function EditorTitle() {
 
 	useEffect(() => {
 		window.document.getElementById('editor-title').innerText = blogTitle;
-		// eslint-disable-next-line
-	}, []);
+	}, [blogTitle]);
 
 	return (
 		<div
