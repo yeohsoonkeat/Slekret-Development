@@ -24,7 +24,7 @@ export default function BlogDetail({ location }) {
 	});
 
 	if (loading) {
-		return <Loading/>;
+		return <Loading />;
 	}
 
 	if (error) {
@@ -81,7 +81,7 @@ export default function BlogDetail({ location }) {
 									<div className="flex">
 										<p
 											className="py-1 text-gray-600 text-sm"
-											style={{ lineHeight: '0.75rem' }}
+											style={{ lineHeight: '1.5' }}
 										>
 											published on{' '}
 											{new Date(blogDetail.created_at).toDateString()}

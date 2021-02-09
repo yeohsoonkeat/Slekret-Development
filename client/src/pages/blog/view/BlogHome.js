@@ -3,7 +3,7 @@ import PostTags from '../components/PostTags';
 import UserInfo from '../components/UserInfo';
 import { gql, useQuery } from '@apollo/client';
 import useAuth from '../../../hook/useAuthProvider';
-import Loading from '../../../components/Loading'
+import Loading from '../../../components/Loading';
 
 const BlogHome = () => {
 	const [auth] = useAuth();
@@ -12,7 +12,7 @@ const BlogHome = () => {
 	});
 
 	if (loading) {
-		return <Loading/>;
+		return <Loading />;
 	}
 	if (error) {
 		return <h1>error</h1>;
@@ -81,12 +81,6 @@ const BlogHome = () => {
 					<div key={index}>
 						<ItemCard item={item} />
 					</div>
-				))}
-
-				{Array.from(
-					Array(local_articles.length >= 4 ? 0 : 4 - local_articles.length)
-				).map((_, index) => (
-					<div key={index}></div>
 				))}
 			</div>
 		</div>
