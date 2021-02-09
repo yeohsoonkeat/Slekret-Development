@@ -1,10 +1,14 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import ApiService from '../../../../service/api';
 import useEditorStateProvider from '../../hook/useEditorStateProvider';
 
 const api = new ApiService();
 
 export default function EditorImageCover() {
+	const location = useLocation();
+	const isEdit = location.pathname === '/blog/edit';
+
 	const [editorState, editorDispatch] = useEditorStateProvider();
 	const articleCover = editorState.blog.articleCover;
 	const showPreview = editorState.showPreview;
@@ -17,7 +21,6 @@ export default function EditorImageCover() {
 			.catch((e) => {
 				window.open('/error/500', '_self');
 			});
-		console.log(res);
 
 		if (res?.data?.fail) {
 			editorDispatch({ type: 'SET_ERROR_MESSAGE', payload: res.data.message });
@@ -27,7 +30,7 @@ export default function EditorImageCover() {
 				payload: res.data.path,
 			});
 			window.localStorage.setItem(
-				'blogEditor',
+				location.pathname,
 				JSON.stringify({ ...editorState.blog, articleCover: res.data.path })
 			);
 		}
@@ -51,10 +54,14 @@ export default function EditorImageCover() {
 			});
 			delete editorState.blog.articleCover;
 			window.localStorage.setItem(
-				'blogEditor',
+				location.pathname,
 				JSON.stringify({ ...editorState.blog })
 			);
 		}
+	};
+
+	const changeImageCover = () => {
+		editorDispatch({ type: 'REMOVE_BLOG_ARTICLE_COVER' });
 	};
 
 	return (
@@ -68,12 +75,23 @@ export default function EditorImageCover() {
 					/>
 
 					{!showPreview && (
-						<button
-							onClick={removeImageCover}
-							className=" bg-red-500 text-white cursor-pointer border-2 px-10 py-4 absolute focus:outline-none  hover:tracking-wide transition-all hover:shadow"
-						>
-							change
-						</button>
+						<div className="absolute">
+							{isEdit ? (
+								<button
+									onClick={changeImageCover}
+									className=" bg-red-500 text-white cursor-pointer border-2 px-10 py-4  focus:outline-none  hover:tracking-wide transition-all hover:shadow"
+								>
+									change
+								</button>
+							) : (
+								<button
+									onClick={removeImageCover}
+									className=" bg-red-500 text-white cursor-pointer border-2 px-10 py-4 focus:outline-none  hover:tracking-wide transition-all hover:shadow"
+								>
+									change
+								</button>
+							)}
+						</div>
 					)}
 				</>
 			) : (

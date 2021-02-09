@@ -1,7 +1,9 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import useEditorStateProvider from '../../hook/useEditorStateProvider';
 
 export default function EditorInputTags() {
+	const location = useLocation();
 	const [editorState, editorDispatch] = useEditorStateProvider();
 
 	const tags = editorState.blog.tags;
@@ -11,7 +13,7 @@ export default function EditorInputTags() {
 			const value = e.target.value.replace(/[^0-9a-z,]+/g, '');
 			editorDispatch({ type: 'SET_TAGS', payload: value });
 			window.localStorage.setItem(
-				'blogEditor',
+				location.pathname,
 				JSON.stringify({ ...editorState.blog, tags: e.target.value })
 			);
 		}

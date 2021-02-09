@@ -8,13 +8,74 @@ import EditorErrorAlert from '../components/editor/EditorErrorAlert';
 import useEditorStateProvider from '../hook/useEditorStateProvider';
 import { gql, useMutation } from '@apollo/client';
 import generateListOfTag from '../utils/generateListOfTags';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function BlogEditor() {
 	const [editorState, editorDispatch] = useEditorStateProvider();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.pathname === '/blog/edit') {
+			editorDispatch({
+				type: 'EDIT_BlOG',
+				payload: location.state?.blog,
+			});
+		} else {
+			editorDispatch({
+				type: 'EDIT_BlOG',
+				payload: JSON.parse(window.localStorage.getItem(location.pathname)) || {
+					title: '',
+					content: '',
+					articleCover: '',
+					tags: '',
+				},
+			});
+		}
+	}, [editorDispatch, location.state?.blog, location]);
 
 	const [postNewArticle, { loading, data, error }] = useMutation(
 		POST_NEW_ARTICLE
 	);
+	const [editBlog] = useMutation(EDIT_BLOG_ARTICLE, {
+		onCompleted() {
+			window.localStorage.removeItem(location.pathname);
+
+			window.open(
+				`/blog/${location.state.blogId}/${editorState.blog.title
+					.split(' ')
+					.join('-')}`,
+				'_self'
+			);
+		},
+	});
+
+	const handleUpdate = () => {
+		const { articleCover, title, content } = editorState.blog;
+
+		if (!title.trim()) {
+			editorDispatch({
+				type: 'SET_ERROR_MESSAGE',
+				payload: 'Title can not be blank.',
+			});
+			return;
+		}
+		if (!content.trim()) {
+			editorDispatch({
+				type: 'SET_ERROR_MESSAGE',
+				payload: 'Content can not be blank.',
+			});
+			return;
+		}
+		editBlog({
+			variables: {
+				blogId: location.state.blogId,
+				content,
+				title,
+				articleCover,
+			},
+		});
+	};
 
 	const handleOnClick = () => {
 		const { articleCover, title, content, tags } = editorState.blog;
@@ -42,6 +103,7 @@ export default function BlogEditor() {
 			},
 		});
 	};
+
 	if (loading) {
 		return <h1>Loading...</h1>;
 	}
@@ -50,7 +112,7 @@ export default function BlogEditor() {
 	}
 
 	if (data?.insert_blog_articles_one?.id) {
-		window.localStorage.removeItem('blogEditor');
+		window.localStorage.removeItem(location.pathname);
 		window.open(
 			`/blog/${
 				data?.insert_blog_articles_one?.id
@@ -79,12 +141,21 @@ export default function BlogEditor() {
 				)}
 				<hr />
 				<div className="fixed bottom-0 bg-white max-w-6xl w-full py-3">
-					<button
-						className=" bg-blue-500 text-white mt-2 px-14 py-3 rounded hover: tracking-wider transition-all "
-						onClick={handleOnClick}
-					>
-						Publish
-					</button>
+					{location.pathname === '/blog/edit' ? (
+						<button
+							className=" bg-blue-500 text-white mt-2 px-14 py-3 rounded hover: tracking-wider transition-all "
+							onClick={handleUpdate}
+						>
+							Update
+						</button>
+					) : (
+						<button
+							className=" bg-blue-500 text-white mt-2 px-14 py-3 rounded hover: tracking-wider transition-all "
+							onClick={handleOnClick}
+						>
+							Publish
+						</button>
+					)}
 				</div>
 			</div>
 		</>
@@ -108,6 +179,22 @@ const POST_NEW_ARTICLE = gql`
 		) {
 			id
 			title
+		}
+	}
+`;
+
+const EDIT_BLOG_ARTICLE = gql`
+	mutation MyMutation(
+		$blogId: uuid
+		$articleCover: String
+		$content: String
+		$title: String
+	) {
+		update_blog_articles(
+			where: { id: { _eq: $blogId } }
+			_set: { article_cover: $articleCover, content: $content, title: $title }
+		) {
+			affected_rows
 		}
 	}
 `;
