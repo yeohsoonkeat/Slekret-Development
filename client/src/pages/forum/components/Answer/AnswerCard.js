@@ -1,28 +1,23 @@
+import formatDistance from 'date-fns/formatDistance';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
-import IconArrowNarrowDown from '../../../icons/ic_arrow_narrow_down';
-import IconArrowNarrowUp from '../../../icons/ic_arrow_narrow_up';
-import Reply from './Reply';
-import UserAvatar from './UserAvatar';
-import formatDistance from 'date-fns/formatDistance';
-import numeral from 'numeral';
-import IconReply from '../../../icons/ic_reply';
-import MarkdownEditor from '../../../components/MarkdownEditor';
+import MarkdownEditor from '../../../../components/MarkdownEditor';
+import IconReply from '../../../../icons/ic_reply';
+import Reply from '../Reply';
+import UserAvatar from '../UserAvatar';
+import AnswerVote from './AnswerVote';
 
-const actionUpVoted = 1;
-const actionDownVoted = -1;
-const Answer = ({ answer, replies }) => {
-  const { author } = answer;
+const AnswerCard = ({ answer }) => {
+  const { author = {}, replies = [] } = answer;
 
-  const [action, setAction] = useState(answer.voteAction);
   const [showReplyEditor, setShowReplyEditor] = useState(false);
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-sm">
       <div className="flex relative">
-        {replies && replies.length > 0 && (
+        {replies.length > 0 && (
           <div className="w-12 border-l-2 border-b-2 h-full absolute top-6 left-6 rounded-bl-lg" />
         )}
 
@@ -53,46 +48,12 @@ const Answer = ({ answer, replies }) => {
               </p>
             </div>
 
-            <div className="flex items-center select-none">
-              <div
-                className={`mr-2 p-1 border hover:bg-blue-300 ${
-                  action === actionUpVoted
-                    ? 'bg-blue-500 text-white'
-                    : 'text-gray-600'
-                }`}
-                onClick={() => {
-                  setAction(action === actionUpVoted ? '' : actionUpVoted);
-                }}
-              >
-                <IconArrowNarrowUp className="w-5 h-5" />
-              </div>
-              <div
-                className={`mr-2 p-1 border hover:bg-pink-300 ${
-                  action === actionDownVoted
-                    ? 'bg-pink-500 text-white'
-                    : 'text-gray-600'
-                }`}
-                onClick={() => {
-                  setAction(action === actionDownVoted ? '' : actionDownVoted);
-                }}
-              >
-                <IconArrowNarrowDown className="w-5 h-5" />
-              </div>
-
-              <p className="px-4 py-1 rounded-sm text-sm bg-gray-200 text-gray-600 font-medium">
-                {numeral(answer.votes).format('0.[00]a')} vote
-                {answer.votes > 1 && 's'}
-              </p>
-            </div>
+            <AnswerVote answer_id={answer.id} />
           </div>
 
           <div className="py-3">
             <ReactMarkdown plugins={[remarkGfm]}>
-              {/* {answer.content} */}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-              voluptate culpa accusantium dolor minima quod laudantium, enim
-              numquam harum voluptates quisquam dolorem omnis laborum quis
-              molestiae sapiente assumenda rerum error.
+              {answer.content}
             </ReactMarkdown>
             <div className="mt-2">
               {!showReplyEditor ? (
@@ -138,18 +99,17 @@ const Answer = ({ answer, replies }) => {
       </div>
 
       <div className="pl-16">
-        {replies &&
-          replies.slice(0, 2).map((reply, index) => {
-            return (
-              <Reply
-                key={index}
-                hasNext={index < replies.length - 1}
-                reply={reply}
-              />
-            );
-          })}
+        {replies.slice(0, 2).map((reply, index) => {
+          return (
+            <Reply
+              key={index}
+              hasNext={index < replies.length - 1}
+              reply={reply}
+            />
+          );
+        })}
 
-        {replies && replies.length > 2 && (
+        {replies.length > 2 && (
           <div className="group w-full hover:bg-gray-100 px-6 py-3 flex items-center select-none">
             <div className="flex flex-col space-y-1">
               <div className="rounded-full w-1 h-1 bg-gray-300 group-hover:bg-gray-600"></div>
@@ -167,4 +127,4 @@ const Answer = ({ answer, replies }) => {
   );
 };
 
-export default Answer;
+export default AnswerCard;

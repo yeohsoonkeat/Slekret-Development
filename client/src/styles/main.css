@@ -14456,6 +14456,66 @@ video {
   opacity: 1;
 }
 
+.disabled\:opacity-0:disabled{
+  opacity: 0;
+}
+
+.disabled\:opacity-5:disabled{
+  opacity: 0.05;
+}
+
+.disabled\:opacity-10:disabled{
+  opacity: 0.1;
+}
+
+.disabled\:opacity-20:disabled{
+  opacity: 0.2;
+}
+
+.disabled\:opacity-25:disabled{
+  opacity: 0.25;
+}
+
+.disabled\:opacity-30:disabled{
+  opacity: 0.3;
+}
+
+.disabled\:opacity-40:disabled{
+  opacity: 0.4;
+}
+
+.disabled\:opacity-50:disabled{
+  opacity: 0.5;
+}
+
+.disabled\:opacity-60:disabled{
+  opacity: 0.6;
+}
+
+.disabled\:opacity-70:disabled{
+  opacity: 0.7;
+}
+
+.disabled\:opacity-75:disabled{
+  opacity: 0.75;
+}
+
+.disabled\:opacity-80:disabled{
+  opacity: 0.8;
+}
+
+.disabled\:opacity-90:disabled{
+  opacity: 0.9;
+}
+
+.disabled\:opacity-95:disabled{
+  opacity: 0.95;
+}
+
+.disabled\:opacity-100:disabled{
+  opacity: 1;
+}
+
 .outline-none{
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -29355,39 +29415,99 @@ video {
   transition-delay: 1000ms;
 }
 
-@keyframes float{
-  0%{
-    transform: translateY(0px);
-    animation-timing-function: ease-in-out;
+@keyframes spin{
+  to{
+    transform: rotate(360deg);
   }
+}
 
-  50%{
-    transform: translateY(-20px);
-    animation-timing-function: ease-in-out;
-  }
-
-  100%{
-    transform: translateY(0px);
-    animation-timing-function: ease-in-out;
+@keyframes ping{
+  75%, 100%{
+    transform: scale(2);
+    opacity: 0;
   }
 }
 
 @keyframes pulse{
+  50%{
+    opacity: .5;
+  }
+}
+
+@keyframes bounce{
   0%, 100%{
-    opacity: 0.8;
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
   }
 
   50%{
-    opacity: 0.5;
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
   }
 }
 
-.animate-float{
-  animation: float 3s infinite;
+.animate-none{
+  animation: none;
+}
+
+.animate-spin{
+  animation: spin 1s linear infinite;
+}
+
+.animate-ping{
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 .animate-pulse{
-  animation: pulse 1.5s infinite;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce{
+  animation: bounce 1s infinite;
+}
+
+@media (prefers-reduced-motion: no-preference){
+  .motion-safe\:animate-none{
+    animation: none;
+  }
+
+  .motion-safe\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .motion-safe\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .motion-safe\:animate-pulse{
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .motion-safe\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .motion-reduce\:animate-none{
+    animation: none;
+  }
+
+  .motion-reduce\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .motion-reduce\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .motion-reduce\:animate-pulse{
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .motion-reduce\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
 }
 
 @font-face {
@@ -43318,6 +43438,66 @@ video {
   }
 
   .sm\:focus\:opacity-100:focus{
+    opacity: 1;
+  }
+
+  .sm\:disabled\:opacity-0:disabled{
+    opacity: 0;
+  }
+
+  .sm\:disabled\:opacity-5:disabled{
+    opacity: 0.05;
+  }
+
+  .sm\:disabled\:opacity-10:disabled{
+    opacity: 0.1;
+  }
+
+  .sm\:disabled\:opacity-20:disabled{
+    opacity: 0.2;
+  }
+
+  .sm\:disabled\:opacity-25:disabled{
+    opacity: 0.25;
+  }
+
+  .sm\:disabled\:opacity-30:disabled{
+    opacity: 0.3;
+  }
+
+  .sm\:disabled\:opacity-40:disabled{
+    opacity: 0.4;
+  }
+
+  .sm\:disabled\:opacity-50:disabled{
+    opacity: 0.5;
+  }
+
+  .sm\:disabled\:opacity-60:disabled{
+    opacity: 0.6;
+  }
+
+  .sm\:disabled\:opacity-70:disabled{
+    opacity: 0.7;
+  }
+
+  .sm\:disabled\:opacity-75:disabled{
+    opacity: 0.75;
+  }
+
+  .sm\:disabled\:opacity-80:disabled{
+    opacity: 0.8;
+  }
+
+  .sm\:disabled\:opacity-90:disabled{
+    opacity: 0.9;
+  }
+
+  .sm\:disabled\:opacity-95:disabled{
+    opacity: 0.95;
+  }
+
+  .sm\:disabled\:opacity-100:disabled{
     opacity: 1;
   }
 
@@ -58207,12 +58387,68 @@ video {
     transition-delay: 1000ms;
   }
 
-  .sm\:animate-float{
-    animation: float 3s infinite;
+  .sm\:animate-none{
+    animation: none;
+  }
+
+  .sm\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .sm\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   .sm\:animate-pulse{
-    animation: pulse 1.5s infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .sm\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .sm\:motion-safe\:animate-none{
+      animation: none;
+    }
+
+    .sm\:motion-safe\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .sm\:motion-safe\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .sm\:motion-safe\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .sm\:motion-safe\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .sm\:motion-reduce\:animate-none{
+      animation: none;
+    }
+
+    .sm\:motion-reduce\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .sm\:motion-reduce\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .sm\:motion-reduce\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .sm\:motion-reduce\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
   }
 }
 
@@ -72132,6 +72368,66 @@ video {
   }
 
   .md\:focus\:opacity-100:focus{
+    opacity: 1;
+  }
+
+  .md\:disabled\:opacity-0:disabled{
+    opacity: 0;
+  }
+
+  .md\:disabled\:opacity-5:disabled{
+    opacity: 0.05;
+  }
+
+  .md\:disabled\:opacity-10:disabled{
+    opacity: 0.1;
+  }
+
+  .md\:disabled\:opacity-20:disabled{
+    opacity: 0.2;
+  }
+
+  .md\:disabled\:opacity-25:disabled{
+    opacity: 0.25;
+  }
+
+  .md\:disabled\:opacity-30:disabled{
+    opacity: 0.3;
+  }
+
+  .md\:disabled\:opacity-40:disabled{
+    opacity: 0.4;
+  }
+
+  .md\:disabled\:opacity-50:disabled{
+    opacity: 0.5;
+  }
+
+  .md\:disabled\:opacity-60:disabled{
+    opacity: 0.6;
+  }
+
+  .md\:disabled\:opacity-70:disabled{
+    opacity: 0.7;
+  }
+
+  .md\:disabled\:opacity-75:disabled{
+    opacity: 0.75;
+  }
+
+  .md\:disabled\:opacity-80:disabled{
+    opacity: 0.8;
+  }
+
+  .md\:disabled\:opacity-90:disabled{
+    opacity: 0.9;
+  }
+
+  .md\:disabled\:opacity-95:disabled{
+    opacity: 0.95;
+  }
+
+  .md\:disabled\:opacity-100:disabled{
     opacity: 1;
   }
 
@@ -87021,12 +87317,68 @@ video {
     transition-delay: 1000ms;
   }
 
-  .md\:animate-float{
-    animation: float 3s infinite;
+  .md\:animate-none{
+    animation: none;
+  }
+
+  .md\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .md\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   .md\:animate-pulse{
-    animation: pulse 1.5s infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .md\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .md\:motion-safe\:animate-none{
+      animation: none;
+    }
+
+    .md\:motion-safe\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .md\:motion-safe\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .md\:motion-safe\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .md\:motion-safe\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .md\:motion-reduce\:animate-none{
+      animation: none;
+    }
+
+    .md\:motion-reduce\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .md\:motion-reduce\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .md\:motion-reduce\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .md\:motion-reduce\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
   }
 }
 
@@ -100946,6 +101298,66 @@ video {
   }
 
   .lg\:focus\:opacity-100:focus{
+    opacity: 1;
+  }
+
+  .lg\:disabled\:opacity-0:disabled{
+    opacity: 0;
+  }
+
+  .lg\:disabled\:opacity-5:disabled{
+    opacity: 0.05;
+  }
+
+  .lg\:disabled\:opacity-10:disabled{
+    opacity: 0.1;
+  }
+
+  .lg\:disabled\:opacity-20:disabled{
+    opacity: 0.2;
+  }
+
+  .lg\:disabled\:opacity-25:disabled{
+    opacity: 0.25;
+  }
+
+  .lg\:disabled\:opacity-30:disabled{
+    opacity: 0.3;
+  }
+
+  .lg\:disabled\:opacity-40:disabled{
+    opacity: 0.4;
+  }
+
+  .lg\:disabled\:opacity-50:disabled{
+    opacity: 0.5;
+  }
+
+  .lg\:disabled\:opacity-60:disabled{
+    opacity: 0.6;
+  }
+
+  .lg\:disabled\:opacity-70:disabled{
+    opacity: 0.7;
+  }
+
+  .lg\:disabled\:opacity-75:disabled{
+    opacity: 0.75;
+  }
+
+  .lg\:disabled\:opacity-80:disabled{
+    opacity: 0.8;
+  }
+
+  .lg\:disabled\:opacity-90:disabled{
+    opacity: 0.9;
+  }
+
+  .lg\:disabled\:opacity-95:disabled{
+    opacity: 0.95;
+  }
+
+  .lg\:disabled\:opacity-100:disabled{
     opacity: 1;
   }
 
@@ -115835,12 +116247,68 @@ video {
     transition-delay: 1000ms;
   }
 
-  .lg\:animate-float{
-    animation: float 3s infinite;
+  .lg\:animate-none{
+    animation: none;
+  }
+
+  .lg\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .lg\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   .lg\:animate-pulse{
-    animation: pulse 1.5s infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .lg\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .lg\:motion-safe\:animate-none{
+      animation: none;
+    }
+
+    .lg\:motion-safe\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .lg\:motion-safe\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .lg\:motion-safe\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .lg\:motion-safe\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .lg\:motion-reduce\:animate-none{
+      animation: none;
+    }
+
+    .lg\:motion-reduce\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .lg\:motion-reduce\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .lg\:motion-reduce\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .lg\:motion-reduce\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
   }
 }
 
@@ -129760,6 +130228,66 @@ video {
   }
 
   .xl\:focus\:opacity-100:focus{
+    opacity: 1;
+  }
+
+  .xl\:disabled\:opacity-0:disabled{
+    opacity: 0;
+  }
+
+  .xl\:disabled\:opacity-5:disabled{
+    opacity: 0.05;
+  }
+
+  .xl\:disabled\:opacity-10:disabled{
+    opacity: 0.1;
+  }
+
+  .xl\:disabled\:opacity-20:disabled{
+    opacity: 0.2;
+  }
+
+  .xl\:disabled\:opacity-25:disabled{
+    opacity: 0.25;
+  }
+
+  .xl\:disabled\:opacity-30:disabled{
+    opacity: 0.3;
+  }
+
+  .xl\:disabled\:opacity-40:disabled{
+    opacity: 0.4;
+  }
+
+  .xl\:disabled\:opacity-50:disabled{
+    opacity: 0.5;
+  }
+
+  .xl\:disabled\:opacity-60:disabled{
+    opacity: 0.6;
+  }
+
+  .xl\:disabled\:opacity-70:disabled{
+    opacity: 0.7;
+  }
+
+  .xl\:disabled\:opacity-75:disabled{
+    opacity: 0.75;
+  }
+
+  .xl\:disabled\:opacity-80:disabled{
+    opacity: 0.8;
+  }
+
+  .xl\:disabled\:opacity-90:disabled{
+    opacity: 0.9;
+  }
+
+  .xl\:disabled\:opacity-95:disabled{
+    opacity: 0.95;
+  }
+
+  .xl\:disabled\:opacity-100:disabled{
     opacity: 1;
   }
 
@@ -144649,12 +145177,68 @@ video {
     transition-delay: 1000ms;
   }
 
-  .xl\:animate-float{
-    animation: float 3s infinite;
+  .xl\:animate-none{
+    animation: none;
+  }
+
+  .xl\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .xl\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   .xl\:animate-pulse{
-    animation: pulse 1.5s infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .xl\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .xl\:motion-safe\:animate-none{
+      animation: none;
+    }
+
+    .xl\:motion-safe\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .xl\:motion-safe\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .xl\:motion-safe\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .xl\:motion-safe\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .xl\:motion-reduce\:animate-none{
+      animation: none;
+    }
+
+    .xl\:motion-reduce\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .xl\:motion-reduce\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .xl\:motion-reduce\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .xl\:motion-reduce\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
   }
 }
 
@@ -158574,6 +159158,66 @@ video {
   }
 
   .\32xl\:focus\:opacity-100:focus{
+    opacity: 1;
+  }
+
+  .\32xl\:disabled\:opacity-0:disabled{
+    opacity: 0;
+  }
+
+  .\32xl\:disabled\:opacity-5:disabled{
+    opacity: 0.05;
+  }
+
+  .\32xl\:disabled\:opacity-10:disabled{
+    opacity: 0.1;
+  }
+
+  .\32xl\:disabled\:opacity-20:disabled{
+    opacity: 0.2;
+  }
+
+  .\32xl\:disabled\:opacity-25:disabled{
+    opacity: 0.25;
+  }
+
+  .\32xl\:disabled\:opacity-30:disabled{
+    opacity: 0.3;
+  }
+
+  .\32xl\:disabled\:opacity-40:disabled{
+    opacity: 0.4;
+  }
+
+  .\32xl\:disabled\:opacity-50:disabled{
+    opacity: 0.5;
+  }
+
+  .\32xl\:disabled\:opacity-60:disabled{
+    opacity: 0.6;
+  }
+
+  .\32xl\:disabled\:opacity-70:disabled{
+    opacity: 0.7;
+  }
+
+  .\32xl\:disabled\:opacity-75:disabled{
+    opacity: 0.75;
+  }
+
+  .\32xl\:disabled\:opacity-80:disabled{
+    opacity: 0.8;
+  }
+
+  .\32xl\:disabled\:opacity-90:disabled{
+    opacity: 0.9;
+  }
+
+  .\32xl\:disabled\:opacity-95:disabled{
+    opacity: 0.95;
+  }
+
+  .\32xl\:disabled\:opacity-100:disabled{
     opacity: 1;
   }
 
@@ -173463,11 +174107,67 @@ video {
     transition-delay: 1000ms;
   }
 
-  .\32xl\:animate-float{
-    animation: float 3s infinite;
+  .\32xl\:animate-none{
+    animation: none;
+  }
+
+  .\32xl\:animate-spin{
+    animation: spin 1s linear infinite;
+  }
+
+  .\32xl\:animate-ping{
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   .\32xl\:animate-pulse{
-    animation: pulse 1.5s infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .\32xl\:animate-bounce{
+    animation: bounce 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .\32xl\:motion-safe\:animate-none{
+      animation: none;
+    }
+
+    .\32xl\:motion-safe\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .\32xl\:motion-safe\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .\32xl\:motion-safe\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .\32xl\:motion-safe\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .\32xl\:motion-reduce\:animate-none{
+      animation: none;
+    }
+
+    .\32xl\:motion-reduce\:animate-spin{
+      animation: spin 1s linear infinite;
+    }
+
+    .\32xl\:motion-reduce\:animate-ping{
+      animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .\32xl\:motion-reduce\:animate-pulse{
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .\32xl\:motion-reduce\:animate-bounce{
+      animation: bounce 1s infinite;
+    }
   }
 }
