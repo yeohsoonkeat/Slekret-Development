@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import ApiService from '../../service/api';
 import AlertError from './components/AlertError';
 import ButtonAuth from './components/ButtonAuth';
 import Container from './components/Container';
@@ -9,8 +11,6 @@ import LoadingForm from './components/LoadingForm';
 import Title from './components/Title';
 import constant from './constant/form';
 import LayoutForm from './Layout/LayoutForm';
-import ApiService from '../../service/api';
-import { useHistory } from 'react-router-dom';
 
 const api = new ApiService();
 
@@ -32,7 +32,7 @@ export default function SetUpUsername() {
 			setLoading(false);
 			setMessage(res.data.message);
 		} else {
-			window.open('/', '_self');
+			window.open('/blog', '_self');
 			setLoading(false);
 			window.localStorage.setItem('auth', 'true');
 		}
