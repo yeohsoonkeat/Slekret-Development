@@ -52,7 +52,7 @@ app.use(
 // router
 
 app.use('/api/v1', api);
-
+// eslint-disable no-unused-vars
 app.use(function(err, req, res, next) {
 	res.status(500).json({ message: 'something went wrong' });
 });
