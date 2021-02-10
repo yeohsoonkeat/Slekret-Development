@@ -1,11 +1,14 @@
 import { Route, Switch } from 'react-router-dom';
 import NavigationBar from '../../components/navbar';
+import ProtectedRoutes from '../../routes/ProtectedRoutes';
 import EditorStateProvider from './provider/editor/editorStateProvider';
+import BlogConfirmDelete from './view/BlogConfirmDelete';
+import BlogConfirmDeleteComment from './view/BlogConfirmDeleteComment';
+import BlogDetail from './view/BlogDetail';
+import BlogEditComment from './view/BlogEditComment';
 import BlogEditor from './view/BlogEditor';
 import BlogHome from './view/BlogHome';
-import BlogDetail from './view/BlogDetail';
-import ProtectedRoutes from '../../routes/ProtectedRoutes';
-import BlogConfirmDelete from './view/BlogConfirmDelete';
+import NotFound from '../../components/NotFound'
 
 const Blog = (props) => {
 	const { match } = props;
@@ -24,6 +27,16 @@ const Blog = (props) => {
 					/>
 					<Route
 						exact
+						path={current_url + '/delete_confirm/comment/:id/:comment'}
+						component={BlogConfirmDeleteComment}
+					/>
+					<Route
+						exact
+						path={current_url + '/edit/comment/:id/:comment'}
+						component={BlogEditComment}
+					/>
+					<Route
+						exact
 						path={current_url + '/:id/:blogTitle'}
 						component={BlogDetail}
 					/>
@@ -39,6 +52,7 @@ const Blog = (props) => {
 							component={BlogEditor}
 						/>
 					</EditorStateProvider>
+					<Route component={NotFound} />
 				</Switch>
 			</div>
 		</div>

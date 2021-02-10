@@ -11,6 +11,11 @@ class ApiService {
 	async resetPassword(path, data) {
 		return this.postRequest(config.backendUrl + path, data);
 	}
+
+	async changePassword(path, data) {
+		return this.postRequest(config.backendUrl + path, data);
+	}
+
 	async setUpUsername(path, data) {
 		return this.postRequest(config.backendUrl + path, data);
 	}

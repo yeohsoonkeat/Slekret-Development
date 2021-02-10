@@ -3,7 +3,7 @@ const tagObject = (tagName) => {
 		slekret_tag: {
 			data: { tag_name: tagName },
 			on_conflict: {
-				constraint: 'tags_pkey',
+				constraint: 'slekret_tags_pkey',
 				update_columns: ['tag_name'],
 			},
 		},

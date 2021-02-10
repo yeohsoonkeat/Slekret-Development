@@ -1,4 +1,4 @@
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 import NavigationBar from '../components/navbar';
 
 const DefaultLayout = ({ children }) => {
@@ -8,7 +8,7 @@ const DefaultLayout = ({ children }) => {
 				<NavigationBar />
 				{children}
 			</div>
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 };

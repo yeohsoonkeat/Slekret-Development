@@ -74,7 +74,7 @@ export default function SignIn() {
 						<ButtonAuth value={'Sign In'} />
 					</form>
 					<Link
-						to="/auth/reset-password"
+						to="/auth/forget-password"
 						className="text-center mt-5 text-sm cursor-pointer block hover:tracking-wider transition-all hover:underline"
 					>
 						Forgot Password?

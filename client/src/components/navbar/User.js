@@ -19,7 +19,7 @@ export default function User() {
 
 	const avatarSrc =
 		window.localStorage.getItem('avatarSrc') !== 'undefined'
-			? data.slekret_users[0].avatar_src ||
+			? data?.slekret_users[0]?.avatar_src ||
 			  authState.user.avatar_src ||
 			  window.localStorage.getItem('avatarSrc')
 			: process.env.PUBLIC_URL + '/assets/default_avatar.png';

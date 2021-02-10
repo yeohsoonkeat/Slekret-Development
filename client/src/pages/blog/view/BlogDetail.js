@@ -1,7 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Loading from '../../../components/Loading';
+import NotFound from '../../../components/NotFound';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import BlogComments from '../components/BlogComments';
 import MarkdownPreview from '../components/MarkdownPreview';
@@ -24,16 +25,16 @@ export default function BlogDetail({ location }) {
 	});
 
 	if (loading) {
-		return <Loading/>;
+		return <Loading />;
 	}
 
 	if (error) {
-		return <h1>error</h1>;
+		return <NotFound/>
 	}
 	const blogDetail = data?.blog_articles[0];
 
 	if (!blogDetail) {
-		window.open('/', '_self');
+		window.open('/blog', '_self');
 	}
 
 	return (
@@ -73,7 +74,7 @@ export default function BlogDetail({ location }) {
 								/>
 								<div className="ml-4">
 									<Link
-										to={`/user/${blogDetail.slekret_user.username}`}
+										to={`/user/profile/${blogDetail.slekret_user.username}`}
 										className="font-bold hover:text-blue-800 hover:font-semibold hover:tracking-wide hover:cursor-pointer transition-all "
 									>
 										{blogDetail.slekret_user.displayname}
@@ -81,7 +82,7 @@ export default function BlogDetail({ location }) {
 									<div className="flex">
 										<p
 											className="py-1 text-gray-600 text-sm"
-											style={{ lineHeight: '0.75rem' }}
+											style={{ lineHeight: '1.5' }}
 										>
 											published on{' '}
 											{new Date(blogDetail.created_at).toDateString()}
@@ -134,6 +135,7 @@ export default function BlogDetail({ location }) {
 					<hr className="mt-10 mb-10" />
 					<BlogComments
 						blogId={id}
+						blogTitle={blogDetail.title}
 						numberOfComments={
 							blogDetail.blog_article_comments_aggregate?.aggregate.count || 0
 						}
