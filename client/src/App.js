@@ -6,9 +6,7 @@ import Loading from './components/Loading';
 import config from './config';
 import routes from './constant/routes';
 import useApolloClientWithToken from './hook/useApolloClientWithToken';
-import Loading from './components/Loading';
 import useAuthProvider from './hook/useAuthProvider';
-
 
 const Admin = lazy(() => import('./pages/admin'));
 const Auth = lazy(() => import('./pages/auth'));

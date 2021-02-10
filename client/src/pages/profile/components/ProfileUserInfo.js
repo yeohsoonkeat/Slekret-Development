@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import useAuthProvider from '../../../hook/useAuthProvider';
 
 export default function ProfileUserInfo({ username }) {
@@ -54,9 +55,12 @@ export default function ProfileUserInfo({ username }) {
 					</div>
 				</div>
 				{authState.user.id === user.id && (
-					<button className="text-cente border w-full mt-5 rounded hover:tracking-wide md:w-40 h-10 hover:shadow transition-all focus:outline-none">
+					<Link
+						to="/user/setting"
+						className="text-cente border w-full mt-5 rounded hover:tracking-wide md:w-40 h-10 hover:shadow transition-all focus:outline-none flex items-center justify-center"
+					>
 						Edit profile
-					</button>
+					</Link>
 				)}
 			</div>
 			<p className="mt-5 md:mt-10">{user.about}</p>
@@ -67,6 +71,7 @@ export default function ProfileUserInfo({ username }) {
 const GET_USER_INFO = gql`
 	query MyQuery($username: String) {
 		slekret_users(where: { username: { _eq: $username } }) {
+			id
 			avatar_src
 			about
 			displayname

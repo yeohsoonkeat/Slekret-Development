@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Loading from '../../../components/Loading';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import BlogComments from '../components/BlogComments';
@@ -33,7 +33,7 @@ export default function BlogDetail({ location }) {
 	const blogDetail = data?.blog_articles[0];
 
 	if (!blogDetail) {
-		window.open('/', '_self');
+		window.open('/blog', '_self');
 	}
 
 	return (
