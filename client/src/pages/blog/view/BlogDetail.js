@@ -73,7 +73,7 @@ export default function BlogDetail({ location }) {
 								/>
 								<div className="ml-4">
 									<Link
-										to={`/user/${blogDetail.slekret_user.username}`}
+										to={`/user/profile/${blogDetail.slekret_user.username}`}
 										className="font-bold hover:text-blue-800 hover:font-semibold hover:tracking-wide hover:cursor-pointer transition-all "
 									>
 										{blogDetail.slekret_user.displayname}
@@ -134,6 +134,7 @@ export default function BlogDetail({ location }) {
 					<hr className="mt-10 mb-10" />
 					<BlogComments
 						blogId={id}
+						blogTitle={blogDetail.title}
 						numberOfComments={
 							blogDetail.blog_article_comments_aggregate?.aggregate.count || 0
 						}

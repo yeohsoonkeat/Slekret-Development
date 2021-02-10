@@ -51,32 +51,33 @@ const App = () => {
       });
   }, [authDispatch]);
 
-  return (
-    <ApolloProvider client={apolloClient}>
-      <BrowserRouter>
-        <Suspense fallback={<Loading />}>
-          <Switch>
-            <ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
-            <PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+	return (
+		<ApolloProvider client={apolloClient}>
+			<BrowserRouter>
+				<Suspense fallback={<Loading />}>
+					<Switch>
+						<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
+						<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+						<Route exact path={routes.home} component={Blog} />
 
             <Route path={routes.blog} component={Blog} />
 
-            <DefaultLayout>
-              <Route path={routes.error} component={ErrorPage} />
-              {/* <Route exact path={routes.home} component={Home} /> */}
-              <ProtectedRoute
-                auth={auth}
-                path={routes.profile}
-                component={Profile}
-              />
-              <Route path={routes.forum} component={Forum} />
+						<DefaultLayout>
+							<Route path={routes.error} component={ErrorPage} />
+							<ProtectedRoute
+								auth={auth}
+								path={routes.profile}
+								component={Profile}
+							/>
+							<Route path={routes.forum} component={Forum} />
               <Route component={NotFound} />
-            </DefaultLayout>
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
-    </ApolloProvider>
-  );
+
+						</DefaultLayout>
+					</Switch>
+				</Suspense>
+			</BrowserRouter>
+		</ApolloProvider>
+	);
 };
 
 export default App;
