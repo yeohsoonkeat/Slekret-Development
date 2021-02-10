@@ -36,7 +36,7 @@ const Questions = (props) => {
 
 const GET_FORUM_QUESTIONS = gql`
 	query MyQuery {
-		forum_questions(order_by: { created_at: desc }) {
+		forum_questions {
 			content
 			created_at
 			id
@@ -45,6 +45,21 @@ const GET_FORUM_QUESTIONS = gql`
 				avatar_src
 				displayname
 				username
+			}
+			forum_tags {
+				tag_name
+			}
+			forum_question_votes_aggregate {
+				aggregate {
+					sum {
+						vote
+					}
+				}
+			}
+			forum_question_answers_aggregate {
+				aggregate {
+					count
+				}
 			}
 		}
 	}
