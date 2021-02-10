@@ -1,10 +1,9 @@
+import { gql, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import ReactMarkDown from 'react-markdown';
-
+import { Link } from 'react-router-dom';
 import PostTags from './PostTags';
 import UserInfo from './UserInfo';
-import { gql, useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
 
 const ItemCard = ({ item }) => {
 	const {

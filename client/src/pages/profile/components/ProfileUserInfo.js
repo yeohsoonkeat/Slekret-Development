@@ -19,6 +19,10 @@ export default function ProfileUserInfo({ username }) {
 
 	const user = data.slekret_users[0];
 
+	if (!user) {
+		return window.open('/blog', '_self');
+	}
+
 	return (
 		<div>
 			<div className="flex justify-between flex-col md:flex-row">

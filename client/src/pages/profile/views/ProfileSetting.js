@@ -26,7 +26,7 @@ export default function ProfileSetting() {
 	});
 	const [updateUserInfo] = useMutation(UPDATE_USER_INFO, {
 		onCompleted() {
-			window.open(`/user/${authState.user.username}`, '_self');
+			window.open(`/user/profile/${authState.user.username}`, '_self');
 		},
 		onError() {
 			setMessage('Username is already exist');

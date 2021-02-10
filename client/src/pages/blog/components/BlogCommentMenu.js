@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import IconDotHorizontal from '../../../icons/ic_dothorizontal';
 
-export default function BlogCommentMenu({ userId }) {
+export default function BlogCommentMenu({ userId, comment, blog }) {
 	const [authState] = useAuthProvider();
 	const isThisCommentBelongtoCurrentUser = authState.user.id === userId;
 	return (
@@ -16,9 +17,15 @@ export default function BlogCommentMenu({ userId }) {
 								<p className="p-2 hover:bg-gray-100 hover:text-blue-400 hover:tracking-wide transition-all">
 									Edit
 								</p>
-								<p className="p-2 hover:bg-gray-100 hover:text-blue-400 hover:tracking-wide transition-all">
+								<Link
+									to={{
+										pathname: `/blog/delete_confirm/comment/${comment.id}/${comment.content}`,
+										state: { blog },
+									}}
+									className="p-2 hover:bg-gray-100 hover:text-blue-400 hover:tracking-wide transition-all block"
+								>
 									Delete
-								</p>
+								</Link>
 							</>
 						)}
 

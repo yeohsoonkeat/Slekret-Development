@@ -28,7 +28,7 @@ const UserInfo = ({ user }) => {
 				/>
 				<div className="select-none flex flex-col items-start">
 					<Link
-						to={`/user/${username}`}
+						to={`/user/profile/${username}`}
 						className="text-sm text-gray-800 hover:text-blue-800 hover:font-semibold hover:tracking-wide hover:cursor-pointer transition-all"
 					>
 						{displayname}

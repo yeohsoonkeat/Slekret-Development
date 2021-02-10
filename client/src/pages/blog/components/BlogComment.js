@@ -1,7 +1,7 @@
 import '../styles/blogStyle.css';
 import BlogCommentMenu from './BlogCommentMenu';
 
-export default function BlogComment({ comment }) {
+export default function BlogComment({ comment, blog }) {
 	return (
 		<>
 			<div className="border p-5 rounded mt-5 relative">
@@ -30,7 +30,11 @@ export default function BlogComment({ comment }) {
 				</div>
 				<p className="ml-16 text-xl"> {comment.content}</p>
 
-				<BlogCommentMenu userId={comment.slekret_user.id} />
+				<BlogCommentMenu
+					userId={comment.slekret_user.id}
+					comment={comment}
+					blog={blog}
+				/>
 			</div>
 		</>
 	);

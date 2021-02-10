@@ -3,7 +3,7 @@ import { useState } from 'react';
 import AddNewComment from './AddNewComment';
 import BlogComment from './BlogComment';
 
-export default function BlogComments({ blogId, numberOfComments }) {
+export default function BlogComments({ blogId, numberOfComments, blogTitle }) {
 	const [listOfComments, setListOfComment] = useState([]);
 	const [commentsLength, setNumberOfComments] = useState(numberOfComments);
 	const { loading, error, data } = useQuery(GET_BLOG_COMMENTS, {
@@ -36,15 +36,31 @@ export default function BlogComments({ blogId, numberOfComments }) {
 				if (index === 0) {
 					return (
 						<div className=" bg-yellow-50 p-5">
-							<BlogComment comment={comment} key={index} />
+							<BlogComment
+								comment={comment}
+								key={index}
+								blog={{ blogId: comment.id, blogTitle }}
+							/>
 						</div>
 					);
 				}
-				return <BlogComment comment={comment} key={index} />;
+				return (
+					<BlogComment
+						comment={comment}
+						key={index}
+						blog={{ blogId: comment.id, blogTitle }}
+					/>
+				);
 			})}
 
 			{data.blog_article_comments.map((comment, index) => {
-				return <BlogComment comment={comment} key={index} />;
+				return (
+					<BlogComment
+						comment={comment}
+						key={index}
+						blog={{ blogId, blogTitle }}
+					/>
+				);
 			})}
 		</div>
 	);
@@ -56,6 +72,7 @@ const GET_BLOG_COMMENTS = gql`
 			where: { blog_article: { id: { _eq: $id } } }
 			order_by: { created_at: asc }
 		) {
+			id
 			content
 			slekret_user {
 				avatar_src
