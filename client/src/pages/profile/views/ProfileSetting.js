@@ -6,6 +6,7 @@ import Loading from '../../../components/Loading';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import ApiService from '../../../service/api';
 import AlertError from '../../auth/components/AlertError';
+import ProfileSettingLayout from '../layout/ProfileSettingLayout';
 import personalInformation from '../schema/personalInformation';
 
 const api = new ApiService();
@@ -70,6 +71,8 @@ export default function ProfileSetting() {
 	};
 
 	return (
+		<ProfileSettingLayout>
+
 		<div className=" flex-1 flex  items-center flex-col p-5">
 			<AlertError message={message} />
 			<div className=" relative ">
@@ -131,6 +134,8 @@ export default function ProfileSetting() {
 				</button>
 			</form>
 		</div>
+		</ProfileSettingLayout>
+
 	);
 }
 

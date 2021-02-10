@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Loading from '../../../components/Loading';
+import NotFound from '../../../components/NotFound';
 import useAuthProvider from '../../../hook/useAuthProvider';
 import BlogComments from '../components/BlogComments';
 import MarkdownPreview from '../components/MarkdownPreview';
@@ -28,7 +29,7 @@ export default function BlogDetail({ location }) {
 	}
 
 	if (error) {
-		return <h1>error</h1>;
+		return <NotFound/>
 	}
 	const blogDetail = data?.blog_articles[0];
 

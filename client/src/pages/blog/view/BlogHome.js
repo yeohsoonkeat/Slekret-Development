@@ -4,6 +4,7 @@ import UserInfo from '../components/UserInfo';
 import { gql, useQuery } from '@apollo/client';
 import useAuth from '../../../hook/useAuthProvider';
 import Loading from '../../../components/Loading';
+import NotFound from '../../../components/NotFound';
 
 const BlogHome = () => {
 	const [auth] = useAuth();
@@ -15,8 +16,7 @@ const BlogHome = () => {
 		return <Loading />;
 	}
 	if (error) {
-		console.log(error);
-		return <h1>error</h1>;
+		return <NotFound/>
 	}
 	const globally_pinned_articles = [];
 	const local_articles = [];
@@ -40,7 +40,7 @@ const BlogHome = () => {
 				} = globally_pinned_article;
 				const { avatar_src, displayname, username } = slekret_user;
 				return (
-					<div className="w-full relative">
+					<div className="w-full relative" key={index}>
 						<div className="relative" style={{ paddingTop: '40%' }}>
 							<div
 								className="absolute inset-0 bg-no-repeat bg-cover"

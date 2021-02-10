@@ -8,6 +8,7 @@ import BlogDetail from './view/BlogDetail';
 import BlogEditComment from './view/BlogEditComment';
 import BlogEditor from './view/BlogEditor';
 import BlogHome from './view/BlogHome';
+import NotFound from '../../components/NotFound'
 
 const Blog = (props) => {
 	const { match } = props;
@@ -51,6 +52,7 @@ const Blog = (props) => {
 							component={BlogEditor}
 						/>
 					</EditorStateProvider>
+					<Route component={NotFound} />
 				</Switch>
 			</div>
 		</div>

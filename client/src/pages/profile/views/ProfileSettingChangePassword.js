@@ -5,6 +5,7 @@ import useAuthProvider from '../../../hook/useAuthProvider';
 import IconEye from '../../../icons/ic_eye';
 import IconEyeOff from '../../../icons/ic_eye_off';
 import ApiService from '../../../service/api';
+import ProfileSettingLayout from '../layout/ProfileSettingLayout';
 import changePassword from '../schema/changePassword';
 
 const api = new ApiService();
@@ -27,6 +28,8 @@ export default function ProfileSettingChangePassword() {
 		setResponse(res.data);
 	};
 	return (
+		<ProfileSettingLayout>
+
 		<div className="flex-1 w-full p-5">
 			{response && (
 				<div
@@ -102,5 +105,7 @@ export default function ProfileSettingChangePassword() {
 				</button>
 			</form>
 		</div>
+		</ProfileSettingLayout>
+
 	);
 }

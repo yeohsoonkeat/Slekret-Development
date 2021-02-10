@@ -2,8 +2,8 @@ import { ApolloProvider } from '@apollo/client';
 import axios from 'axios';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import ComingSoon from './components/ComingSoon';
 import Loading from './components/Loading';
-import NotFound from './components/NotFound';
 import config from './config';
 import routes from './constant/routes';
 import useApolloClientWithToken from './hook/useApolloClientWithToken';
@@ -19,6 +19,7 @@ const ErrorPage = lazy(() => import('./pages/error'));
 const DefaultLayout = lazy(() => import('./layout/default'));
 const ProtectedRoute = lazy(() => import('./routes/ProtectedRoutes'));
 const PublicRoutes = lazy(() => import('./routes/PublicRoutes'));
+const NotFound = lazy(() => import("./components/NotFound"));
 
 const App = () => {
   const [token, setToken] = useState();
@@ -62,17 +63,16 @@ const App = () => {
 
             <Route path={routes.blog} component={Blog} />
 
-						<DefaultLayout>
 							<Route path={routes.error} component={ErrorPage} />
 							<ProtectedRoute
 								auth={auth}
 								path={routes.profile}
 								component={Profile}
 							/>
-							<Route path={routes.forum} component={Forum} />
+							<Route path={routes.forum} component={ComingSoon} />
               <Route component={NotFound} />
 
-						</DefaultLayout>
+				
 					</Switch>
 				</Suspense>
 			</BrowserRouter>
