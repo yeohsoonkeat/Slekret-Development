@@ -15,13 +15,13 @@ export default function ProfileSettingLayout({ children }) {
 						>
 							Personal Information
 						</NavLink>
-						{/* <NavLink
+						<NavLink
 							to="/user/setting/change-password"
 							className="	 p-3 cursor-pointer block transition-all"
 							activeClassName="bg-gray-200 border-l-2 border-gray-500 p-3"
 						>
 							Change Password
-						</NavLink> */}
+						</NavLink>
 					</ul>
 				</div>
 				{children}

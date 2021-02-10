@@ -52,6 +52,18 @@ class AuthValidator {
 				.isEmpty(),
 		];
 	}
+	changePassword() {
+		return [
+			check('username')
+				.not()
+				.isEmpty()
+				.isString(),
+			check('password')
+				.isLength({ min: 6 })
+				.not()
+				.isEmpty(),
+		];
+	}
 
 	setupUsername() {
 		return [

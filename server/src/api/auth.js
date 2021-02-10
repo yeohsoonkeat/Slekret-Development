@@ -52,13 +52,23 @@ auth
 auth.route('/logout').post(cors(corsOptions), authController.logout);
 
 auth
-	.route('/reset-password')
+	.route('/forget-password')
 	.post(
 		cors(corsOptions),
 		speedLimiter(anHour, canRequest, increaseOneSecond),
 		limiter(anHour, canRequest),
 		authValidator.resetPassword(),
 		authController.resetPassword
+	);
+
+auth
+	.route('/change-password')
+	.post(
+		cors(corsOptions),
+		speedLimiter(anHour, canRequest, increaseOneSecond),
+		limiter(anHour, canRequest),
+		authValidator.changePassword(),
+		authController.changePassword
 	);
 
 auth

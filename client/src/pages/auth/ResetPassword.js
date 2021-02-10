@@ -31,7 +31,7 @@ export default function ResetPassword() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		const res = await api
-			.resetPassword('/auth/reset-password', data)
+			.resetPassword('/auth/forget-password', data)
 			.catch((err) => {
 				return history.push('/error/500');
 			});

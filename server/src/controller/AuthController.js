@@ -11,6 +11,7 @@ const comparePassword = require('../utils/comparePassword');
 const hashPassword = require('../utils/hashPassword');
 const updateUserPassword = require('../db/updateUserPassword');
 const getUserByEmail = require('../db/getUserByEmail');
+const updateUserPasswordWithUsername = require('../db/updateUserPasswordWithUsername');
 
 const userService = new UserService();
 
@@ -152,6 +153,31 @@ class AuthController {
 			return res.json({ emailSent: true });
 		} catch (err) {
 			next(err);
+		}
+	}
+
+	async changePassword(req, res, next) {
+		const error = validationResult(req);
+		if (error.errors.length > 0) {
+			return res.json({
+				message: 'Unable to reset password user',
+				code: 400,
+			});
+		}
+		try {
+			const { username, password } = req.body;
+			const newPassword = await hashPassword(password);
+
+			const { data } = await updateUserPasswordWithUsername({
+				username,
+				newPassword,
+			});
+
+			if (data.update_slekret_users.affected_rows) {
+				return res.json({ message: 'Successfully Updated', code: 200 });
+			}
+		} catch (e) {
+			next(e);
 		}
 	}
 
