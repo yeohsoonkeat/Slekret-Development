@@ -15,6 +15,7 @@ const BlogHome = () => {
 		return <Loading />;
 	}
 	if (error) {
+		console.log(error);
 		return <h1>error</h1>;
 	}
 	const globally_pinned_articles = [];
