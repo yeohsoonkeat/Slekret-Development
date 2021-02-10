@@ -5,8 +5,8 @@ const express = require('express');
 const helmet = require('helmet');
 const passport = require('passport');
 const sessions = require('express-session');
-const appConfig = require('./config/app.config');
 const api = require('./api');
+const appConfig = require('./config/app.config');
 
 const app = express();
 
@@ -21,6 +21,8 @@ app.use(helmet());
 
 app.use(express.json());
 // app.use(csrf());
+
+// app.use(csrf({ cookie: true, httpOnly: true }));
 
 app.use(
 	sessions({
@@ -48,16 +50,11 @@ app.use(
 );
 
 // router
+
 app.use('/api/v1', api);
 
-app.use(function(req, res, next) {
-	// Expose variable to templates via locals
-	res.locals.csrftoken = req.csrfToken();
-	next();
-});
-
-app.use(function(err, req, res) {
-	res.status(500).send('Something broke!');
+app.use(function(err, req, res, next) {
+	res.status(500).json({ message: 'something went wrong' });
 });
 
 module.exports = app;
