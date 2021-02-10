@@ -74,17 +74,11 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 };
 
 const ADD_NEW_COMMENT = gql`
-	mutation MyMutation($blogId: uuid, $content: String) {
+	mutation MyMutation($blogId: uuid, $content: String,$) {
 		insert_blog_article_comments_one(
 			object: { content: $content, blog_article_id: $blogId }
 		) {
 			id
-			created_at
-			slekret_user {
-				avatar_src
-				displayname
-				username
-			}
 		}
 	}
 `;

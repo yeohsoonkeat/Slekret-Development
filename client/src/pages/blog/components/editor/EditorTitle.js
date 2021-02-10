@@ -1,6 +1,7 @@
-import '../../styles/blogStyle.css';
-import useEditorStateProvider from '../../hook/useEditorStateProvider';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import useEditorStateProvider from '../../hook/useEditorStateProvider';
+import '../../styles/blogStyle.css';
 
 function EditorTitle() {
 	const location = useLocation();
@@ -21,6 +22,11 @@ function EditorTitle() {
 		const text = e.clipboardData.getData('text/plain');
 		window.document.execCommand('insertText', false, text);
 	};
+	useEffect(() => {
+		window.document.getElementById('editor-title').innerText =
+			editorState.blog.title;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div

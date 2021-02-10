@@ -57,12 +57,12 @@ const App = () => {
 					<Switch>
 						<ProtectedRoute path={routes.admin} auth={auth} component={Admin} />
 						<PublicRoutes path={routes.auth} auth={auth} component={Auth} />
+						<Route exact path={routes.home} component={Blog} />
 
 						<Route path={routes.blog} component={Blog} />
 
 						<DefaultLayout>
 							<Route path={routes.error} component={ErrorPage} />
-							{/* <Route exact path={routes.home} component={Home} /> */}
 							<ProtectedRoute
 								auth={auth}
 								path={routes.profile}
