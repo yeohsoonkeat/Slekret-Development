@@ -39,7 +39,7 @@ export default function BlogComments({ blogId, numberOfComments, blogTitle }) {
 							<BlogComment
 								comment={comment}
 								key={index}
-								blog={{ blogId, blogTitle }}
+								blog={{ blogId: comment.id, blogTitle }}
 							/>
 						</div>
 					);
@@ -48,7 +48,7 @@ export default function BlogComments({ blogId, numberOfComments, blogTitle }) {
 					<BlogComment
 						comment={comment}
 						key={index}
-						blog={{ blogId, blogTitle }}
+						blog={{ blogId: comment.id, blogTitle }}
 					/>
 				);
 			})}

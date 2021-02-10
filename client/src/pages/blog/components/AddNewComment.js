@@ -2,16 +2,19 @@ import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import ModalRequireAuth from '../../../components/ModalRequireAuth';
 import useAuthProvider from '../../../hook/useAuthProvider';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 	const [showModal, setShowModal] = useState(false);
 	const [commentContent, setCommentContent] = useState('');
 	const [authState] = useAuthProvider();
+	const commentId = uuidv4();
 
 	const [addNewComent] = useMutation(ADD_NEW_COMMENT, {
 		onCompleted(addNewComent) {
 			if (addNewComent) {
 				const newComment = {
+					id: commentId,
 					content: commentContent,
 					created_at: new Date(),
 					slekret_user: {
@@ -37,7 +40,9 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 			return setShowModal(true);
 		}
 		if (commentContent.trim()) {
-			addNewComent({ variables: { blogId, content: commentContent } });
+			addNewComent({
+				variables: { blogId, content: commentContent, commentId },
+			});
 		}
 	};
 	const handleOnfucus = () => {
@@ -74,9 +79,9 @@ const AddNewComment = ({ blogId, setListOfComment, setNumberOfComments }) => {
 };
 
 const ADD_NEW_COMMENT = gql`
-	mutation MyMutation($blogId: uuid, $content: String,$) {
+	mutation MyMutation($blogId: uuid, $content: String, $commentId: uuid) {
 		insert_blog_article_comments_one(
-			object: { content: $content, blog_article_id: $blogId }
+			object: { content: $content, blog_article_id: $blogId, id: $commentId }
 		) {
 			id
 		}
