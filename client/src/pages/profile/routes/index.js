@@ -2,7 +2,7 @@ import { Route, Switch } from 'react-router-dom';
 import ProfileSettingLayout from '../layout/ProfileSettingLayout';
 import { ProfilePage } from '../views/';
 import ProfileSetting from '../views/ProfileSetting';
-// import ProfileSettingChangePassword from '../views/ProfileSettingChangePassword';
+import ProfileSettingChangePassword from '../views/ProfileSettingChangePassword';
 
 export default function ProfileRoute() {
 	return (
@@ -11,11 +11,11 @@ export default function ProfileRoute() {
 
 			<ProfileSettingLayout>
 				<Route path="/user/setting/" exact component={ProfileSetting} />
-				{/* <Route
+				<Route
 					path="/user/setting/change-password"
 					exact
 					component={ProfileSettingChangePassword}
-				/> */}
+				/>
 			</ProfileSettingLayout>
 		</Switch>
 	);

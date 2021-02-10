@@ -15,7 +15,7 @@ export default function index() {
 				<Route exact path="/auth/signin" component={SignIn} />
 				<Route exact path="/auth/signup" component={SignUp} />
 				<Route exact path="/auth/setupusername" component={SetUpUsername} />
-				<Route exact path="/auth/reset-password" component={ResetPassword} />
+				<Route exact path="/auth/forget-password" component={ResetPassword} />
 				<Route exact path="/auth/verify-email" component={VerifyEmail} />
 				<Redirect from="/auth*" to="/auth/signin" />
 			</Switch>
