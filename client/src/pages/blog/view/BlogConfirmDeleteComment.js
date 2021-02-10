@@ -9,7 +9,6 @@ function BlogConfirmDeleteComment(props) {
 
 	const [removeComment] = useMutation(DELETE_COMMENT, {
 		onCompleted() {
-			console.log('helllo');
 			window.open(`/blog/${blog.blogId}/${blog.blogTitle}`, '_self');
 		},
 	});

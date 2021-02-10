@@ -14,9 +14,15 @@ export default function BlogCommentMenu({ userId, comment, blog }) {
 					<div className="w-56 shadow-2xl border bg-white rounded absolute right-0 hidden dropdown py-5">
 						{isThisCommentBelongtoCurrentUser && (
 							<>
-								<p className="p-2 hover:bg-gray-100 hover:text-blue-400 hover:tracking-wide transition-all">
+								<Link
+									to={{
+										pathname: `/blog/edit/comment/${comment.id}/${comment.content}`,
+										state: { blog },
+									}}
+									className="p-2 hover:bg-gray-100 hover:text-blue-400 hover:tracking-wide transition-all block"
+								>
 									Edit
-								</p>
+								</Link>
 								<Link
 									to={{
 										pathname: `/blog/delete_confirm/comment/${comment.id}/${comment.content}`,

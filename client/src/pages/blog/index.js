@@ -5,6 +5,7 @@ import EditorStateProvider from './provider/editor/editorStateProvider';
 import BlogConfirmDelete from './view/BlogConfirmDelete';
 import BlogConfirmDeleteComment from './view/BlogConfirmDeleteComment';
 import BlogDetail from './view/BlogDetail';
+import BlogEditComment from './view/BlogEditComment';
 import BlogEditor from './view/BlogEditor';
 import BlogHome from './view/BlogHome';
 
@@ -27,6 +28,11 @@ const Blog = (props) => {
 						exact
 						path={current_url + '/delete_confirm/comment/:id/:comment'}
 						component={BlogConfirmDeleteComment}
+					/>
+					<Route
+						exact
+						path={current_url + '/edit/comment/:id/:comment'}
+						component={BlogEditComment}
 					/>
 					<Route
 						exact
